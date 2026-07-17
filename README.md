@@ -1,6 +1,8 @@
 # Exhibition Mod — Alpha
 
-**Version:** see [VERSION](VERSION) (`0.1.0-alpha.1`)
+**Version:** see [VERSION](VERSION) (`0.1.0-alpha.1`)  
+**GitHub:** [ScurryFP/exhibition-mod](https://github.com/ScurryFP/exhibition-mod)  
+**Downloads:** [Releases](https://github.com/ScurryFP/exhibition-mod/releases) (zip from `dist/`)
 
 An **appearance / paperdoll extension** for **Course of Temptation** desktop HTML builds, plus a **standalone clothing & face editor** that saves image packs into the game folder.
 
