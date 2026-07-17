@@ -1,0 +1,364 @@
+:: SocialPeopleFixWidgets [widget nobr]
+
+<<widget "displaypeoplebody">>
+<<set _peopletab to _args[0] or _peopletab or "here">>
+<<script>>
+if (!V.socialfilters || typeof V.socialfilters !== "object") State.setVar("$socialfilters", {});
+if (!V.traitfilters || typeof V.traitfilters !== "object") State.setVar("$traitfilters", {});
+T.people = Array.isArray(T.people) ? T.people.filter(Boolean) : [];
+if (V.favoritepeople && Array.isArray(V.favoritepeople))
+    T.people = T.people.sort((a, b) => V.favoritepeople.includes(b) - V.favoritepeople.includes(a));
+const sfilters = V.socialfilters;
+const tfilters = V.traitfilters;
+T.anybadgesfiltered = Object.values(sfilters).includes(false);
+T.anytraitsfiltered = Object.values(tfilters).includes(false);
+const people = Array.isArray(T.people) ? T.people : [];
+const filtering = !!(V.socialsearch || T.anybadgesfiltered || T.anytraitsfiltered);
+if (filtering) {
+    T.dpeople = people.filter(p => {
+        let known = setup.people.is_known(p);
+        let anyfound = true;
+        if (T.anybadgesfiltered) {
+            let anyenabled = Object.values(sfilters).includes(true);
+            if (!anyenabled)
+                anyfound = false;
+            else {
+                for (let [badge, badgeenabled] of Object.entries(sfilters))
+                    if (badgeenabled && !setup.people.has_badge(p, badge)) {
+                        anyfound = false;
+                        break;
+                    }
+            }
+        }
+        if (anyfound && T.anytraitsfiltered) {
+            let anyenabled = Object.values(tfilters).includes(true);
+            if (!anyenabled)
+                anyfound = false;
+            else {
+                let thistraits = setup.people.known_personality_traits(p) || [];
+                for (let [trait, traitenabled] of Object.entries(tfilters)) {
+                    if (traitenabled && !thistraits.includes(trait)) {
+                        anyfound = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!anyfound) return false;
+        const search = (V.socialsearch || "").toLowerCase();
+        if (known && p.toLowerCase().includes(search))
+            return true;
+        else if (!known && setup.people.anonymous_name(p).toLowerCase().includes(search))
+            return true;
+        else
+            return false;
+    });
+} else {
+    T.dpeople = people;
+}
+T.dpeople = Array.isArray(T.dpeople) ? T.dpeople : [];
+<</script>>
+<<set _anybadgesfiltered to _anybadgesfiltered>>
+<<set _anytraitsfiltered to _anytraitsfiltered>>
+<<set _dpeople to _dpeople>>
+<div id="display-people-body">
+        <<if _dpeople.length is 0>>
+            <div class="view-people-empty">
+            <<if $socialsearch or _anybadgesfiltered or _anytraitsfiltered>>
+                There is no one in this category with your current filters applied.
+            <<else>>
+                <<switch _peopletab>>
+                    <<case "here">>
+                        There are no people here.
+                    <<case "friends">>
+                        You have no friends. Ouch!
+                    <<case "sexpartners">>
+                        You haven&#39;t been sexual with anybody yet.
+                    <<case "rivals">>
+                        You don&#39;t have any acknowledged enemies. Maybe that&#39;s a good thing!
+                    <<case "admirers">>
+                        No one is seriously crushing on you. Yet.
+                    <<case "acquaintances">>
+                        There&#39;s nobody that you barely know.
+                    <<case "special">>
+                        You don&#39;t know anybody who seems to fill a particular niche in the story of your life.
+                    <<case "team">>
+                        You&#39;re flying solo.
+                    <<case "faculty">>
+                        You don&#39;t know any faculty yet.
+                    <<case "coworkers">>
+                        You don&#39;t have any coworkers.
+                    <<case "rompartners">>
+                        You don&#39;t have a romantic partner.
+                    <<case "crush">>
+                        You don&#39;t currently have a crush.
+                    <<case "haters">>
+                        You haven&#39;t made any enemies yet, you lovable dork.
+                    <<case "favorite">>
+                        You don&#39;t have any favs.
+                    <<case "greek">>
+                        Disaster has struck. No one is in your Greek house.
+                        /* i mean nobody should see this but you never know */
+                <</switch>>
+            <</if>>
+            </div>
+        <<else>>
+            /* <<run console.time(&#39;slicing for paging&#39;)>> */
+            <<set _olen to _dpeople.length>>
+            <<set $peoplepage to Math.min($peoplepage, Math.max(0, Math.ceil(_olen / 16) - 1))>>
+            <<set _starti to 16 * $peoplepage>>
+            <<set _endi to _starti + 15>>
+            <<set _dpeople to _dpeople.slice(_starti, _endi + 1)>>
+            <div class="view-people-title">
+            <div>
+            <<switch _peopletab>>
+                <<case "here">>
+                    <<if $pc.in_encounter()>>People in encounter:<<elseif $hangout>>On <<aoran $hangout.type>> <<= $hangout.type>> with:<<else>>People nearby:<</if>>
+                <<case "friends">>
+                    Friends:
+                <<case "sexpartners">>
+                    Sexual partners:
+                <<case "rivals">>
+                    Rivals:
+                <<case "admirers">>
+                    Admirers:
+                <<case "acquaintances">>
+                    Acquaintances:
+                <<case "special">>
+                    People who fill a particular niche in the story of your life:
+                <<case "team">>
+                    Teammates:
+                <<case "faculty">>
+                    Known faculty:
+                <<case "coworkers">>
+                    Coworkers:
+                <<case "rompartners">>
+                    Romantic partner<<if _dpeople.length gt 1>>s<</if>>:
+                <<case "crush">>
+                    Your crush:
+                <<case "haters">>
+                    Haters:
+                <<case "favorite">>
+                    Favorites:
+                <<case "greek">>
+                    <<if !$pchouse>>
+                        People in the Greek house you&#39;re pledging to:
+                    <<elseif !$tradgreeks>>
+                        Kin in your Greek house:
+                    <<elseif setup.Houses.is_fraternity(_greekhouse)>>
+                        Brothers in your Greek house:
+                    <<elseif setup.Houses.is_sorority(_greekhouse)>>
+                        Sisters in your Greek house:
+                    <<else>>
+                        Kin in your Greek house:
+                    <</if>>
+            <</switch>>
+            </div>
+            /* <<run console.timeEnd(&#39;slicing for paging&#39;)>> */
+            <<if _starti gt 0 or _endi lt _olen - 1>>
+                <div class="view-people-page-button-container">
+                    <<if _starti gt 0>>
+                        <button id="view-people-page-backward" tabindex="0" title="Previous page" aria-label="Previous page" type="button" role="button"></button>
+                        <<script>>
+                            $(document).ready(function() {
+                                $("#view-people-page-backward")
+                                    .off("click")
+                                    .on("click", function() {
+                                    State.setVar("$peoplepage", V.peoplepage - 1);
+                                    Wikifier.wikifyEval("<<replace &#39;#display-people-body&#39;>><<displaypeoplebody _peopletab>><</replace>>");
+                                });
+                            });
+                        <</script>>
+                    <</if>>
+                </div>
+                <div>
+                    Page <<= $peoplepage + 1>>/<<= Math.floor(_olen / 16) + (_olen % 16 > 0 ? 1 : 0)>>
+                </div>
+                <div class="view-people-page-button-container">
+                    <<if _endi lt _olen - 1>>
+                        <button id="view-people-page-forward" tabindex="0" title="Next page" aria-label="Next page" type="button" role="button"></button>
+                        <<script>>
+                            $(document).ready(function() {
+                                $("#view-people-page-forward")
+                                    .off("click")
+                                    .on("click", function() {
+                                    State.setVar("$peoplepage", V.peoplepage + 1);
+                                    Wikifier.wikifyEval("<<replace &#39;#display-people-body&#39;>><<displaypeoplebody _peopletab>><</replace>>");
+                                });
+                            });
+                        <</script>>
+                    <</if>>
+                </div>
+            <</if>>
+            </div>
+            <div class="view-people-list">
+                <<set _nichesbyperson to setup.people.reverse_niches() or {}>>
+                <<for _displayperson range _dpeople>>
+                    /* <<run console.time(`processing ${_displayperson}`)>> */
+                    <<set _pname to setup.people.get_name(_displayperson)>>
+                    <<set _known to setup.people.is_known(_pname) && !setup.people.is_anonymous(_pname)>>
+                    <<if _known>>
+                        <<set _name to setup.people.fullname(_pname)>>
+                        <<set _niche to _nichesbyperson[_pname]>>
+                    <<else>>
+                        <<set _name to setup.people.anonymous_name(_pname)>>
+                        <<set _niche to null>>
+                    <</if>>
+                    <<set _rel to setup.Relationships.relationship_with(_pname)>>
+                    <<if !_rel and $crush is _pname>>
+                        <<set _rel to "crush">>
+                    <</if>>
+                    <<if !_niche and _rel>>
+                        <<set _niche to "Your " + setup.Relationships.label(_rel, _pname)>>
+                    <</if>>
+                    <<if !_niche and setup.people.is_professor(_displayperson, true)>>
+                        <<set _niche to "Your professor">>
+                    <</if>>
+                    <<if !_niche and _greekhouse and setup.Houses.house(_displayperson) is _greekhouse>>
+                        <<if setup.Houses.get_president(_greekhouse) is _pname>>
+                            <<set _niche to "Your Greek house president">>
+                        <<elseif setup.Houses.get_rushchair(_greekhouse) is _pname>>
+                            <<set _niche to "Your Greek house rush chair">>
+                        <<elseif $tradgreeks and setup.Houses.is_fraternity(_greekhouse) and setup.people.is_masc(_displayperson)>>
+                            <<set _niche to "Your fraternity brother">>
+                        <<elseif $tradgreeks and setup.Houses.is_sorority(_greekhouse) and setup.people.is_femme(_displayperson)>>
+                            <<set _niche to "Your sorority sister">>
+                        <<elseif $tradgreeks and setup.Houses.is_fraternity(_greekhouse)>>
+                            <<set _niche to "Your fraternity kin">>
+                        <<elseif $tradgreeks and setup.Houses.is_sorority(_greekhouse)>>
+                            <<set _niche to "Your sorority kin">>
+                        <<else>>
+                            <<set _niche to "Your Greek house kin">>
+                        <</if>>
+                    <</if>>
+                    <<if typeof _displayperson isnot "string">>
+                        <<set _displayperson to _displayperson.person>>
+                    <</if>>
+                    <<set _gender to setup.people.get_gender(_displayperson)>>
+                    <<set _styleclass to "view-people-person-name " + _gender>>
+                    <<if _gender is "transgender female">>
+                        <<set _coloropt to "female">>
+                    <<elseif _gender is "transgender male">>
+                        <<set _coloropt to "male">>
+                    <<elseif _gender is "nonbinary amab" or _gender is "nonbinary afab">>
+                        <<set _coloropt to "nonbinary">>
+                    <<else>>
+                        <<set _coloropt to _gender>>
+                    <</if>>
+                    <<set _style = &#39;color: &#39; + setup.get_color(_coloropt) + &#39;;&#39;>>
+                    <div class="view-people-person">
+                        <div class="view-people-person-header">
+                            <div @class=&#39;_styleclass&#39; @style=&#39;_style&#39;>
+                                <<capture _displayperson, _name>>
+                                    <<link _name>>
+                                        <<run setup.display_npc_dialog(_displayperson, _name)>>
+                                    <</link>>
+                                <</capture>>
+                            </div>
+                            <<set _badges to (setup.people.get_badges(_displayperson) || []).filter(badge => !badge.invisible)>>
+                            <<if _badges and _badges.length > 0 and $optshowemojis>>
+                                <div class="view-people-person-badges">
+                                    <<for _badge range _badges>>
+                                        <div class="view-people-person-badge"><<hovertip _badge.tooltip>><span class="emoji"><<=_badge.icon>></span><</hovertip>></div>
+                                    <</for>>
+                                </div>
+                            <</if>>
+                        </div>
+                        <<if _niche != null>>
+                            <div class="view-people-person-niche faded small">
+                                <<= _niche>>
+                            </div>
+                        <</if>>
+                        <div class="status-meter-labeled" style="align-content: flex-end;">
+                            <<set _label to _displayperson.split(&#39; &#39;).join(&#39;_&#39;).split(&#39;\&#39;&#39;).join(&#39;_&#39;)>>
+                            <<set _friendship to setup.people.get_attitude(_displayperson, "friendship")>>
+                            <<if !$optsocialdialoguemeters>>
+                                <<if _friendship gte 0>><<set _style to "small unbad">><<else>><<set _style to "small bad">><</if>>
+                                <<highlight _style>>
+                                    <<if _friendship gte 0>>Friendship<<else>>Dislike<</if>>:
+                                    <<= Math.floor(Math.abs(_friendship) / 10)>>%
+                                    <br>
+                                <</highlight>>
+                            <<else>>
+                                <<if _friendship gte 0>>
+                                    <<set _barbgid = "hzFriendbarbg" + _label>>
+                                    <<set _barid = "hzFriendbar" + _label>>
+                                    <span class="status-meter-label">Friendship</span>
+                                <<else>>
+                                    <<set _barbgid = "hzEnemybarbg" + _label>>
+                                    <<set _barid = "hzEnemybar" + _label>>
+                                    <span class="status-meter-label">Dislike</span>
+                                <</if>>
+
+                                <<= Meter(Math.abs(_friendship), 1000, _barid, true)>>
+                            <</if>>
+
+                            <<set _lust to Math.max(0, setup.people.get_attitude(_displayperson, "lust"))>>
+                            <<if !$optsocialdialoguemeters>>
+                                <<highlight "small sexy">>
+                                    Lust:
+                                    <<= Math.floor(Math.abs(_lust) / 10)>>%
+                                    <br>
+                                <</highlight>>
+                            <<else>>
+                                <<set _barbgid = "hzLustbarbg" + _label>>
+                                <<set _barid = "hzLustbar" + _label>>
+                                <span class="status-meter-label">Lust</span>
+                                <<= Meter(_lust, 1000, _barid, true)>>
+                            <</if>>
+
+                            <<set _romance to Math.max(0, setup.people.get_attitude(_displayperson, "romance"))>>
+                            <<if !$optsocialdialoguemeters>>
+                                <<highlight "small romantic">>
+                                    Romance:
+                                    <<= Math.floor(Math.abs(_romance) / 10)>>%
+                                    <br>
+                                <</highlight>>
+                            <<else>>
+                                <<set _barbgid = "hzRomancebarbg" + _label>>
+                                <<set _barid = "hzRomancebar" + _label>>
+                                <span class="status-meter-label">Romance</span>
+                                <<= Meter(_romance, 1000, _barid, true)>>
+                            <</if>>
+                        </div>
+                    </div>
+                    /* <<run console.timeEnd(`processing ${_displayperson}`)>> */
+                <</for>>
+                <<done>>
+                    <<script>>
+                        $(".view-people-person").on("click", function() {
+                            $(this).find(".view-people-person-name").find("a").click();
+                        });
+                    <</script>>
+                <</done>>
+            </div>
+            <div class="view-people-list-footer">
+                Click a person to see more.
+                <br>
+                <label><<checkbox "$optsocialdialoguemeters" false true autocheck>> Show Attitude Meters (not recommended for slower devices)</label>
+            </div>
+
+            <<script>>
+                $(document).ready(function()
+                {
+                    let checkbox = $("#checkbox-optsocialdialoguemeters");
+                    checkbox.on("change", function()
+                    {
+                        Dialog.setup();
+                        Dialog.wiki(Story.get("Social").processText());
+                        Dialog.open();
+                    });
+                });
+            <</script>>
+        <</if>>
+    </div>
+
+<</widget>>
+
+<<widget "sortpeople">>
+    <<script>>
+        T.people = Array.isArray(T.people) ? T.people.filter(Boolean) : [];
+        if (V.favoritepeople && Array.isArray(V.favoritepeople))
+            T.people = T.people.sort((a, b) => V.favoritepeople.includes(b) - V.favoritepeople.includes(a));
+    <</script>>
+<</widget>>

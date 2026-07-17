@@ -1,0 +1,28 @@
+The installer is set up for the unzip-and-click workflow players expect.
+Player workflou
+1. Unzip the mod into the game folder (alongside their game HTML).
+Ensure the game file is named CourseOfTemptationtest.html (or leave it as CourseOfTemptation.html — the installer will find it).
+3. Run:
+* Linwx: ./install.sh
+* Windows: double-click install.exe (or install.bat if Python is installed)
+Vhat gets installed
+step Result
+Rebake all mod features | Sidebar, tanning, paperdoll, wear defaults, NPC outfits, etc. baked into their game HTML
+Rebuild paperdoll editor | Refreshes base-embed.js so the standalone editor works offline
+Create launchers Exhibition Paperdol1 Editor.sh (Linux) and Exhibition Paperdoll Editor.bat (Windons
+A backup of their game HTML is saved to backup/ before any changes.
+Files added
+install.py — Cross-platform core (calls rebake scripts directly, no bash reguired on Windous)
+* install.sh — Linwd/mac0s entry point
+instal1.bat — Windows entry point (needs Python 3
+build-install-exe.bat — zun once on Windous to create install.exe for players without Python
+Before you publish the ZIP
+
+On a Windows PC, Tun:
+build-install-exe.bat
+That crestes install.exe to include in the mod ZIP so Windows players can install without installing Python.
+Your dev workflou (unchanged)
+* Keep working in CourseofTemptation-Exhibition-appearance-dev.html
+* Use ./rebake-dev.sh while modding
+* Use ./install.sh (or point players at it) when you want to test/publish the player install
+install-exhibition-mod. sh stil1 works and forwards to install.sh.

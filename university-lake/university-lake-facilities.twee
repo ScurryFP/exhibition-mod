@@ -1,0 +1,102 @@
+:: UniversityLakeBeachRestroom [location locUniversityLakeBeachRestroom locblockCampus roomtypebathroom dcCampusOutside bathroom emoji🚽 nobr quickieroomtypebathroomstall]
+A small cinder-block building by the lake holds the beach restrooms — gender-neutral stalls, a row of sinks, and the faint smell of sunscreen and wet sand tracked in from outside.
+<br><br>
+<<if $justpeed>>
+    You go into a stall and take care of business.
+    <br><br>
+    <<include StallRoomWall>>
+    <br>
+    After finishing, you step back out to wash your hands.
+    <<unset $justpeed>>
+<<else>>
+    The restroom is reasonably clean for a campus beach facility.
+<</if>>
+<br><br>
+<<set _loc to passage()>>
+<<if $pcneeds['Bladder'] lt 1000>>
+    <<set _link to {text: "Take care of business", emojifrom: "UniversityLakeBeachRestroom"}>>
+    <<link _link>>
+        <<unset $attemptednavigation>>
+        <<set $justpeed to true>>
+        <<advtime 3>>
+        <<run setup.Needs.pee(1000)>>
+        <<if State.random() lte setup.Events.base_event_chance()>>
+            <<set _event to setup.Events.passage(["restroom"])>>
+            <<if _event>>
+                <<egoto _event>>
+            <<else>>
+                <<egoto _loc>>
+            <</if>>
+        <<else>>
+            <<egoto _loc>>
+        <</if>>
+    <</link>> <<dtime 3>> <<dalterneed Bladder 1000>><br>
+<</if>>
+<<set _link to {text: "Wash up", link: "UniversityLakeBeachRestroom", emoji: "💧"}>>
+<<link _link>>
+    <<advtime 5>>
+    <<alterneed Hygiene 25>>
+    <<set $header to "You quickly wash up. <<dalterneed Hygiene 25>>">>
+<</link>> <<dtime 5>> <<dalterneed Hygiene 25>>
+<<adjusttoyslink>>
+<<dryclotheslink>>
+<<pregnancytestlink>>
+<br><br>
+<<if !$pc.is_part_covered("crotch")>>
+    You could grab a towel to cover yourself.
+    <br>
+    <<link "Dress in towel" UniversityLakeBeachRestroom>>
+        <<run setup.dress_in_towel()>>
+        <<set $header to "You grab a towel and wrap it around yourself.">>
+    <</link>>
+    <br>
+<</if>>
+<<if !$pc.is_part_covered("foot")>>
+    There are some cheap, disposable slip-on shoes here you could grab.
+    <br>
+    <<link "Dress in slip-ons" UniversityLakeBeachRestroom>>
+        <<run setup.dress_in_slipons()>>
+        <<set $header to "You grab a pair of cheap, disposable slip-ons and place them on your feet.">>
+    <</link>>
+    <br>
+<</if>>
+<br>
+<<opportunities>>
+<<set _link to {text: "Return to the beach", link: "UniversityLakeBeach", emoji: '🏖️'}>>
+<<link _link>><<advtime 1>><</link>> <<dtime 1>>
+
+:: UniversityLakeBeachChangingRoom [location locUniversityLakeBeachChangingRoom locblockCampus roomtypedressingroom dcCampusOutside stripallowed swimwearallowed changeclothes hasdressingroom quickieroomtypedressingroom emoji🪞 nobr]
+A row of curtained changing stalls lines one wall of the beach utility building. Lockers big enough for a towel and a change of clothes sit beneath a bench; sand crunches underfoot no matter how often the custodian sweeps.
+<br><br>
+<<handlependingoutfit>>
+<<if !$pc.is_part_covered("crotch")>>
+    You could grab a towel to cover yourself.
+    <br>
+    <<link "Dress in towel" UniversityLakeBeachChangingRoom>>
+        <<run setup.dress_in_towel()>>
+        <<set $header to "You grab a towel and wrap it around yourself.">>
+    <</link>>
+    <br>
+<</if>>
+<<if !$pc.is_part_covered("foot")>>
+    There are some cheap, disposable slip-on shoes here you could grab.
+    <br>
+    <<link "Dress in slip-ons" UniversityLakeBeachChangingRoom>>
+        <<run setup.dress_in_slipons()>>
+        <<set $header to "You grab a pair of cheap, disposable slip-ons and place them on your feet.">>
+    <</link>>
+    <br>
+<</if>>
+<br>
+<<include QuickWardrobe>>
+<br>
+<<link "Manage outfits" Wardrobe>><</link>>
+<br><br>
+<<if !$pc.clothes_ok("UniversityLakeBeach")>>
+    You can't walk back out to the beach like this. <<= $pc.get_error_clothes("UniversityLakeBeach")>>
+    <br>
+<</if>>
+<<set _link to {text: "Return to the beach", link: "UniversityLakeBeach", emoji: '🏖️'}>>
+<<link _link>><<advtime 1>><</link>> <<dtime 1>>
+<br><br>
+<<opportunities>>

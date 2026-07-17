@@ -1,0 +1,27 @@
+:: PaperdollMirror [noevents nobr]
+
+<div id="paperdollMirror"></div>
+
+:: PaperdollMirrorPassage [noevents nobr]
+<<link '<-' Wardrobe>><</link>>
+<div class="paperdoll-mirror-layout">
+    <div class="paperdoll-mirror-preview-col">
+        <div class="paperdoll-mirror-controls">
+            <button type="button" class="paperdoll-mirror-view" onclick="setup.ExhibitionPaperdoll.toggleView()" title="Show ass (back)">Ass</button>
+            <button type="button" class="paperdoll-panel-face" onclick="setup.ExhibitionPaperdoll.openFaceDialog()" title="Face close-up and makeup">Face</button>
+        </div>
+        <canvas id="paperdollPC-canvas-large" style="position: relative;"></canvas>
+        <p class="mini-hint" style="opacity:0.75;font-size:90%;">Face features and makeup live in the <strong>Face</strong> mirror (edit makeup in bathrooms).</p>
+    </div>
+</div>
+<<script>>
+    $(document).one(":passageend", () => {
+        if (setup.ExhibitionPaperdoll.syncViewButtons) setup.ExhibitionPaperdoll.syncViewButtons();
+        (async function() {
+            setup.ExhibitionPaperdoll.invalidate();
+            const canvas = document.getElementById("paperdollPC-canvas-large");
+            if (V.pc) await setup.ExhibitionPaperdoll.renderMirror(canvas, V.pc, { pose: setup.ExhibitionPaperdoll.getPoseForView(setup.ExhibitionPaperdoll.getView()) });
+            setTimeout(() => { canvas.style.transform = "none"; }, 120);
+        })();
+    });
+<</script>>

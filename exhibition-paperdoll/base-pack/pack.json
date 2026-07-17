@@ -1,0 +1,61 @@
+{
+  "id": "base",
+  "type": "base",
+  "name": "Exhibition Base Doll",
+  "description": "",
+  "canvas": {
+    "width": 256,
+    "height": 512
+  },
+  "lod": {
+    "reference": 256,
+    "tiers": [
+      256,
+      512,
+      1024,
+      2048
+    ]
+  },
+  "poses": [
+    "front",
+    "back"
+  ],
+  "layers": [
+    {
+      "id": "body",
+      "zIndex": 10,
+      "poses": {
+        "front": {
+          "sources": {
+            "1024": "assets/poses/front/body_1024.png"
+          },
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false,
+            "opacity": 1
+          }
+        },
+        "back": {
+          "sources": {
+            "1024": "assets/poses/back/body_1024.png"
+          },
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false,
+            "opacity": 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "id": "appearance-mod",
+  "type": "appearance",
+  "name": "Appearance mod",
+  "description": "",
+  "enabled": true,
+  "clothing": {
+    "items": [
+      {
+        "id": "bikini-top",
+        "name": "bikini top",
+        "zIndex": 41,
+        "poses": {
+          "front": {
+            "sources": {
+              "1024": "assets/items/bikini-top/front_1024.png"
+            },
+            "transform": {
+              "x": 0,
+              "y": 0,
+              "scaleX": 1,
+              "scaleY": 1,
+              "rotation": 0,
+              "flipH": false,
+              "flipV": false,
+              "opacity": 1
+            },
+            "colorMask": {
+              "1024": "assets/items/bikini-top/front_color_1024.png"
+            }
+          },
+          "back": {
+            "sources": {
+              "1024": "assets/items/bikini-top/back_1024.png"
+            },
+            "transform": {
+              "x": 0,
+              "y": 0,
+              "scaleX": 1,
+              "scaleY": 1,
+              "rotation": 0,
+              "flipH": false,
+              "flipV": false,
+              "opacity": 1
+            },
+            "colorMask": {
+              "1024": "assets/items/bikini-top/back_color_1024.png"
+            }
+          }
+        },
+        "layer": "bikini-top",
+        "cotBindings": [
+          "Bikini Top"
+        ],
+        "recolor": true
+      }
+    ]
+  },
+  "skinOverlay": {
+    "items": []
+  },
+  "baseFaceOverlay": {
+    "items": [
+      {
+        "id": "base-face-1",
+        "name": "Base face 1",
+        "zIndex": 15,
+        "poses": {
+          "front": {
+            "sources": {
+              "1024": "assets/base-face/base-face-1/front_1024.png"
+            },
+            "transform": {
+              "x": 0,
+              "y": 0,
+              "scaleX": 1,
+              "scaleY": 1,
+              "rotation": 0,
+              "flipH": false,
+              "flipV": false,
+              "opacity": 1
+            }
+          }
+        },
+        "layer": "base-face",
+        "facePartSlot": "base",
+        "cotBindings": [
+          "base-face-1"
+        ]
+      }
+    ]
+  },
+  "faceOverlay": {
+    "items": []
+  },
+  "hairOverlay": {
+    "items": []
+  },
+  "makeupOverlay": {
+    "items": []
+  },
+  "bodyWritingOverlay": {
+    "items": []
+  },
+  "effectOverlay": {
+    "items": [],
+    "effect": "wet"
+  },
+  "poses": [
+    "front",
+    "back"
+  ],
+  "poseMeta": {}
+}

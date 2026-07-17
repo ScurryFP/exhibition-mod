@@ -1,0 +1,2593 @@
+{
+  "standard_graphics": [
+    "an alien",
+    "a deer",
+    "a flock of birds",
+    "a skull",
+    "a death's head moth",
+    "a pair of palm trees",
+    "a bucking bull",
+    "a cat",
+    "a sugar skull",
+    "an astronaut",
+    "a boombox",
+    "a guitar",
+    "a waifu",
+    "a pair of kanji",
+    "a belly dancer",
+    "a band logo",
+    "a famous album cover",
+    "a vintage cartoon character",
+    "a dragon",
+    "a surfboard",
+    "a stylized fox face",
+    "a heart",
+    "some howling wolves",
+    "a bat",
+    "a galaxy",
+    "a synthwave sunset",
+    "a happy slime",
+    "a daisy",
+    "a marijuana leaf",
+    "'Good Vibes Only'",
+    "'No Bra Club'"
+  ],
+  "items": [
+    {
+      "id": "Graphic T-shirt",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Novelty Nudity T-shirt",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "a muscular male torso",
+          "a bare beer belly",
+          "a nude female torso",
+          "a skeleton on a dark background",
+          "a diagram of muscles and organs",
+          "an anime waifu's torso",
+          "Randy & Niles",
+          "Renaldo & Alice"
+        ]
+      }
+    },
+    {
+      "id": "Fandom T-shirt",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "a kaiju",
+          "an anti-kaiju robot",
+          "a clocktower",
+          "an EverNexus",
+          "a Courtroom Courtship",
+          "a Freedom Man",
+          "a Bat Knight",
+          "an Amazonian",
+          "a Lamplighter",
+          "a Jokester",
+          "an Adolescent Argonauts",
+          "a Chainsaw Boy",
+          "a Chainsaw Lad",
+          "a Chainsaw Babe",
+          "a the Flasher",
+          "a the Webber",
+          "the Bulk",
+          "Fe Male",
+          "a Deathpool",
+          "a Scarlet Sorcerer and Oracle",
+          "Renaldo the Squire",
+          "Alice Soumis",
+          "a Niles & Randy",
+          "a Space Explorers",
+          "a Space Explorers: The Next Expedition",
+          "a Space Explorers: Deepthroat 69",
+          "a Space Explorers: Voyeurs",
+          "a Warstar Galaxy",
+          "a Star Swords",
+          "an obscure anime",
+          "a Stacy Supernova",
+          "a Goose of Thrones",
+          "a Ninjudo",
+          "a Newton the Nerd",
+          "a Magic Academy",
+          "a Space Vikings",
+          "a Snakespheres",
+          "a Virusfiends",
+          "a Dangeresque",
+          "a Doomgal",
+          "a Crimeboys",
+          "a Biopunk",
+          "a Cybershock",
+          "a Jack Frost",
+          "a Pocket Waifu",
+          "a Gravitity",
+          "a The Unbelievables",
+          "a John Travolta",
+          "a Loki's Gate 3",
+          "an Exploration 34",
+          "an old cowboy movie",
+          "an Undefeatable",
+          "an Omnidad",
+          "an Atom Steve",
+          "a Sharkick",
+          "an Inspector Spacetime",
+          "a Monty Panther",
+          "a Tokyo Grift",
+          "a Card Games On Motorcycles",
+          "a Cell Games sponsored by Hetap",
+          "a HFIL",
+          "a Ninja Sex Party",
+          "a fake tuxedo"
+        ]
+      }
+    },
+    {
+      "id": "Graphic V-neck Tee",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Slogan T-shirt",
+      "category": "tops",
+      "subs": {
+        "text": [
+          "Off Duty Stripper",
+          "Every Hole's A Goal",
+          "DICK HUNTER",
+          "PUSSY DESTROYER",
+          "Slippery When Wet",
+          "I Hate Everyone",
+          "ANARCHY",
+          "Dead Inside",
+          "Generic T-Shirt Slogan",
+          "Where's My Coffee",
+          "Game Over",
+          "NERD",
+          "D&Don't Touch Me",
+          "GAMER",
+          "WILD AND FREE",
+          "Find Your Greatness",
+          "Never Give Up",
+          "BEAST MODE"
+        ]
+      }
+    },
+    {
+      "id": "Slogan Tank Top",
+      "category": "tops",
+      "subs": {
+        "text": [
+          "Off Duty Stripper",
+          "Every Hole's A Goal",
+          "DICK HUNTER",
+          "PUSSY DESTROYER",
+          "Slippery When Wet",
+          "I Hate Everyone",
+          "ANARCHY",
+          "Dead Inside",
+          "Generic T-Shirt Slogan",
+          "Where's My Coffee",
+          "Game Over",
+          "NERD",
+          "D&Don't Touch Me",
+          "GAMER",
+          "WILD AND FREE",
+          "Find Your Greatness",
+          "Never Give Up",
+          "BEAST MODE"
+        ]
+      }
+    },
+    {
+      "id": "Fake Sleeves Graphic T-shirt",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'",
+          "a punk band's logo",
+          "a grunge band's logo",
+          "a rock band's logo",
+          "a metal band's logo",
+          "a folk band's logo",
+          "a foreign band's logo",
+          "an emo band's logo",
+          "an indie band's logo",
+          "a popstar's logo",
+          "a rap artist's logo"
+        ]
+      }
+    },
+    {
+      "id": "Fake Striped Sleeves Graphic T-shirt",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Mesh Top",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "solid stripes",
+          "a basic design",
+          "tasteful glittering sequins",
+          "a glittering starlight pattern",
+          "a lacy paisley pattern",
+          "a lacy floral pattern",
+          "a bold checkerboard pattern",
+          "a confident erotic pattern",
+          "gothic frills",
+          "a thorny vine design",
+          "glittering chains"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Mesh Crop Top",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "solid stripes",
+          "a basic design",
+          "tasteful glittering sequins",
+          "a glittering starlight pattern",
+          "a lacy paisley pattern",
+          "a lacy floral pattern",
+          "a bold checkerboard pattern",
+          "a confident erotic pattern",
+          "gothic frills",
+          "a thorny vine design",
+          "glittering chains"
+        ]
+      }
+    },
+    {
+      "id": "Transparent Graphic Top",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'",
+          "a tribal-pattern",
+          "a dragons and samurai",
+          "a river and koi fish",
+          "a tiger stripe",
+          "a simple floral print",
+          "a snake coiling around the torso",
+          "a flowery",
+          "a trail of butterflies",
+          "a pair of handprints covering the breasts",
+          "a geometric pattern",
+          "a ribcage",
+          "a collage of suggestive text and swear words",
+          "a pair of X's over the nipples",
+          "a flower covering each nipple",
+          "a star covering each nipple",
+          "a heart covering each nipple",
+          "a map of a clocktower",
+          "a constellation of glittering stars",
+          "a plunging neckline",
+          "a lacy paisley pattern",
+          "a lacy floral pattern",
+          "a bold checkerboard pattern",
+          "a confident erotic clubwear pattern"
+        ]
+      }
+    },
+    {
+      "id": "Long Loose Graphic Tank Top",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Crop Tee",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Skintight Graphic Crop Top",
+      "category": "tops",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'",
+          "a tribal-pattern",
+          "dragons and a samurai",
+          "a river and koi fish",
+          "tiger stripes",
+          "a simple floral print",
+          "a snake coiling around the torso",
+          "a flowery print",
+          "a trail of butterflies",
+          "a pair of handprints covering the breasts",
+          "a geometric pattern",
+          "a ribcage",
+          "a collage of suggestive text and swear words",
+          "a pair of X's over the nipples",
+          "a flower covering each nipple",
+          "a star covering each nipple",
+          "a heart covering each nipple",
+          "a map of clocktower",
+          "a constellation of glittering stars",
+          "a plunging neckline",
+          "a lacy paisley pattern",
+          "a lacy floral pattern",
+          "a bold checkerboard pattern",
+          "a confident erotic clubwear pattern",
+          "racing decals",
+          "a foreign flag"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Crop Top",
+      "category": "tops",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Shell Top",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Crop Top",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Shirt",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Football Jersey",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Tokyo-3 Devilbats",
+          "Zanarkand Apes",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Baseball Jersey",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Knockers",
+          "Cleechville Cocks",
+          "Seaside Swingers",
+          "West Coast Evaders",
+          "East City Titans",
+          "South Desert Bandits",
+          "Northside Clubbers",
+          "Sapphtown Peaches",
+          "Springfield Isotopes",
+          "Gotham Batters",
+          "St. Lewis Wolves",
+          "Pumpkintown Lanterns"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Basketball Jersey",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "Nuttingham Ballers",
+          "Cleechville Dunkers",
+          "Seaside Ponderers",
+          "West Coast Warlords",
+          "East City Worldwiders",
+          "South Desert Gestrals",
+          "Northside Manotaurs",
+          "Springbeach Flames",
+          "Chulainn Hounds",
+          "Bunnyville Tunes",
+          "Shohoku Shoguns",
+          "Sannoh Industrials"
+        ]
+      }
+    },
+    {
+      "id": "Bowling Shirt",
+      "category": "tops",
+      "subs": {
+        "team": [
+          "blank",
+          "Ball Busters",
+          "Back Alley Slammers",
+          "Gutter Fingers",
+          "Splits or Swallows",
+          "Three Fingers Deep",
+          "Whips & Frames"
+        ]
+      }
+    },
+    {
+      "id": "Fruity T-shirt Dress",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "stars",
+          "cherries",
+          "strawberries",
+          "peaches",
+          "pineapples",
+          "skulls",
+          "palm trees",
+          "bananas",
+          "grapes",
+          "cute cartoons",
+          "coconuts",
+          "musical notes",
+          "watermelons",
+          "strawberry seeds",
+          "cacti wearing sunglasses",
+          "a fruit salad",
+          "slices of cheese",
+          "bees and honey",
+          "daisies",
+          "pears",
+          "lemons and limes",
+          "oranges",
+          "apples"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Sleep T-shirt",
+      "category": "dresses",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Summer Dress",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "a pretty floral print",
+          "an elegant design depicting a trail of butterflies",
+          "a lacy collar and hem",
+          "a simple polka-dot pattern",
+          "a low neckline",
+          "a plunging neckline",
+          "a square neckline",
+          "an opalescent sheen",
+          "A bold chromatic accent",
+          "A vintage geometric print"
+        ]
+      }
+    },
+    {
+      "id": "Fruity Sundress",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "stars",
+          "cherries",
+          "strawberries",
+          "peaches",
+          "pineapples",
+          "skulls",
+          "palm trees",
+          "bananas",
+          "grapes",
+          "cute cartoons",
+          "coconuts",
+          "musical notes",
+          "watermelons",
+          "strawberry seeds",
+          "cacti wearing sunglasses",
+          "a fruit salad",
+          "slices of cheese",
+          "bees and honey",
+          "daisies",
+          "pears",
+          "lemons and limes",
+          "oranges",
+          "apples"
+        ]
+      }
+    },
+    {
+      "id": "Fruity Skater Dress",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "stars",
+          "cherries",
+          "strawberries",
+          "peaches",
+          "pineapples",
+          "skulls",
+          "palm trees",
+          "bananas",
+          "grapes",
+          "cute cartoons",
+          "coconuts",
+          "musical notes",
+          "watermelons",
+          "strawberry seeds",
+          "cacti wearing sunglasses",
+          "a fruit salad",
+          "slices of cheese",
+          "bees and honey",
+          "daisies",
+          "pears",
+          "lemons and limes",
+          "oranges",
+          "apples"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Bodycon Dress",
+      "category": "dresses",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Patterned Qipao",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "a tribal-pattern design",
+          "a traditional design depicting dragons",
+          "a traditional design depicting a flowing  water",
+          "a traditional design depicting a tiger",
+          "a traditional design depicting a phoenix",
+          "a traditional design depicting mountains",
+          "a traditional design depicting a snake coiling around the torso",
+          "a traditional design depicting flowers and leaves",
+          "a metallic design depicting flowers and leaves",
+          "a realistic design depicting flowers and leaves",
+          "a lacy pattern depicting flowers and leaves",
+          "an elegant design depicting a trail of butterflies",
+          "an elegant design depicting a crane",
+          "an intricate design depicting a geometric pattern",
+          "a vivid design depicting fans and parasols",
+          "an enamel print design depicting a mandala",
+          "a printed design depicting historical art",
+          "a printed design of an anime character",
+          "a printed design depicting porcelain patterns",
+          "a modern metallic sheen",
+          "a chest window",
+          "a groovy paisley pattern",
+          "bold checkerboard pattern",
+          "a modern pop-art design",
+          "a tesselating triangular design"
+        ]
+      }
+    },
+    {
+      "id": "Kimono",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "a tribal-pattern design",
+          "a traditional design depicting dragons",
+          "a traditional design depicting a flowing  water",
+          "a traditional design depicting a tiger",
+          "a traditional design depicting a phoenix",
+          "a traditional design depicting mountains",
+          "a traditional design depicting a snake coiling around the torso",
+          "a traditional design depicting flowers and leaves",
+          "a metallic design depicting flowers and leaves",
+          "a realistic design depicting flowers and leaves",
+          "a lacy pattern depicting flowers and leaves",
+          "an elegant design depicting a trail of butterflies",
+          "an elegant design depicting a crane",
+          "an intricate design depicting a geometric pattern",
+          "a vivid design depicting fans and parasols",
+          "an enamel print design depicting a mandala",
+          "a printed design depicting historical art",
+          "a printed design of an anime character",
+          "a printed design depicting porcelain patterns",
+          "a modern metallic sheen",
+          "a chest window",
+          "a groovy paisley pattern",
+          "bold checkerboard pattern",
+          "a modern pop-art design",
+          "a tesselating triangular design"
+        ]
+      }
+    },
+    {
+      "id": "Furisode",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "a tribal-pattern design",
+          "a traditional design depicting dragons",
+          "a traditional design depicting a flowing  water",
+          "a traditional design depicting a tiger",
+          "a traditional design depicting a phoenix",
+          "a traditional design depicting mountains",
+          "a traditional design depicting a snake coiling around the torso",
+          "a traditional design depicting flowers and leaves",
+          "a metallic design depicting flowers and leaves",
+          "a realistic design depicting flowers and leaves",
+          "a lacy pattern depicting flowers and leaves",
+          "an elegant design depicting a trail of butterflies",
+          "an elegant design depicting a crane",
+          "an intricate design depicting a geometric pattern",
+          "a vivid design depicting fans and parasols",
+          "an enamel print design depicting a mandala",
+          "a printed design depicting historical art",
+          "a printed design of an anime character",
+          "a printed design depicting porcelain patterns",
+          "a modern metallic sheen",
+          "a chest window",
+          "a groovy paisley pattern",
+          "bold checkerboard pattern",
+          "a modern pop-art design",
+          "a tesselating triangular design"
+        ]
+      }
+    },
+    {
+      "id": "Yukata",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "a tribal-pattern design",
+          "a traditional design depicting dragons",
+          "a traditional design depicting a flowing  water",
+          "a traditional design depicting a tiger",
+          "a traditional design depicting a phoenix",
+          "a traditional design depicting mountains",
+          "a traditional design depicting a snake coiling around the torso",
+          "a traditional design depicting flowers and leaves",
+          "a metallic design depicting flowers and leaves",
+          "a realistic design depicting flowers and leaves",
+          "a lacy pattern depicting flowers and leaves",
+          "an elegant design depicting a trail of butterflies",
+          "an elegant design depicting a crane",
+          "an intricate design depicting a geometric pattern",
+          "a vivid design depicting fans and parasols",
+          "an enamel print design depicting a mandala",
+          "a printed design depicting historical art",
+          "a printed design of an anime character",
+          "a printed design depicting porcelain patterns",
+          "a modern metallic sheen",
+          "a chest window",
+          "a groovy paisley pattern",
+          "bold checkerboard pattern",
+          "a modern pop-art design",
+          "a tesselating triangular design"
+        ]
+      }
+    },
+    {
+      "id": "The Striped Lace Bodycon Dress",
+      "category": "dresses",
+      "subs": {
+        "print": [
+          "black and blue",
+          "white and gold"
+        ]
+      }
+    },
+    {
+      "id": "Mesh Graphic Dress",
+      "category": "dresses",
+      "subs": {
+        "design": [
+          "tribal-pattern sleeve",
+          "Japan-themed sleeve depicting dragons and samurai",
+          "Japan-themed sleeve depicting a river and koi fish",
+          "tiger stripe sleeve",
+          "eagle feather sleeve",
+          "sleeve depicting a snake coiling around the torso and ass",
+          "watercolor-like sleeve depicting flowers and leaves",
+          "watercolor-like sleeve depicting a trail of butterflies",
+          "handprints covering your breasts and crotch",
+          "intricate sleeve depicting a geometric pattern",
+          "vivid sleeve depicting a skeleton over your skin",
+          "collage of suggestive text and swear words",
+          "print picture of a topless woman",
+          "print picture of a topless man",
+          "print picture of an anime waifu",
+          "tasteful glittering sequins",
+          "map of clocktower",
+          "constellation of glittering stars",
+          "plunging neckline",
+          "lacy paisley pattern",
+          "lacy floral pattern",
+          "bold checkerboard pattern",
+          "confident erotic clubwear pattern"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Leotard",
+      "category": "bodysuits",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Shoulderless Print Leotard",
+      "category": "bodysuits",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print",
+          "tribal print",
+          "camo print",
+          "floral print",
+          "matte",
+          "polka-dot",
+          "stripy",
+          "glossy",
+          "sparkly",
+          "shiny"
+        ]
+      }
+    },
+    {
+      "id": "Embroidered Jeans",
+      "category": "bottoms",
+      "subs": {
+        "design": [
+          "flowers",
+          "a mushroom",
+          "eyes",
+          "wings",
+          "butterflies",
+          "'GO AWAY'",
+          "a constellation",
+          "hearts",
+          "PiV's eye icon",
+          "a snake coiled around one leg and between the cheeks",
+          "a hand throwing a peace sign",
+          "a hand throwing a middle finger",
+          "cherries",
+          "a dragon",
+          "a japanese style wave",
+          "a band logo",
+          "a skull",
+          "'BURN CORPO SHIT'",
+          "'STOP STARING'",
+          "an elk",
+          "a punk band's logo",
+          "a grunge band's logo",
+          "a rock band's logo",
+          "a metal band's logo",
+          "a folk band's logo",
+          "a foreign band's logo",
+          "an emo band's logo",
+          "an indie band's logo",
+          "a popstar's logo",
+          "a rap artist's logo",
+          "a pornstar's likeness"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Leggings",
+      "category": "bottoms",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Dress Pants",
+      "category": "bottoms",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Sleep Shorts",
+      "category": "bottoms",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Skirt",
+      "category": "bottoms",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Short Authentic Cheerleaders Skirt",
+      "category": "bottoms",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Miniskirt",
+      "category": "bottoms",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Pants",
+      "category": "bottoms",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleaders Shorts",
+      "category": "bottoms",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Football Memorabilia Pants",
+      "category": "bottoms",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Leg Warmers",
+      "category": "outerwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Warm Graphic Hoodie",
+      "category": "outerwear",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Suit Jacket",
+      "category": "outerwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Haori",
+      "category": "outerwear",
+      "subs": {
+        "design": [
+          "a tribal-pattern design",
+          "a traditional design depicting dragons",
+          "a traditional design depicting a flowing water",
+          "a traditional design depicting a tiger",
+          "a traditional design depicting a phoenix",
+          "a traditional design depicting mountains",
+          "a traditional design depicting a snake coiling around the torso",
+          "a traditional design depicting flowers and leaves",
+          "a metallic design depicting flowers and leaves",
+          "a realistic design depicting flowers and leaves",
+          "a lacy pattern depicting flowers and leaves",
+          "an elegant design depicting a trail of butterflies",
+          "an elegant design depicting a crane",
+          "an intricate design depicting a geometric pattern",
+          "a vivid design depicting fans and parasols",
+          "an enamel print design depicting a mandala",
+          "a printed design depicting historical art",
+          "a printed design of an anime character",
+          "a printed design depicting porcelain patterns",
+          "a modern metallic sheen",
+          "a chest window",
+          "a groovy paisley pattern",
+          "bold checkerboard pattern",
+          "a modern pop-art design",
+          "a tesselating triangular design"
+        ]
+      }
+    },
+    {
+      "id": "Crystaljock Light-Up Bomber Jacket",
+      "category": "outerwear",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'",
+          "an edgerunner monogram",
+          "an oni",
+          "dragons and samurai",
+          "a river and koi fish",
+          "a tiger",
+          "an eagle",
+          "a snake",
+          "a trail of butterflies",
+          "a grinning skull with a mohawk",
+          "an owl",
+          "a ram",
+          "a lion",
+          "an elk",
+          "a bee",
+          "a shark",
+          "a tarot card",
+          "a radiation symbol",
+          "the moon",
+          "a star",
+          "a rose",
+          "a mandala",
+          "an ankh",
+          "a demon",
+          "a succubus",
+          "a pentagram"
+        ]
+      }
+    },
+    {
+      "id": "Climate-Controlled Bomber Jacket",
+      "category": "outerwear",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a famous album cover",
+          "a vintage cartoon character",
+          "a dragon",
+          "a surfboard",
+          "a stylized fox face",
+          "a heart",
+          "some howling wolves",
+          "a bat",
+          "a galaxy",
+          "a synthwave sunset",
+          "a happy slime",
+          "a daisy",
+          "a marijuana leaf",
+          "'Good Vibes Only'",
+          "'No Bra Club'",
+          "an edgerunner monogram",
+          "an oni",
+          "dragons and samurai",
+          "a river and koi fish",
+          "a tiger",
+          "an eagle",
+          "a snake",
+          "a trail of butterflies",
+          "a grinning skull with a mohawk",
+          "an owl",
+          "a ram",
+          "a lion",
+          "an elk",
+          "a bee",
+          "a shark",
+          "a tarot card",
+          "a radiation symbol",
+          "the moon",
+          "a star",
+          "a rose",
+          "a mandala",
+          "an ankh",
+          "a demon",
+          "a succubus",
+          "a pentagram"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Panties",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Thong",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print G-string",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Fruity Panties",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "stars",
+          "cherries",
+          "strawberries",
+          "peaches",
+          "pineapples",
+          "skulls",
+          "palm trees",
+          "bananas",
+          "grapes",
+          "cute cartoons",
+          "coconuts",
+          "musical notes",
+          "watermelons",
+          "strawberry seeds",
+          "cacti wearing sunglasses",
+          "a fruit salad",
+          "slices of cheese",
+          "bees and honey",
+          "daisies",
+          "pears",
+          "lemons and limes",
+          "oranges",
+          "apples"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Print Panties",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "alien",
+          "deer",
+          "bird",
+          "skull",
+          "death's head moth",
+          "palm tree",
+          "bucking bull",
+          "cat",
+          "sugar skull",
+          "astronaut",
+          "boombox",
+          "guitar",
+          "waifu",
+          "kanji",
+          "belly dancer",
+          "band logo",
+          "dragon",
+          "surfboard",
+          "stylized fox face",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Print Briefs",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "alien",
+          "deer",
+          "bird",
+          "skull",
+          "death's head moth",
+          "palm tree",
+          "bucking bull",
+          "cat",
+          "sugar skull",
+          "astronaut",
+          "boombox",
+          "guitar",
+          "waifu",
+          "kanji",
+          "belly dancer",
+          "band logo",
+          "dragon",
+          "surfboard",
+          "stylized fox face",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Print Boxer-Briefs",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "alien",
+          "deer",
+          "bird",
+          "skull",
+          "death's head moth",
+          "palm tree",
+          "bucking bull",
+          "cat",
+          "sugar skull",
+          "astronaut",
+          "boombox",
+          "guitar",
+          "waifu",
+          "kanji",
+          "belly dancer",
+          "band logo",
+          "dragon",
+          "surfboard",
+          "stylized fox face",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Print Boxers",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "alien",
+          "deer",
+          "bird",
+          "skull",
+          "death's head moth",
+          "palm tree",
+          "bucking bull",
+          "cat",
+          "sugar skull",
+          "astronaut",
+          "boombox",
+          "guitar",
+          "waifu",
+          "kanji",
+          "belly dancer",
+          "band logo",
+          "dragon",
+          "surfboard",
+          "stylized fox face",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Authentic Cheerleader Briefs",
+      "category": "underwear",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Boyshorts",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Briefs",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Boxers",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Bra",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Unpadded Animal-Print Bra",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Strapless Animal-Print Bra",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Fruity Bralette",
+      "category": "underwear",
+      "subs": {
+        "design": [
+          "stars",
+          "cherries",
+          "strawberries",
+          "peaches",
+          "pineapples",
+          "skulls",
+          "palm trees",
+          "bananas",
+          "grapes",
+          "cute cartoons",
+          "coconuts",
+          "musical notes",
+          "watermelons",
+          "strawberry seeds",
+          "cacti wearing sunglasses",
+          "a fruit salad",
+          "slices of cheese",
+          "bees and honey",
+          "daisies",
+          "pears",
+          "lemons and limes",
+          "oranges",
+          "apples"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Bodysuit",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Thigh-High Socks",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Mock Thigh-High Pantyhose",
+      "category": "underwear",
+      "subs": {
+        "print": [
+          "lowleg print",
+          "pantyline print",
+          "highleg print",
+          "garter print",
+          "kitten print",
+          "thigh rings"
+        ]
+      }
+    },
+    {
+      "id": "Steel Toe Dress Shoes",
+      "category": "footwear",
+      "subs": {
+        "print": [
+          "suede",
+          "leather",
+          "cow-hide",
+          "alligator-hide",
+          "snake-skin"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Stiletto Heels",
+      "category": "footwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Boots",
+      "category": "footwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Bikini Bottom",
+      "category": "swimwear",
+      "subs": {
+        "design": [
+          "star",
+          "alien",
+          "deer",
+          "bird",
+          "skull",
+          "death's head moth",
+          "palm tree",
+          "bucking bull",
+          "cat",
+          "sugar skull",
+          "astronaut",
+          "boombox",
+          "guitar",
+          "waifu",
+          "kanji",
+          "belly dancer",
+          "band logo",
+          "dragon",
+          "surfboard",
+          "stylized fox face"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Bikini Bottom",
+      "category": "swimwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Bikini Top",
+      "category": "swimwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Graphic One-Piece Swimsuit",
+      "category": "swimwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print",
+          "tribal print",
+          "camo print",
+          "floral print",
+          "matte",
+          "polka-dot",
+          "stripy",
+          "glossy",
+          "sparkly",
+          "shiny"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Board Shorts",
+      "category": "swimwear",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Board Shorts",
+      "category": "swimwear",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a dragon",
+          "a surfboard",
+          "a punk band's logo",
+          "a grunge band's logo",
+          "a rock band's logo",
+          "a metal band's logo",
+          "a folk band's logo",
+          "a foreign band's logo",
+          "an emo band's logo",
+          "an indie band's logo",
+          "a popstar's logo",
+          "a rap artist's logo",
+          "a pornstar's likeness",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Novelty Nautical Bra",
+      "category": "swimwear",
+      "subs": {
+        "design": [
+          "clamshell",
+          "starfish",
+          "seashell",
+          "scallop shells",
+          "turtle",
+          "coral",
+          "seaweed",
+          "fish-scale",
+          "octopus",
+          "flotsam and jetsam",
+          "pineapple"
+        ]
+      }
+    },
+    {
+      "id": "Football Collectible Helmet",
+      "category": "hats",
+      "subs": {
+        "team": [
+          "Nuttingham Knights",
+          "Cleechville Chevaliers",
+          "Seaside Swallows",
+          "West Coast 69ers",
+          "East City Westmen",
+          "South Desert Cowgirls",
+          "Northside Hooters",
+          "Comoverton Beavers",
+          "Sapphtown Poets",
+          "Frosthome Jacks"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Headband",
+      "category": "accessories",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Ear Muffs",
+      "category": "accessories",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Embossed Leather Collar",
+      "category": "accessories",
+      "subs": {
+        "text": [
+          "Owned",
+          "Submissive",
+          "Slut",
+          "Cumslut",
+          "Slave",
+          "Use Me"
+        ]
+      }
+    },
+    {
+      "id": "Leather String Necklace With Charm",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "crescent moon",
+          "donut",
+          "rubber duck",
+          "condom",
+          "ghost",
+          "record",
+          "egg",
+          "penis",
+          "bird",
+          "skull",
+          "cat",
+          "bat",
+          "leaf",
+          "sun",
+          "moon",
+          "star",
+          "ring",
+          "pendant",
+          "gummy bear",
+          "frog",
+          "heart",
+          "mushroom",
+          "pizza",
+          "butterfly",
+          "Purity in Virtue",
+          "daisy",
+          "sword",
+          "dagger",
+          "bow and arrow"
+        ]
+      }
+    },
+    {
+      "id": "Hunters Necklace",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "shark tooth",
+          "canine fang",
+          "wolf tooth",
+          "eagle talon",
+          "tiger claw",
+          "bird skull",
+          "fox claw",
+          "coyote fang",
+          "curved tusk",
+          "curved fang",
+          "carved fang",
+          "bone needle",
+          "demon fang",
+          "dragon fang",
+          "dragon claw",
+          "dragon scale"
+        ]
+      }
+    },
+    {
+      "id": "Apron",
+      "category": "accessories",
+      "subs": {
+        "text": [
+          "nothing",
+          "Kiss The Cook",
+          "Shut Up And Eat My Meat",
+          "Stop Staring At My Meat",
+          "Hot Stuff Coming Through",
+          "My Grill, My Rules",
+          "I'm Sorry For What I Said When I Was Hungry",
+          "Dude With The Food",
+          "Don't Make Me Poison You",
+          "They See Me Rollin'"
+        ]
+      }
+    },
+    {
+      "id": "Animal-Print Belt",
+      "category": "accessories",
+      "subs": {
+        "print": [
+          "leopard-print",
+          "tiger-print",
+          "giraffe-print",
+          "cow-print",
+          "zebra-print",
+          "dragon-scale print",
+          "fish-scale print",
+          "alligator-print",
+          "snake-skin print"
+        ]
+      }
+    },
+    {
+      "id": "Belt Buckle",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "Freedom Man",
+          "Bat Knight",
+          "Webber",
+          "Amazonian",
+          "star",
+          "heart",
+          "PiV",
+          "flask",
+          "lighter",
+          "onion",
+          "arrowhead",
+          "skull",
+          "ankh",
+          "elk",
+          "BAMF",
+          "Dragon Ranger transformation coin",
+          "bottle opener",
+          "horseshoe",
+          "'Need Head'",
+          "'Blow Here'",
+          "'PORNSTAR'",
+          "'Crack Kills'",
+          "'DON'T DEAD OPEN INSIDE'",
+          "buffalo",
+          "smiley face",
+          "Fighting Club",
+          "rock band's logo",
+          "punk band's logo",
+          "metal band's logo",
+          "folk band's logo",
+          "country singer's logo",
+          "emo band's logo",
+          "80's band's logo",
+          "indie band's logo"
+        ]
+      }
+    },
+    {
+      "id": "Belt With Novelty Buckle",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "Freedom Man",
+          "Bat Knight",
+          "Webber",
+          "Amazonian",
+          "star",
+          "heart",
+          "PiV",
+          "flask",
+          "lighter",
+          "onion",
+          "arrowhead",
+          "skull",
+          "ankh",
+          "elk",
+          "BAMF",
+          "Dragon Ranger transformation coin",
+          "bottle opener",
+          "horseshoe",
+          "'Need Head'",
+          "'Blow Here'",
+          "'PORNSTAR'",
+          "'Crack Kills'",
+          "'DON'T DEAD OPEN INSIDE'",
+          "buffalo",
+          "smiley face",
+          "Fighting Club",
+          "rock band's logo",
+          "punk band's logo",
+          "metal band's logo",
+          "folk band's logo",
+          "country singer's logo",
+          "emo band's logo",
+          "80's band's logo",
+          "indie band's logo",
+          "a country singer's logo"
+        ]
+      }
+    },
+    {
+      "id": "Celestial Chain",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "stars",
+          "moons",
+          "suns",
+          "planets",
+          "pentagrams",
+          "ankhs",
+          "hearts",
+          "swords",
+          "wands",
+          "cups",
+          "coins"
+        ]
+      }
+    },
+    {
+      "id": "Imported Festival Mask",
+      "category": "masks",
+      "subs": {
+        "design": [
+          "red oni",
+          "blue oni",
+          "tengu",
+          "kitsune",
+          "noh",
+          "neko",
+          "octopus-man",
+          "kabuki",
+          "hannya",
+          "dino ranger"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Tote Bag",
+      "category": "bags",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a dragon",
+          "a surfboard",
+          "a punk band's logo",
+          "a grunge band's logo",
+          "a rock band's logo",
+          "a metal band's logo",
+          "a folk band's logo",
+          "a foreign band's logo",
+          "an emo band's logo",
+          "an indie band's logo",
+          "a popstar's logo",
+          "a rap artist's logo",
+          "a pornstar's likeness",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Graphic Drawstring Bag",
+      "category": "bags",
+      "subs": {
+        "design": [
+          "an alien",
+          "a deer",
+          "a flock of birds",
+          "a skull",
+          "a death's head moth",
+          "a pair of palm trees",
+          "a bucking bull",
+          "a cat",
+          "a sugar skull",
+          "an astronaut",
+          "a boombox",
+          "a guitar",
+          "a waifu",
+          "a pair of kanji",
+          "a belly dancer",
+          "a band logo",
+          "a dragon",
+          "a surfboard",
+          "a punk band's logo",
+          "a grunge band's logo",
+          "a rock band's logo",
+          "a metal band's logo",
+          "a folk band's logo",
+          "a foreign band's logo",
+          "an emo band's logo",
+          "an indie band's logo",
+          "a popstar's logo",
+          "a rap artist's logo",
+          "a pornstar's likeness'",
+          "camouflage"
+        ]
+      }
+    },
+    {
+      "id": "Cosplay Katana",
+      "category": "accessories",
+      "subs": {
+        "design": [
+          "Water Pillar",
+          "Love Pillar",
+          "Serpent Pillar",
+          "Wind Pillar",
+          "Stone Pillar",
+          "Mist Pillar",
+          "Flame Pillar",
+          "Flower Pillar",
+          "Sound Pillar",
+          "Tanjiko-chan's",
+          "Zenko-chan's",
+          "Inotsuki-chan's",
+          "Gun'ya-chan's",
+          "Kento-kun's",
+          "Liv from EverNexus'",
+          "Sophie Wrath's",
+          "standard issue",
+          "Wretched Wally's",
+          "Kitty Litter",
+          "Hebimaru",
+          "White Snow",
+          "World Inverter",
+          "Cherry Blossom",
+          "Princess Benny's",
+          "Iceringer",
+          "Fleshgorger",
+          "Kyoko Mizuki",
+          "Akahime",
+          "Oneline",
+          "Killer Kenny's",
+          "Strawberry-chan's BFS",
+          "Classic Zantetsu",
+          "Genki Zantetsu",
+          "Reborn Zantetsu",
+          "Reforged Zantetsu",
+          "Tensa Zantetsu",
+          "Iron-Splitting Fang",
+          "Heaven Reborn Fang",
+          "Rebellion",
+          "Harmony",
+          "The Bride's"
+        ]
+      }
+    },
+    {
+      "id": "Cosplay Haori",
+      "category": "outerwear",
+      "subs": {
+        "design": [
+          "Nazuki-kun",
+          "Water Pillar",
+          "Love Pillar",
+          "Serpent Pillar",
+          "Wind Pillar",
+          "Stone Pillar",
+          "Mist Pillar",
+          "Flame Pillar",
+          "Flower Pillar",
+          "Sound Pillar",
+          "Tanjiko-chan",
+          "Zenko-chan",
+          "Inotsuki-chan",
+          "Gun'ya-chan",
+          "Kento-kun",
+          "solid black",
+          "Squad Captain",
+          "Red Cloud Cult",
+          "Toad Judoka"
+        ]
+      }
+    },
+    {
+      "id": "Costume Unitard",
+      "category": "bodysuits",
+      "subs": {
+        "print": [
+          "Null Suit",
+          "Nerve Plugsuit",
+          "Gravitity",
+          "Ara Arachnid",
+          "Deadly Bee",
+          "Mrs Unbeliveable",
+          "Dark Invader",
+          "Thunder Trooper",
+          "Brandolorian",
+          "Yowcha Predator",
+          "Zenomurphy",
+          "Scary Stabby Stevey",
+          "Fe Male",
+          "Bushido Bill",
+          "Andy Smashem",
+          "Jack Frost",
+          "Candlejack",
+          "Dragon Ranger",
+          "Judge Bread",
+          "Blaster Chief",
+          "AI Halsey",
+          "Doomgal",
+          "Cobra Joe",
+          "Cobra Countess",
+          "Cyclemask Hero"
+        ]
+      }
+    }
+  ]
+}

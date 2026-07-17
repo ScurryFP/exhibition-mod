@@ -1,0 +1,69 @@
+:: TanSwimWardrobe [noevents util nobr emoji👙 suppressemoji]
+<<run setup.Tanning.begin_swimsuit_picker($pc)>>
+<<set _tanret to setup.Tanning.get_swim_wardrobe_return()>>
+<<if $wearresult>>
+    <<= $wearresult>>
+    <br><br>
+    <<unset $wearresult>>
+<</if>>
+<<if $tanswimchangemsg>>
+    <<= $tanswimchangemsg>>
+    <br><br>
+    <<unset $tanswimchangemsg>>
+<</if>>
+Pick something to tan in:
+<br><br>
+<<if $pc.wearing_some_swimwear()>>
+    Currently wearing: <<= setup.Tanning.describe_swim_wardrobe_outfit($pc) >>.
+    Pick another piece to add, or switch to a full outfit.
+    <br><br>
+<</if>>
+<<set _opts to setup.Tanning.get_swimsuit_picker_options($pc)>>
+<<if _opts.length is 0>>
+    You don't have any swimwear in your things.
+    <br><br>
+<<else>>
+    <<for _opt range _opts>>
+        <<capture _opt>>
+            <<link _opt.label TanSwimWardrobe>>
+                <<set _fx to setup.Tanning.wear_swimsuit_choice($pc, _opt)>>
+                <<set $wearresult to _fx.msg>>
+            <</link>>
+            <br>
+        <</capture>>
+    <</for>>
+    <br>
+<</if>>
+<<set _exhibreq to setup.Tanning.swim_wardrobe_exhib_req($pc)>>
+<<if $pc.wearing_some_swimwear()>>
+    <<link "Take everything off and start over" TanSwimWardrobe>>
+        <<run setup.Tanning.reset_swimsuit_picker_outfit($pc)>>
+        <<set $wearresult to "You strip back down to decide again.">>
+    <</link>>
+    <br><br>
+    <<if setup.Tanning.can_leave_swim_wardrobe($pc)>>
+        <<link "Done — back to tanning menu" _tanret>>
+            <<run setup.Tanning.confirm_swimsuit_for_tanning($pc)>>
+            <<advtime 1>>
+        <</link>> <<dtime 1>>
+    <<else>>
+        <span class="bad">Laying out in that on the mall would take more nerve than you have right now.</span> (Need <<skill Exhibitionism _exhibreq>>)
+        <br><br>
+        <<link "Try a different swimsuit" TanSwimWardrobe>><</link>>
+        <br>
+        <<link "Change back into your clothes" TanSwimWardrobe>>
+            <<run setup.Tanning.cancel_swimsuit_picker($pc)>>
+            <<set $wearresult to "You change back into what you were wearing.">>
+        <</link>>
+        <br>
+        <<link "Back to tanning menu (stay in clothes)" _tanret>>
+            <<run setup.Tanning.cancel_swimsuit_picker($pc)>>
+            <<advtime 1>>
+        <</link>> <<dtime 1>>
+    <</if>>
+<<else>>
+    <<link "Back to tanning menu" _tanret>>
+        <<run setup.Tanning.cancel_swimsuit_picker($pc)>>
+        <<advtime 1>>
+    <</link>> <<dtime 1>>
+<</if>>

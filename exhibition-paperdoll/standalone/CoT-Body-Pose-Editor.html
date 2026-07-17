@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CoT-Body-Pose-Editor</title>
+  <link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+  <div id="setup-overlay" class="setup-overlay" hidden>
+    <div class="setup-card">
+      <h2 id="setup-title">Connect to your game (one time)</h2>
+      <p id="setup-intro">Before authoring, point the editor at your game install. After this, <strong>Save to game</strong> writes files to the correct folders automatically — no more path prompts.</p>
+      <p id="setup-reconnect-note" class="setup-reconnect-note" hidden>Your browser needs permission to access the folder again. Click <strong>Reconnect</strong> — you should not need to browse for the folder unless you moved the game.</p>
+      <p class="setup-label">Choose the folder that contains <strong>exhibition-paperdoll/</strong> and your game HTML:</p>
+      <ul class="setup-paths">
+        <li><code>exhibition-paperdoll/</code></li>
+        <li><code>CourseOfTemptation-Exhibition-appearance-dev.html</code> <span class="setup-mini">(modder copy)</span></li>
+        <li>or <code>CourseOfTemptationtest.html</code> <span class="setup-mini">(installed copy)</span></li>
+      </ul>
+      <p class="setup-example">Example folder: <code id="setup-path-project">…/your-game-folder/</code></p>
+      <p class="setup-mini">Base poses → <code id="setup-path-base">exhibition-paperdoll/base-pack/</code><br>
+        Clothing, tattoos, wet/cum, overlays → <code id="setup-path-mods">exhibition-paperdoll/mods/&lt;pack-id&gt;/</code><br>
+        All asset packs load at runtime from those folders (no HTML rebake). After saving, hard-refresh the game (Ctrl+Shift+R). Use Chrome or Edge for Save to game.</p>
+      <div class="setup-actions">
+        <button type="button" id="setup-btn-reconnect" class="primary" hidden>Reconnect to game folder</button>
+        <button type="button" id="setup-btn-connect" class="primary">Choose game folder…</button>
+        <button type="button" id="setup-btn-verify" hidden>Test connection</button>
+      </div>
+      <ul id="setup-verify-list" class="setup-verify-list" hidden></ul>
+      <p id="setup-status" class="setup-status"></p>
+      <p class="setup-mini">Needs Chrome or Edge. Other browsers can still use <strong>Export asset pack</strong>.</p>
+    </div>
+  </div>
+
+  <div id="app-shell">
+  <header class="app-header">
+    <nav class="mode-bar" id="mode-bar" aria-label="Editor workflow"></nav>
+    <h1 id="app-title">CoT-Body-Pose-Editor</h1>
+    <div class="header-actions">
+      <label for="file-image" class="btn-file" id="btn-add-image">Add image…</label>
+      <label for="file-import" class="btn-file" id="btn-import">Import asset pack</label>
+      <button type="button" id="btn-save" class="primary" title="Save pack to mods/base-pack and update game HTML in the browser">Save to game</button>
+      <button type="button" id="btn-export">Export asset pack</button>
+      <button type="button" id="btn-game-folder" class="setup-link-btn" title="Change which game folder Save writes to">Game folder…</button>
+      <input type="file" id="file-image" accept="image/png,image/webp,image/jpeg" hidden />
+      <input type="file" id="file-import" accept=".zip,application/zip" hidden />
+    </div>
+  </header>
+
+  <div id="pack-bar" class="pack-bar">
+    <button type="button" id="pack-bar-toggle" class="collapsible-toggle pack-bar-toggle" aria-expanded="false" aria-controls="pack-meta-panel">
+      <span class="collapsible-toggle-label">Pack</span>
+      <span id="pack-bar-summary" class="pack-bar-summary"></span>
+      <span class="collapse-chevron" aria-hidden="true">▸</span>
+    </button>
+    <div id="pack-meta-panel" class="pack-meta-panel is-collapsed" hidden>
+      <div class="pack-meta-fields">
+        <div class="field">
+          <label for="pack-id">Pack ID (folder name)</label>
+          <input id="pack-id" type="text" spellcheck="false" />
+        </div>
+        <div class="field">
+          <label for="pack-name">Display name</label>
+          <input id="pack-name" type="text" />
+        </div>
+        <div class="field pack-desc-field">
+          <label for="pack-desc">Description</label>
+          <textarea id="pack-desc" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="save-success-banner" class="save-success-banner hidden" role="status" aria-live="polite">
+    <span id="save-success-icon" class="save-success-icon" aria-hidden="true">✓</span>
+    <span id="save-success-text"></span>
+  </div>
+
+  <div id="import-banner" class="import-banner hidden">
+    Previewing <strong id="import-banner-name">asset pack</strong> —
+    check poses and layers, then click <strong>Save to game</strong> (Chrome/Edge) to install and update the game HTML.
+  </div>
+
+  <div class="app-grid">
+    <aside class="panel panel-left">
+      <p class="mode-hint" id="mode-hint"></p>
+
+      <section class="collapsible-section" id="layers-section" data-section="layers">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="layers-section-body">
+          <h2 id="layers-title">Clothing pieces</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="layers-section-body" class="section-body">
+          <ul id="layer-list" class="layer-list"></ul>
+          <div class="layer-actions" id="layer-actions">
+            <button type="button" id="btn-create-clothing" class="primary" title="Add a brand-new in-game clothing item (setup.clothes + shops + paperdoll). Not a reskin.">+ Create Clothing</button>
+            <button type="button" id="btn-add-layer" title="New Skin: art for an existing game clothing item and optional graphic/design (matches shop sub design text when worn).">+ New Skin</button>
+            <button type="button" id="btn-add-existing" title="Stack another clothing piece on the preview (coverage check)">+ Add Existing</button>
+            <button type="button" id="btn-remove-layer" class="danger">Remove</button>
+            <button type="button" id="btn-new" class="layer-actions-end">Clear all</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="collapsible-section" id="selected-layer-section" data-section="selected-layer">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="panel-props">
+          <h2 id="selected-layer-title">Selected layer</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="panel-props" class="section-body">
+          <div class="field">
+            <label for="layer-id" id="layer-id-label">Item ID</label>
+            <input id="layer-id" type="text" spellcheck="false" />
+          </div>
+          <div class="field" id="layer-name-field">
+            <label for="layer-name">Display name</label>
+            <input id="layer-name" type="text" />
+          </div>
+          <div class="field">
+            <label for="layer-z">Z-index (draw order)</label>
+            <input id="layer-z" type="number" step="1" />
+          </div>
+          <div class="field hidden" id="layer-category-field">
+            <label>Layer category</label>
+            <div id="layer-category-badge" class="layer-category-badge">Skin</div>
+          </div>
+          <div class="field hidden" id="makeup-field">
+            <nav class="makeup-sub-bar" id="makeup-sub-bar" aria-label="Makeup workflow">
+              <button type="button" data-makeup-sub="face-hair" class="active">Face / Hair</button>
+              <button type="button" data-makeup-sub="makeup">Makeup</button>
+              <button type="button" data-makeup-sub="body-writing">Body writing</button>
+            </nav>
+            <div class="makeup-sub-kind hidden" id="face-hair-kind-wrap">
+              <label for="face-hair-kind">Authoring</label>
+              <select id="face-hair-kind" style="width:auto;">
+                <option value="base-face">Base faces</option>
+                <option value="face-part">Distinguishing feature overlays</option>
+                <option value="hair">Hair styles</option>
+              </select>
+            </div>
+            <label for="makeup-select" id="makeup-select-label">In-game makeup style</label>
+            <input type="search" id="makeup-search" placeholder="Search makeup name or slot…" spellcheck="false" />
+            <div class="cot-picker-filters">
+              <select id="makeup-slot" style="width:auto;">
+                <option value="">All slots</option>
+              </select>
+              <label class="filter-chip"><input type="checkbox" id="makeup-filter-hide-authored" /> Hide with images</label>
+              <label class="filter-chip"><input type="checkbox" id="makeup-filter-missing-pose" /> Missing current pose</label>
+              <label class="filter-chip"><input type="checkbox" id="makeup-filter-color-mask" /> Has color mask</label>
+            </div>
+            <select id="makeup-select" class="cot-clothing-select" size="8"></select>
+            <p id="makeup-count" class="mini-hint"></p>
+            <p class="mini-hint" id="makeup-field-hint">Click a style to <strong>bind it to the selected layer</strong>. Slots: eyeshadow, eyeliner, mascara, lipstick, blush, fingernails, toenails. Use color masks for player-chosen colors.</p>
+          </div>
+          <div class="field" id="cot-field">
+            <label for="cot-clothing-select">Game clothing piece</label>
+            <input type="search" id="cot-clothing-search" placeholder="Search name or ID…" spellcheck="false" />
+            <div class="cot-picker-filters">
+              <select id="cot-clothing-category" style="width:auto;">
+                <option value="">All categories</option>
+              </select>
+              <label class="filter-chip"><input type="checkbox" id="cot-filter-hide-authored" /> Hide with images</label>
+              <label class="filter-chip"><input type="checkbox" id="cot-filter-missing-pose" /> Missing current pose</label>
+              <label class="filter-chip"><input type="checkbox" id="cot-filter-displacement" /> Has displacement art</label>
+            </div>
+            <select id="cot-clothing-select" class="cot-clothing-select" size="8"></select>
+            <p id="cot-clothing-count" class="mini-hint"></p>
+            <p class="mini-hint">Click a piece to <strong>bind it to the selected layer</strong> (replaces that layer’s game binding). Use <strong>+ Add Existing</strong> to stack another piece on the preview. Use <strong>+ New Skin</strong> to create art for a graphic/logo design on an existing item (e.g. Graphic T-shirt + “an alien”).</p>
+            <p id="skin-design-status" class="mini-hint skin-design-status"></p>
+          </div>
+          <div class="field hidden" id="recolor-field">
+            <label class="check-inline"><input type="checkbox" id="item-recolor" /> Player can choose color in-game (color mask)</label>
+            <label for="preview-tint-color">Preview tint</label>
+            <input id="preview-tint-color" type="text" spellcheck="false" placeholder="e.g. red, navy, #3366cc" value="red" />
+          </div>
+          <div class="field hidden" id="exposure-disp-field">
+            <label for="exposure-displacements">Exposure tweak → displacement map (JSON)</label>
+            <textarea id="exposure-displacements" rows="3" spellcheck="false" placeholder='{"tighten_bottom":"cameltoe","hike_skirt":"hem_lifted"}'></textarea>
+            <p class="mini-hint">Optional per-item overrides. Defaults map waistband hikes to <code>cameltoe</code> depth, hems to <code>hem_lifted</code>, etc.</p>
+          </div>
+          <div class="field hidden" id="clothing-flags-field">
+            <label>Clothing flags (exposure style)</label>
+            <p class="mini-hint">Game wardrobe flags for this piece. For a short crop top that always shows underboob, set <strong>Underboob → certain</strong>. Applied in-game when this pack is loaded (merged with exhibition adjustments).</p>
+            <div id="clothing-flags-list" class="clothing-flags-list"></div>
+          </div>
+          <div class="field hidden" id="enabled-disp-field">
+            <label>Displacement masks for this piece</label>
+            <p class="mini-hint">Tick types this garment can use. <strong>In-game</strong> a mask only draws when it is checked <em>and</em> has art for the pose. List is from CoT clothing displace verbs + exhibition adjustments — enable the ones you will author.</p>
+            <div class="cot-picker-filters" id="enabled-disp-filters">
+              <label class="filter-chip"><input type="checkbox" id="enabled-disp-only-on" /> Show enabled only</label>
+              <label class="filter-chip"><input type="checkbox" id="enabled-disp-need-art" /> Needs art only</label>
+            </div>
+            <div id="enabled-disp-list" class="enabled-disp-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="collapsible-section hidden" id="body-size-section" data-section="body-size">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="body-size-section-body">
+          <h2>Body size &amp; hair</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="body-size-section-body" class="section-body">
+          <p class="mini-hint">Pick a body shape, part size, or body-hair style. The <strong>right sidebar</strong> image slot edits art for that choice. Default base is used when a tier has no art. Body hair draws above skin/tattoos.</p>
+          <div id="body-size-menu" class="body-size-menu"></div>
+          <p id="body-variant-status" class="mini-hint"></p>
+        </div>
+      </section>
+    </aside>
+
+    <main class="preview-area">
+      <div class="preview-toolbar">
+        <div class="group" id="view-bar" title="Quick front/back"></div>
+        <div class="group" id="pose-bar" title="All poses"></div>
+        <div class="group" id="preview-bg-bar" title="Preview background (for black line art)"></div>
+        <label class="btn-file preview-bg-add" title="Add a custom background image used in editor and in-game mirrors">
+          + BG image
+          <input type="file" id="file-bg-image" accept="image/png,image/webp,image/jpeg" hidden />
+        </label>
+        <label id="disp-preview-wrap" style="display:flex;align-items:center;gap:0.35rem;font-size:0.85rem;color:var(--muted);">
+          Displacement
+          <select id="preview-displacement" style="width:auto;"></select>
+        </label>
+        <label style="display:flex;align-items:center;gap:0.35rem;font-size:0.85rem;color:var(--muted);">
+          Preview LOD
+          <select id="preview-lod" style="width:auto;">
+            <option value="256">256</option>
+            <option value="512" selected>512</option>
+            <option value="1024">1024</option>
+            <option value="2048">2048</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="canvas-wrap exhib-mirror-stage" id="drop-zone" data-exhib-mirror="editor">
+        <div class="drop-hint" id="drop-hint">
+          <strong>Drop a PNG or asset-pack ZIP here</strong>
+          <span>PNG → add to selected pose · ZIP → import and preview before saving</span>
+        </div>
+        <canvas id="preview-canvas" width="256" height="512"></canvas>
+      </div>
+
+      <p class="hint" id="workflow-hint">
+        Pick a workflow tab above. <strong>Import asset pack</strong> to preview shared ZIPs, then
+        <strong>Save</strong> when ready. <strong>Export asset pack</strong> shares your work.
+      </p>
+    </main>
+
+    <aside class="panel panel-right" id="panel-edit">
+      <div class="right-toolbar">
+        <div class="field right-toolbar-lod">
+          <label for="edit-lod">Resolution (all layers)</label>
+          <select id="edit-lod">
+            <option value="256">256 px</option>
+            <option value="512">512 px</option>
+            <option value="1024" selected>1024 px</option>
+            <option value="2048">2048 px</option>
+          </select>
+          <p class="mini-hint">One size for base image, color mask, and displacement overlays.</p>
+        </div>
+        <div id="lod-other-hint" class="mini-hint lod-other-hint hidden"></div>
+        <div class="field pose-manager-field">
+          <label>Poses</label>
+          <p class="mini-hint">Default: Front &amp; Back. Add poses for extra art on base body, clothing, displacements, skin, etc.</p>
+          <div id="pose-list" class="pose-manager-list"></div>
+          <div class="pose-manager-add">
+            <select id="pose-preset-select" title="Add a common pose preset"></select>
+            <button type="button" id="btn-add-pose-preset">Add preset</button>
+          </div>
+          <div class="pose-manager-add">
+            <input id="pose-custom-id" type="text" spellcheck="false" placeholder="custom_id" title="Pose id (letters, numbers, underscore)" />
+            <input id="pose-custom-label" type="text" placeholder="Label" />
+            <button type="button" id="btn-add-pose-custom">Add custom</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="collapsible-section" data-section="image">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="image-section-body">
+          <h2>Image for pose</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="image-section-body" class="section-body">
+          <div class="field">
+            <label for="edit-pose">Pose for drop / add image</label>
+            <select id="edit-pose"></select>
+          </div>
+          <p id="body-image-target-hint" class="mini-hint hidden"></p>
+          <div id="lod-grid" class="lod-grid lod-grid-single"></div>
+
+          <div id="color-mask-panel" class="hidden">
+            <h3 class="sub-heading">Color mask layer</h3>
+            <p class="mini-hint">Grayscale mask — white areas receive the player's chosen clothing color at purchase. Use a neutral base image above.</p>
+            <div id="color-mask-grid" class="lod-grid lod-grid-single"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="collapsible-section" id="displacement-panel" data-section="displacement">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="displacement-section-body">
+          <h2>Displacement masks</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="displacement-section-body" class="section-body">
+          <p class="mini-hint">Author one <strong>full-coverage base</strong> image above. Masks cut away cloth (transparent = hidden). <strong>Depth overlay</strong> adds folds/shadows on top of base or custom PNG — use depth-only (e.g. <code>cameltoe</code>) to avoid redrawing every exposure step. Custom PNG can pair with its own depth layer.</p>
+          <div class="field">
+            <label for="edit-displacement">Edit displacement state</label>
+            <select id="edit-displacement"></select>
+          </div>
+          <h3 class="sub-heading">Cutout mask</h3>
+          <div id="disp-mask-grid" class="lod-grid lod-grid-single"></div>
+          <h3 class="sub-heading">Depth overlay (optional)</h3>
+          <div id="disp-depth-grid" class="lod-grid lod-grid-single"></div>
+          <h3 class="sub-heading">Custom full PNG (optional override)</h3>
+          <div id="disp-custom-grid" class="lod-grid lod-grid-single"></div>
+        </div>
+      </section>
+
+      <section class="collapsible-section" data-section="transform">
+        <button type="button" class="section-toggle" aria-expanded="true" aria-controls="transform-panel">
+          <h2>Transform</h2>
+          <span class="collapse-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="transform-panel" class="section-body">
+          <div class="slider-row"><span>X</span><input id="tf-x" type="range" min="-64" max="64" step="1" value="0" /><span id="tf-x-val">0</span></div>
+          <div class="slider-row"><span>Y</span><input id="tf-y" type="range" min="-64" max="64" step="1" value="0" /><span id="tf-y-val">0</span></div>
+          <div class="slider-row"><span>Scale X</span><input id="tf-sx" type="range" min="0.25" max="2" step="0.01" value="1" /><span id="tf-sx-val">1</span></div>
+          <div class="slider-row"><span>Scale Y</span><input id="tf-sy" type="range" min="0.25" max="2" step="0.01" value="1" /><span id="tf-sy-val">1</span></div>
+          <div class="slider-row"><span>Rotate</span><input id="tf-rot" type="range" min="-180" max="180" step="1" value="0" /><span id="tf-rot-val">0</span></div>
+          <div class="slider-row"><span>Opacity</span><input id="tf-op" type="range" min="0" max="1" step="0.01" value="1" /><span id="tf-op-val">1</span></div>
+          <div class="check-row">
+            <label><input id="tf-flipH" type="checkbox" /> Flip H</label>
+            <label><input id="tf-flipV" type="checkbox" /> Flip V</label>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  </div>
+
+  <div id="create-clothing-modal" class="create-clothing-modal hidden" role="dialog" aria-modal="true" aria-labelledby="create-clothing-title">
+    <div class="create-clothing-card">
+      <div class="create-clothing-head">
+        <h2 id="create-clothing-title">Create clothing</h2>
+        <button type="button" id="create-clothing-close" class="connection-dismiss-btn" title="Close">×</button>
+      </div>
+      <p class="mini-hint">Full vanilla-style clothing definition → <code>setup.clothes</code>, shops, paperdoll layer. Export includes these for sharing. Save to game injects into HTML.</p>
+      <nav class="cc-tabs" id="cc-tabs" aria-label="Clothing authoring sections">
+        <button type="button" data-cc-tab="basic" class="active">Basic</button>
+        <button type="button" data-cc-tab="covers">Covers</button>
+        <button type="button" data-cc-tab="flags">Flags</button>
+        <button type="button" data-cc-tab="style">Style</button>
+        <button type="button" data-cc-tab="displace">Displace</button>
+        <button type="button" data-cc-tab="shops">Shops</button>
+        <button type="button" data-cc-tab="advanced">Advanced</button>
+      </nav>
+      <div class="create-clothing-grid cc-tab-panel" data-cc-panel="basic">
+        <div class="field">
+          <label for="cc-item-id">Game item name (unique id)</label>
+          <input id="cc-item-id" type="text" spellcheck="false" placeholder="e.g. Exhibition Crop Top" />
+        </div>
+        <div class="field">
+          <label for="cc-shortname">Short name</label>
+          <input id="cc-shortname" type="text" placeholder="crop top" />
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-name-template">Display name template</label>
+          <input id="cc-name-template" type="text" placeholder="%style %color crop top" />
+          <p class="mini-hint">Vanilla tokens: %color, %style, %color2, etc.</p>
+        </div>
+        <div class="field">
+          <label for="cc-category">Category</label>
+          <select id="cc-category"></select>
+        </div>
+        <div class="field">
+          <label for="cc-layer">Game layer</label>
+          <input id="cc-layer" type="number" min="1" max="99" step="1" value="20" />
+          <p class="mini-hint">10 underwear · 20 tops/bottoms · 25 dresses · 30 outerwear</p>
+        </div>
+        <div class="field">
+          <label for="cc-price">Price</label>
+          <input id="cc-price" type="number" min="0" step="1" value="20" />
+        </div>
+        <div class="field">
+          <label for="cc-author">Author credit (optional)</label>
+          <input id="cc-author" type="text" placeholder="Your name" />
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-desc-shop">Shop description</label>
+          <textarea id="cc-desc-shop" rows="2"></textarea>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-desc-wardrobe">Wardrobe description</label>
+          <textarea id="cc-desc-wardrobe" rows="2"></textarea>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-desc-thrift">Thrift description (optional)</label>
+          <textarea id="cc-desc-thrift" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="covers">
+        <div class="field create-clothing-span2">
+          <label>Body parts covered</label>
+          <div id="cc-covers" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Sheer parts (see-through)</label>
+          <div id="cc-sheer" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Skintight exception parts</label>
+          <div id="cc-skintight-ex" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Storage pockets</label>
+          <div id="cc-storage" class="cc-check-grid"></div>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="flags">
+        <div class="field create-clothing-span2">
+          <label>Boolean / wardrobe flags</label>
+          <div id="cc-bool-flags" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Exposure chance flags (exclusive per family)</label>
+          <div id="cc-chance-flags" class="clothing-flags-list"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Dialogue tags</label>
+          <div id="cc-dialogue" class="cc-check-grid"></div>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="style">
+        <div class="field create-clothing-span2">
+          <label>Sub styles (player can pick one)</label>
+          <div id="cc-styles" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label>Style factor (inclination scores)</label>
+          <div id="cc-style-factor" class="cc-style-factor-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label class="check-inline"><input type="checkbox" id="cc-use-color" checked /> Player can pick color (<code>sub color</code>)</label>
+          <label class="check-inline"><input type="checkbox" id="cc-use-color2" /> Second color (<code>sub color2</code>)</label>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-style-factor-mods">Style factor mods (JSON)</label>
+          <textarea id="cc-style-factor-mods" rows="3" spellcheck="false" placeholder='{"tight":{"slutty":2},"form-fitting":{"slutty":1}}'></textarea>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-flags-mods">Flags mods (JSON)</label>
+          <textarea id="cc-flags-mods" rows="2" spellcheck="false" placeholder='{"tight":["shirtbust chance medium"]}'></textarea>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="displace">
+        <div class="field create-clothing-span2">
+          <p class="mini-hint">Enable displace verbs and which body parts they uncover (vanilla <code>displace …</code> keys).</p>
+          <div id="cc-displace" class="cc-displace-list"></div>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="shops">
+        <div class="field create-clothing-span2">
+          <label>Sold in shops</label>
+          <p class="mini-hint">None checked → <code>NoShops</code>.</p>
+          <div id="cc-shops" class="cc-check-grid"></div>
+        </div>
+        <div class="field create-clothing-span2">
+          <label class="check-inline"><input type="checkbox" id="cc-npc-wear" checked /> NPCs can wear</label>
+          <label class="check-inline"><input type="checkbox" id="cc-pc-wear" checked /> PC can wear</label>
+        </div>
+      </div>
+      <div class="create-clothing-grid cc-tab-panel hidden" data-cc-panel="advanced">
+        <div class="field create-clothing-span2">
+          <label for="cc-covers-mods">Covers mods (JSON)</label>
+          <textarea id="cc-covers-mods" rows="2" spellcheck="false" placeholder="{}"></textarea>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-configurations">Configurations (JSON)</label>
+          <textarea id="cc-configurations" rows="4" spellcheck="false" placeholder="{}"></textarea>
+          <p class="mini-hint">Vanilla button/zip configurations object if needed.</p>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="cc-costume-factor">Costume factor (JSON, optional)</label>
+          <textarea id="cc-costume-factor" rows="2" spellcheck="false" placeholder="{}"></textarea>
+        </div>
+      </div>
+      <div class="create-clothing-actions">
+        <button type="button" id="create-clothing-cancel">Cancel</button>
+        <button type="button" id="create-clothing-submit" class="primary">Create item + layer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="new-skin-modal" class="create-clothing-modal hidden" role="dialog" aria-modal="true" aria-labelledby="new-skin-title">
+    <div class="create-clothing-card">
+      <div class="create-clothing-head">
+        <h2 id="new-skin-title">New Skin</h2>
+        <button type="button" id="new-skin-close" class="connection-dismiss-btn" title="Close">×</button>
+      </div>
+      <p class="mini-hint">Art for an <strong>existing</strong> game clothing item. Graphic tees already choose a design in the shop (<code>sub design</code>) — pick that same text here so the paperdoll matches. Leave design as <strong>Base / plain</strong> for default art when no design-specific skin exists.</p>
+      <div class="create-clothing-grid">
+        <div class="field create-clothing-span2">
+          <label for="ns-clothing-search">Game clothing</label>
+          <input type="search" id="ns-clothing-search" placeholder="Search Graphic T-shirt, hoodie…" spellcheck="false" />
+          <select id="ns-clothing-select" class="cot-clothing-select" size="8"></select>
+          <p id="ns-clothing-hint" class="mini-hint"></p>
+        </div>
+        <div class="field">
+          <label for="ns-sub-key">Design field</label>
+          <select id="ns-sub-key">
+            <option value="design">design (logos / graphics)</option>
+            <option value="print">print</option>
+            <option value="team">team</option>
+            <option value="text">text (slogans)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ns-design-search">Design / graphic text</label>
+          <input type="search" id="ns-design-search" placeholder="Filter designs…" spellcheck="false" />
+          <select id="ns-design-select" class="cot-clothing-select" size="8"></select>
+        </div>
+        <div class="field create-clothing-span2">
+          <label for="ns-layer-name">Layer name (editor only)</label>
+          <input id="ns-layer-name" type="text" spellcheck="false" placeholder="Auto from clothing + design" />
+        </div>
+      </div>
+      <div class="create-clothing-actions">
+        <button type="button" id="new-skin-cancel">Cancel</button>
+        <button type="button" id="new-skin-submit" class="primary">Create skin layer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="import-conflict-modal" class="create-clothing-modal hidden" role="dialog" aria-modal="true" aria-labelledby="import-conflict-title">
+    <div class="create-clothing-card import-conflict-card">
+      <div class="create-clothing-head">
+        <h2 id="import-conflict-title">Import conflict</h2>
+        <span id="import-conflict-progress" class="mini-hint"></span>
+      </div>
+      <p id="import-conflict-reasons" class="mini-hint"></p>
+      <div class="import-conflict-compare">
+        <div class="import-conflict-side">
+          <h3>Current / existing</h3>
+          <p id="import-conflict-old-meta" class="mini-hint"></p>
+          <canvas id="import-conflict-old-canvas" width="160" height="320"></canvas>
+        </div>
+        <div class="import-conflict-side">
+          <h3>Incoming pack</h3>
+          <p id="import-conflict-new-meta" class="mini-hint"></p>
+          <canvas id="import-conflict-new-canvas" width="160" height="320"></canvas>
+        </div>
+      </div>
+      <div class="field" id="import-conflict-rename-field">
+        <label for="import-conflict-rename">Rename incoming to</label>
+        <input id="import-conflict-rename" type="text" spellcheck="false" />
+      </div>
+      <div class="create-clothing-actions">
+        <button type="button" id="import-conflict-skip">No — Skip</button>
+        <button type="button" id="import-conflict-rename-btn">Rename</button>
+        <button type="button" id="import-conflict-overwrite" class="primary">Yes — Overwrite</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="status-bar">
+    <span id="status-text">Loading…</span>
+    <div class="status-bar-end">
+      <label id="connection-status-wrap" class="connection-status-wrap hidden">
+        <input type="checkbox" id="connection-status-cb" checked disabled />
+        <span id="connection-status-label">Game connected</span>
+        <span id="connection-status-tooltip" class="connection-status-tooltip" role="tooltip"></span>
+      </label>
+      <button type="button" id="connection-status-dismiss" class="connection-dismiss-btn" title="Dismiss connection notice" hidden>×</button>
+      <span id="game-folder-label" class="game-folder-label"></span>
+    </div>
+  </footer>
+
+  <script>window.setup = window.setup || { ExhibitionPaperdoll: {} };</script>
+  <script src="vendor/jszip.min.js"></script>
+  <script src="pack-config.js"></script>
+  <script src="../core/transforms.js"></script>
+  <script src="../core/masks.js"></script>
+  <script src="../core/poses.js"></script>
+  <script src="../core/body-variants.js"></script>
+  <script src="../core/lod.js"></script>
+  <script src="../core/loader.js"></script>
+  <script src="../core/tint.js"></script>
+  <script src="../core/composer.js"></script>
+  <script src="../core/backgrounds.js"></script>
+  <script src="../core/mod-registry.js"></script>
+  <script src="../runtime/clothing-flags.js"></script>
+  <script src="base-embed.js"></script>
+  <script src="engine-boot.js"></script>
+  <script src="rebake-client.js"></script>
+  <script src="pack-io.js"></script>
+  <script src="custom-clothing.js"></script>
+  <script src="clothing-skins.js"></script>
+  <script src="clothing-picker.js"></script>
+  <script src="makeup-picker.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>

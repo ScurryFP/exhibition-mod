@@ -1,0 +1,38 @@
+:: TanPhoneMenu [noevents util nobr suppressemoji]
+<<run setup.Tanning.ensure_tan_phone_context($pc)>>
+<<if !$tanpose>>
+    <<set _fallback to setup.Tanning.get_tan_passage()>>
+    <<egoto _fallback>>
+<</if>>
+<<set _tanret to setup.Tanning.get_tan_passage()>>
+<<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+<div class="tan-exhib-phone-page">
+    <div class="tan-exhib-adjust-title">Phone</div>
+    <div class="tan-exhib-flavor">You fish your phone out of the backpack beside your towel, shielding the screen from the sun.</div>
+    <<if $tandisplacemsg>>
+        <br><br>
+        <<= $tandisplacemsg>>
+        <<unset $tandisplacemsg>>
+    <</if>>
+    <<if $tanphonemsg>>
+        <br><br>
+        <<= $tanphonemsg>>
+        <<unset $tanphonemsg>>
+    <</if>>
+    <br><br>
+    <<if $phoneselfieconvoactive and $phoneselfiesession>>
+        <<tantanphoneselfieconvo>>
+    <<else>>
+        <<tantanphoneoptions>>
+    <</if>>
+    <br>
+    <<if !$phoneselfieconvoactive>>
+        <<link "Back to your towel" _tanret>>
+            <<unset $tanphoneselfiecontact>>
+            <<unset $tanphoneelkbookopen>>
+            <<unset $tanphoneselfiereply>>
+            <<unset $phoneresponsemenu>>
+            <<advtime _tq Attention>>
+        <</link>> <<dtime _tq>>
+    <</if>>
+</div>

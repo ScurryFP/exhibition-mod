@@ -1,0 +1,43 @@
+:: OutAboutExposure [hangout nobr noevents]
+<<set _ctx to setup.Tanning.get_out_about_context()>>
+<<set _ret to setup.Tanning.out_about_adjust_return()>>
+<<if !setup.Tanning.can_offer_out_exposure($pc)>>
+    <<link "Back" _ret>><</link>>
+<<else>>
+<<set _partner to $hangout.partner>>
+You steal a moment <<print _ctx.settingLabel>> — <<print _ctx.poseLabel.toLowerCase()>>, with <<anonorfullname _partner>> right there to see.
+<br><br>
+<<if $outaboutmsg>>
+    <<= $outaboutmsg>>
+    <<unset $outaboutmsg>>
+    <br><br>
+<</if>>
+<<if $outaboutpartnermsg>>
+    <span class="tan-exhib-flavor"><<= $outaboutpartnermsg>></span>
+    <<unset $outaboutpartnermsg>>
+    <br><br>
+<</if>>
+<<if setup.Tanning.can_offer_pc_out_adjust($pc)>>
+<div class="tan-exhib-adjust">
+    <div class="tan-exhib-adjust-title">Adjust your outfit</div>
+    <div class="tan-exhib-legend">▲ Show more · ▼ Cover up — <<anonorfirstname _partner>> is watching. Bold flashes can stoke a voyeur date's appetite.</div>
+    <div class="tan-exhib-actions">
+        <<outaboutpcactions>>
+    </div>
+</div>
+<br>
+<</if>>
+<<if setup.Tanning.can_offer_partner_out_adjust($pc)>>
+<div class="tan-exhib-adjust tan-exhib-partner">
+    <div class="tan-exhib-adjust-title">Adjust <<anonorfullname _partner>>'s outfit</div>
+    <div class="tan-exhib-legend">Order your controlled partner to shift what they're wearing. ▲ Show more · ▼ Cover up.</div>
+    <div class="tan-exhib-actions">
+        <<outaboutpartneractions>>
+    </div>
+</div>
+<br>
+<</if>>
+<<link "Done adjusting" _ret>>
+    <<advtime 2>>
+<</link>> <<dtime 2>>
+<</if>>

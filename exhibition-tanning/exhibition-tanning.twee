@@ -1,0 +1,1794 @@
+:: TanExhibWidgets [widget nobr]
+
+<<widget "tanswimsuitchangeflash">>
+    <<if $tanswimchangemsg>>
+        <br><br>
+        <<= $tanswimchangemsg>>
+        <<unset $tanswimchangemsg>>
+    <</if>>
+<</widget>>
+
+<<widget "tanswimsuitchangemenu">>
+    <<if setup.Tanning.get_tanning_site() is "UniMall" and !$pc.wearing_some_swimwear() and setup.Tanning.can_offer_swimsuit_change($pc)>>
+    <<set _methods to setup.Tanning.get_swimsuit_change_methods($pc)>>
+    <<if _methods.length gt 0>>
+    <br><br>
+    You aren't dressed for tanning in swimwear yet. Change first, then pick what to wear:
+    <br>
+    <<for _m range _methods>>
+        <<capture _m>>
+            <<set _swimchglabel to _m.label>>
+            <<set _swimchgpass to _m.passage>>
+            <<if _m.enabled>>
+                    <<link _swimchglabel _swimchgpass>>
+                        <<set $tanswimchangetarget to setup.Tanning.get_swim_change_tan_menu()>>
+                        <<if setup.Tanning.TANNING_SITES[$location]>>
+                            <<set $tanninglocation to $location>>
+                        <<elseif $tanninglocation>>
+                            <<set $tanninglocation to $tanninglocation>>
+                        <</if>>
+                        <<set _fx to setup.Tanning.apply_swimsuit_change($pc, _m.id)>>
+                        <<set $tanswimchangemsg to _fx.msg>>
+                        <<if _fx.attention>><<dalterneed Attention _fx.attention true>><</if>>
+                        <<if _fx.humiliation>><<dalterneed Humiliation _fx.humiliation true>><</if>>
+                        <<if _fx.arousal>><<dalterneed Arousal _fx.arousal true>><</if>>
+                        <<if _fx.exhib>><<raiseskill Exhibitionism 1>><</if>>
+                        <<advtime _m.minutes>>
+                    <</link>> <<dtime _m.minutes>>
+                    <<if _m.exhib_req>><<skill Exhibitionism _m.exhib_req>><</if>>
+                    <<if _m.hint>><span class="small"> — <<print _m.hint>></span><</if>>
+                    <br>
+            <<else>>
+                <span class="disabled-action"><<print _m.label>><<if _m.disabled_hint>> — <<print _m.disabled_hint>><</if>></span>
+                <<if _m.exhib_req>><<skill Exhibitionism _m.exhib_req>><</if>>
+                <br>
+            <</if>>
+        <</capture>>
+    <</for>>
+    <<link "Pick a swimsuit from your closet" TanSwimWardrobe>>
+        <<set $tanswimchangetarget to setup.Tanning.get_swim_change_tan_menu()>>
+        <<run setup.Tanning.begin_swimsuit_picker($pc)>>
+        <<set $tanswimchangemsg to "You take a moment to decide what to wear.">>
+    <</link>>
+    <br>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibposemenu">>
+    <<if setup.Tanning.can_exhibition_tan($pc)>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<if !$tanpose>>
+        <div class="tan-exhib-pose">
+            <br>How do you want to lay out?
+            <br><br>
+            <<link "Lay on your back" _tanret>>
+                <<set $tanpose to "back">>
+                <<run setup.Tanning.save_displacement_snapshot($pc)>>
+            <</link>> <<skill Exhibitionism setup.Tanning.EXHIB_TANNING_MIN>>
+            <br>
+            <<link "Lay on your stomach" _tanret>>
+                <<set $tanpose to "stomach">>
+                <<run setup.Tanning.save_displacement_snapshot($pc)>>
+            <</link>> <<skill Exhibitionism setup.Tanning.EXHIB_TANNING_MIN>>
+            <br>
+        </div>
+    <<else>>
+        <<print setup.Tanning.pose_narration($tanpose, $pc)>>
+        <br><br>
+        <<if $tanpose is "back">>
+            <<link "Switch to laying on your stomach" _tanret>>
+                <<set $tanpose to "stomach">>
+            <</link>>
+        <<else>>
+            <<link "Switch to laying on your back" _tanret>>
+                <<set $tanpose to "back">>
+            <</link>>
+        <</if>>
+        <br><br>
+        <<tandexhibpasstime>>
+        <<tantanphonemenu>>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphonemenu">>
+    <<if setup.Tanning.can_use_phone_while_tanning($pc)>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <div class="tan-exhib-phone-entry">
+        <<if setup.Tanning.pc_has_tan_phone($pc)>>
+            <<link "Grab your phone" TanPhoneMenu>>
+                <<run setup.Tanning.ensure_tan_phone_context($pc)>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+        <<else>>
+            <span class="disabled-action">Your backpack is here, but you don't have a phone in it right now.</span>
+        <</if>>
+    </div>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphoneoptions">>
+    <<if $tanpose>>
+    <<if !setup.Tanning.pc_has_tan_phone($pc)>>
+        <div class="tan-exhib-flavor">Your backpack is here, but you don't have a phone in it right now.</div>
+    <<else>>
+    <<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _contacts to setup.Tanning.get_tan_phone_contacts($pc)>>
+    <<set _inviteact to setup.Tanning.get_tan_invite_activity()>>
+    <div class="tan-exhib-legend">Your backpack stays beside the towel — phone, toys, and whatever else you brought are still within reach.</div>
+    <div class="tan-exhib-action">
+        <<capture _phoneRet,_tq>>
+            <<link "Open phone" _phoneRet>>
+                <<run setup.Tanning.open_tan_phone("PhoneMain")>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+        <</capture>>
+    </div>
+    <div class="tan-exhib-action">
+        <<capture _phoneRet,_tq>>
+            <<link "Text someone" _phoneRet>>
+                <<run setup.Tanning.open_tan_phone("PhoneContacts")>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+        <</capture>>
+    </div>
+    <<tantanphoneelkbookmenu>>
+        <<if _contacts.length gt 0>>
+            <<tantanphoneselfiemenu>>
+        <</if>>
+        <<if _contacts.length gt 0>>
+            <<tantanphoneinvitemenu>>
+        <</if>>
+        <div class="tan-exhib-adjust-title">Amateur Porn Town</div>
+        <<if setup.Tanning.can_post_tan_video($pc)>>
+            <<if $pc.skillleveled("Exhibitionism", setup.Tanning.TAN_VIDEO_EXHIB)>>
+                <<capture _phoneRet,_tq>>
+                    <<link "Record a tanning video" _phoneRet>>
+                        <<set _vidfx to setup.Tanning.prepare_tan_exhibition_video($pc)>>
+                        <<set $tandisplacemsg to _vidfx.msg>>
+                        <<if _vidfx.ok>>
+                            <<raiseskill Exhibitionism 1>>
+                            <<advtime 10 Attention>>
+                            <<goto AmateurPornTownEdit>>
+                        <</if>>
+                    <</link>> · Exhib <<print setup.Tanning.TAN_VIDEO_EXHIB>> <<dtime 10>>
+                <</capture>>
+            <<else>>
+                <span class="disabled-action">Record a tanning video · Need Exhib <<print setup.Tanning.TAN_VIDEO_EXHIB>></span>
+            <</if>>
+        <<else>>
+            <span class="disabled-action">Record a tanning video · Register on Amateur Porn Town first (phone → Internet)</span>
+        <</if>>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphonesetselfiemenu">>
+    <<set $phoneselfiemenu to setup.Tanning.build_tan_selfie_menu($pc)>>
+<</widget>>
+
+<<widget "tantanphoneselfieconvo">>
+    <<if $phoneselfiesession>>
+    <<set _s to $phoneselfiesession>>
+    <<set _selfie to _s.pendingEffects or _s.selfie>>
+    <<set _p to _s.target>>
+    <<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _underwear to _selfie[2] or []>>
+    <<set _naked to _selfie[3] or []>>
+    <<set _inccomposure to _selfie[4].inccomposure>>
+
+    <div class="tan-exhib-adjust-title"><<anonorfullname _p>></div>
+    <<if _s.photoCount is 1>>
+        <div class="tan-exhib-flavor">You hit send and off it goes.</div>
+    <</if>>
+
+    <<if !_s.effectsShown>>
+        <<run setup.Tanning.mark_selfie_effects_shown()>>
+        <<if _naked.length gt 0>>
+            <<= setup.Events.exhibitionism(_naked, "naked", "photo", true, [_p], {nocomposure: !_inccomposure}).dalterneed>>
+        <<elseif _underwear.length gt 0>>
+            <<= setup.Events.exhibitionism(_underwear, "underwear", "photo", true, [_p], {nocomposure: !_inccomposure}).dalterneed>>
+        <</if>>
+        <<if _s.photoCount is 1 and _p and _selfie[4].prevattitude>>
+            <<for _att range ["friendship", "lust", "romance"]>>
+                <<set _prev to _selfie[4].prevattitude[_att] or 0>>
+                <<set _pdata to setup.people.get_person(_p)>>
+                <<if _pdata and _pdata.attitude>>
+                    <<set _current to _pdata.attitude[_att] or 0>>
+                <<else>>
+                    <<set _current to 0>>
+                <</if>>
+                <<if _prev isnot _current>>
+                    <<set _label to _att.toUpperFirst()>>
+                    <<set _diff to _current - _prev>>
+                    <<dalterneed _label _diff>>
+                <</if>>
+            <</for>>
+        <</if>>
+        <br>
+    <</if>>
+
+    <div class="tan-exhib-selfie-convo">
+        <<for _line range _s.lines>>
+            <<if _line.from is "narrate">>
+                <div class="tan-exhib-flavor"><<= _line.text>></div>
+            <<elseif _line.from is "photo">>
+                <div class="tan-selfie-bubble tan-selfie-bubble-photo">
+                    <<if _line.image>><<= _line.image>><br><</if>>
+                    <span class="tan-selfie-photo-label"><<= _line.label>></span>
+                </div>
+            <<elseif _line.from is "pc">>
+                <div class="tan-selfie-bubble tan-selfie-bubble-pc"><<= _line.text>></div>
+            <<elseif _line.from is "npc">>
+                <div class="tan-selfie-bubble tan-selfie-bubble-npc"><<= _line.text>></div>
+            <</if>>
+        <</for>>
+    </div>
+
+    <<if _s.awaitingSelfiePick>>
+        <div class="tan-exhib-legend"><<= _s.selfiePickPrompt>></div>
+        <<set $phoneselfiemenu to setup.Tanning.build_selfie_menu_for_convo($pc, _s)>>
+        <<if $phoneselfiemenu.length is 0>>
+            <div class="tan-exhib-flavor">Nothing bolder to send from here right now.</div>
+            <div class="tan-exhib-phone-contact">
+                <<link "Never mind" _phoneRet>>
+                    <<run setup.Tanning.cancel_convo_selfie_pick()>>
+                <</link>>
+            </div>
+        <<else>>
+            <div class="tan-exhib-phone-contacts">
+                <<for _pick range $phoneselfiemenu>>
+                    <<set _pexhib to _pick[1]>>
+                    <<capture _pick,_pexhib,_phoneRet,_tq>>
+                        <div class="tan-exhib-phone-contact">
+                            <<link _pick[0] _phoneRet>>
+                                <<set $tanphoneselfiepick to _pick>>
+                                <<run setup.Tanning.send_convo_followup_selfie()>>
+                                <<advtime _tq Attention>>
+                            <</link>>
+                            <<if _pexhib gt 0>> · Exhib <<print _pexhib>> <<skill Disinhibition 3>><</if>> <<dtime _tq>>
+                        </div>
+                    <</capture>>
+                <</for>>
+            </div>
+            <div class="tan-exhib-phone-contact">
+                <<link "Never mind" _phoneRet>>
+                    <<run setup.Tanning.cancel_convo_selfie_pick()>>
+                <</link>>
+            </div>
+        <</if>>
+        <<unset $phoneselfiemenu>>
+    <<elseif _s.awaitingPc and !_s.done>>
+        <div class="tan-exhib-legend">Your reply:</div>
+        <div class="tan-exhib-phone-contacts">
+            <<set _options to setup.Tanning.get_selfie_pc_replies(_s)>>
+            <<for _opt range _options>>
+                <<capture _opt,_phoneRet,_tq>>
+                    <div class="tan-exhib-phone-contact">
+                        <<link _opt.text _phoneRet>>
+                            <<set $tanselfiereplypick to _opt.id>>
+                            <<run setup.Tanning.apply_selfie_pc_reply()>>
+                            <<advtime _tq Attention>>
+                        <</link>>
+                    </div>
+                <</capture>>
+            <</for>>
+        </div>
+    <<elseif _s.done>>
+        <<if _s.inviteResolved>>
+            <br>
+            <div class="tan-exhib-flavor"><<if $taninvitemsg>><<= $taninvitemsg>><<else>>The invite is out — now you wait and see.<</if>></div>
+        <</if>>
+        <div class="tan-exhib-phone-contact">
+            <<link "Done texting" _phoneRet>>
+                <<run setup.Tanning.finish_selfie_convo()>>
+                <<advtime 5 Attention>>
+            <</link>> <<dtime 5>>
+        </div>
+    <<else>>
+        <<set _discover to _selfie[4].discoverchance>>
+        <<if _discover and $peopleatlocation.length gt 0>>
+            <<if $peopleatlocation gte 5>><<set _discover += 0.4>><<elseif $peopleatlocation gte 3>><<set _discover += 0.2>><</if>>
+            <<set _p2 to setup.Events.pick_person({attitudes: ["random"], specialok: true, exclude: [_p]})>>
+            <<if _p2 isnot null and State.random() lte _discover>>
+                <br>
+                <div class="tan-exhib-flavor">You look around as you're fixing your clothing, and... oops. You're pretty sure <<anonorfullname _p2>> noticed what you were doing.</div>
+                <<if _naked.length gt 0>>
+                    <<= setup.Events.exhibitionism(_naked, "naked", "in person", false, [_p2], {nocomposure: !_inccomposure}).dalterneed>>
+                <<elseif _underwear.length gt 0>>
+                    <<= setup.Events.exhibitionism(_underwear, "underwear", "in person", false, [_p2], {nocomposure: !_inccomposure}).dalterneed>>
+                <</if>>
+            <</if>>
+        <</if>>
+        <div class="tan-exhib-phone-contact">
+            <<link "Done texting" _phoneRet>>
+                <<run setup.Tanning.finish_selfie_convo()>>
+                <<advtime 5 Attention>>
+            <</link>> <<dtime 5>>
+        </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "phoneselfieconvomenu">>
+    <<if $phoneselfiesession>>
+    <<set _s to $phoneselfiesession>>
+    <<set _selfie to _s.pendingEffects or _s.selfie>>
+    <<set _p to _s.target>>
+    <<set _underwear to _selfie[2] or []>>
+    <<set _naked to _selfie[3] or []>>
+    <<set _inccomposure to _selfie[4].inccomposure>>
+
+    <<if !_s.effectsShown>>
+        <<run setup.Tanning.mark_selfie_effects_shown()>>
+        <<if _naked.length gt 0>>
+            <<= setup.Events.exhibitionism(_naked, "naked", "photo", true, [_p], {nocomposure: !_inccomposure}).dalterneed>>
+        <<elseif _underwear.length gt 0>>
+            <<= setup.Events.exhibitionism(_underwear, "underwear", "photo", true, [_p], {nocomposure: !_inccomposure}).dalterneed>>
+        <</if>>
+        <<if _s.photoCount is 1 and _p and _selfie[4].prevattitude>>
+            <<for _att range ["friendship", "lust", "romance"]>>
+                <<set _prev to _selfie[4].prevattitude[_att] or 0>>
+                <<set _pdata to setup.people.get_person(_p)>>
+                <<if _pdata and _pdata.attitude>>
+                    <<set _current to _pdata.attitude[_att] or 0>>
+                <<else>>
+                    <<set _current to 0>>
+                <</if>>
+                <<if _prev isnot _current>>
+                    <<set _label to _att.toUpperFirst()>>
+                    <<set _diff to _current - _prev>>
+                    <<dalterneed _label _diff>>
+                <</if>>
+            <</for>>
+        <</if>>
+    <</if>>
+
+    <<if _s.awaitingSelfiePick>>
+        <div class="tan-exhib-legend"><<= _s.selfiePickPrompt>></div>
+        <<set $phoneselfiemenu to setup.Tanning.build_selfie_menu_for_convo($pc, _s)>>
+        <<if $phoneselfiemenu.length is 0>>
+            <<phonelink "Never mind">>
+                <<run setup.Tanning.cancel_convo_selfie_pick()>>
+                <<phonetextrefresh>>
+            <</phonelink>>
+        <<else>>
+            <<for _pick range $phoneselfiemenu>>
+                <<set _pexhib to _pick[1]>>
+                <<capture _pick,_pexhib>>
+                    <<phonelink _pick[0]>>
+                        <<set $tanphoneselfiepick to _pick>>
+                        <<run setup.Tanning.send_convo_followup_selfie()>>
+                        <<advtime 5 Attention>>
+                        <<phonetextrefresh>>
+                    <</phonelink>> <<if _pexhib gt 0>> · Exhib <<print _pexhib>> <<skill Disinhibition 3>><</if>> <<dtime 5>>
+                    <br>
+                <</capture>>
+            <</for>>
+            <<phonelink "Never mind">>
+                <<run setup.Tanning.cancel_convo_selfie_pick()>>
+                <<phonetextrefresh>>
+            <</phonelink>>
+        <</if>>
+        <<unset $phoneselfiemenu>>
+    <<elseif _s.awaitingPc and !_s.done>>
+        <<set _options to setup.Tanning.get_selfie_pc_replies(_s)>>
+        <<for _opt range _options>>
+            <<capture _opt>>
+                <<phonelink _opt.text>>
+                    <<set $tanselfiereplypick to _opt.id>>
+                    <<run setup.Tanning.apply_selfie_pc_reply()>>
+                    <<advtime 5 Attention>>
+                    <<phonetextrefresh>>
+                <</phonelink>> <<dtime 5>>
+                <br>
+            <</capture>>
+        <</for>>
+    <<else>>
+        <<phonelink "Done texting">>
+            <<run setup.Tanning.finish_selfie_convo()>>
+            <<advtime 5 Attention>>
+            <<phonetextrefresh>>
+        <</phonelink>> <<dtime 5>>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanelkbookreplyloop">>
+    <<if $phoneselfiesent>>
+    <<set _selfie to $phoneselfiesent>>
+    <<set _replychance to (_selfie[3].length gt 0 || _selfie[2].length gt 0) ? 0.667 : 0.25>>
+    <<set _anyreplies to false>>
+    <<for _student range _people>>
+        <<if _anyreplies and State.random() lte _replychance>>
+            <<continue>>
+        <<else>>
+            <<set _anyreplies to true>>
+        <</if>>
+        <<set _msg to setup.Tanning.pick_tan_elkbook_reply(_student, _selfie)>>
+        <div class="elkbook-container tan-exhib-elkbook-reply">
+            <span class="elkbook-name">
+                <<known _student>>
+                    <<viewperson _student>><<dfullname _student>><</viewperson>>
+                <<unknown>>
+                    <<dfullname _student>>
+                <</known>>
+            </span><br>
+            <span class="elkbook-text"><<= _msg>></span>
+        </div>
+    <</for>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphoneelkbookmenu">>
+    <<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<if $elkbook and $elkbook.lastpost and $gameday - $elkbook.lastpost lt 1>>
+        <div class="tan-exhib-adjust-title">Post to Elkbook</div>
+        <div class="tan-exhib-flavor">You've already posted to Elkbook today.</div>
+    <<else>>
+    <div class="tan-exhib-adjust-title">Post to Elkbook</div>
+    <<if !$tanphoneelkbookopen>>
+        <div class="tan-exhib-phone-contact">
+            <<link "Post to Elkbook" _phoneRet>>
+                <<set $tanphoneelkbookopen to true>>
+                <<unset $tanphoneselfiecontact>>
+            <</link>>
+        </div>
+    <<else>>
+        <div class="tan-exhib-legend">Snap a tanning selfie for today's timeline — onlookers might notice.</div>
+        <<tantanphonesetselfiemenu>>
+        <div class="tan-exhib-phone-contacts">
+            <<for _selfie range $phoneselfiemenu>>
+                <<set _exhib to _selfie[1]>>
+                <<if $pc.skillleveled("Exhibitionism", _exhib) and (_exhib is 0 or $pc.skillleveled("Disinhibition", 3))>>
+                    <<capture _selfie,_exhib,_phoneRet,_tq>>
+                        <div class="tan-exhib-phone-contact">
+                            <<link _selfie[0]>>
+                                <<run setup.Tanning.set_tan_phone_return()>>
+                                <<set $phoneselfiesent to setup.Tanning.stage_tan_elkbook_selfie_send(_selfie)>>
+                                <<raiseskill Photography 2>>
+                                <<advtime _tq Attention>>
+                                <<egoto TanElkbookSelfie>>
+                            <</link>>
+                            <<if _exhib gt 0>> · Exhib <<print _exhib>> <<skill Disinhibition 3>><</if>> <<dtime _tq>>
+                        </div>
+                    <</capture>>
+                <</if>>
+            <</for>>
+        </div>
+        <<unset $phoneselfiemenu>>
+        <div class="tan-exhib-phone-contact">
+            <<link "« Back" _phoneRet>>
+                <<unset $tanphoneelkbookopen>>
+            <</link>>
+        </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphoneselfiemenu">>
+    <<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _contacts to setup.Tanning.get_tan_phone_contacts($pc)>>
+    <<if _contacts.length gt 0>>
+    <div class="tan-exhib-adjust-title">Send a selfie</div>
+    <<if !$tanphoneselfiecontact>>
+        <div class="tan-exhib-legend">Text a pic to a friend, lover, or booty call — onlookers might catch you posing.</div>
+        <div class="tan-exhib-phone-contacts">
+            <<for _c range _contacts>>
+                <<capture _c,_phoneRet>>
+                    <div class="tan-exhib-phone-contact">
+                        <<link _c.label _phoneRet>>
+                            <<set $tanphoneselfiecontact to _c.name>>
+                            <<unset $tanphoneelkbookopen>>
+                        <</link>>
+                    </div>
+                <</capture>>
+            <</for>>
+        </div>
+    <<else>>
+        <<set _picklabel to setup.Tanning.menu_npc_label($tanphoneselfiecontact)>>
+        <div class="tan-exhib-legend"><<= _picklabel >> — pick a shot to send.</div>
+        <<tantanphonesetselfiemenu>>
+        <div class="tan-exhib-phone-contacts">
+            <<for _selfie range $phoneselfiemenu>>
+                <<set _exhib to _selfie[1]>>
+                <<if $pc.skillleveled("Exhibitionism", _exhib) and (_exhib is 0 or $pc.skillleveled("Disinhibition", 3))>>
+                    <<capture _selfie,_exhib,_phoneRet,_tq>>
+                        <div class="tan-exhib-phone-contact">
+                            <<link _selfie[0] TanPhoneMenu>>
+                                <<run setup.Tanning.set_tan_phone_return()>>
+                                <<set $phoneselfiesent to setup.Tanning.begin_tan_phone_selfie_convo(_selfie, $tanphoneselfiecontact)>>
+                                <<advtime _tq Attention>>
+                            <</link>>
+                            <<if _exhib gt 0>> · Exhib <<print _exhib>> <<skill Disinhibition 3>><</if>> <<dtime _tq>>
+                        </div>
+                    <</capture>>
+                <</if>>
+            <</for>>
+        </div>
+        <<unset $phoneselfiemenu>>
+        <div class="tan-exhib-phone-contact">
+            <<link "« Pick someone else" _phoneRet>>
+                <<unset $tanphoneselfiecontact>>
+            <</link>>
+        </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tantanphoneinvitemenu">>
+    <<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _contacts to setup.Tanning.get_tan_phone_contacts($pc)>>
+    <<set _inviteact to setup.Tanning.get_tan_invite_activity()>>
+    <<if _contacts.length gt 0>>
+    <div class="tan-exhib-adjust-title">Invite someone</div>
+    <div class="tan-exhib-legend">Ask someone to come <i>watch</i> you tan, or to <i>join</i> you on the towel if they're bold enough (exhibitionist, submissive, or under your control).</div>
+    <div class="tan-exhib-phone-contacts">
+        <<for _c range _contacts>>
+            <<capture _c,_phoneRet,_tq,_inviteact>>
+                <div class="tan-exhib-phone-contact">
+                    <<link "Invite <<anonorfirstname _c.name>> to watch" _phoneRet>>
+                        <<set _inv to setup.Tanning.quick_tan_invite(_c.name, "watch")>>
+                        <<if _inv.ok and _inv.arrivalMsg>><<set $taninvitemsg to _inv.arrivalMsg>><<else>><<set $taninvitemsg to _inv.npcText>><</if>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<dtime _tq>>
+                </div>
+                <<if setup.Tanning.can_invite_to_join_towel($pc, _c.name)>>
+                <div class="tan-exhib-phone-contact">
+                    <<link "Invite <<anonorfirstname _c.name>> to join your towel" _phoneRet>>
+                        <<set _inv to setup.Tanning.quick_tan_invite(_c.name, "join")>>
+                        <<if _inv.ok and _inv.arrivalMsg>><<set $taninvitemsg to _inv.arrivalMsg>><<else>><<set $taninvitemsg to _inv.npcText>><</if>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<dtime _tq>>
+                </div>
+                <<else>>
+                <div class="tan-exhib-phone-contact">
+                    <span class="disabled-action">Invite <<anonorfirstname _c.name>> to join · not exhibitionist/sub enough</span>
+                </div>
+                <</if>>
+                <div class="tan-exhib-phone-contact">
+                    <<link "Text <<anonorfirstname _c.name>>..." _phoneRet>>
+                        <<run setup.Tanning.open_tan_text_contact(_c.name)>>
+                        <<set $tanphoneinvitehint to _inviteact>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<dtime _tq>>
+                </div>
+            <</capture>>
+        <</for>>
+    </div>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibpasstime">>
+    <<if setup.Tanning.can_exhibition_tan($pc) and $tanpose>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <div class="tan-exhib-passtime">
+        Pass time on your towel:
+        <br>
+        <<capture _tanret>>
+            <<link "Continue tanning like this (15 min)" _tanret>>
+                <<set _tanfx to setup.Tanning.apply_pass_time($pc, 15)>>
+                <<set $tanpassmsg to _tanfx.passmsg>>
+                <<if _tanfx.witness>>
+                    <<set $tanwitness to _tanfx.witness>>
+                <</if>>
+                <<if _tanfx.extras and _tanfx.extras.length>>
+                    <<set $tanwitnessextras to _tanfx.extras>>
+                <</if>>
+                <<if _tanfx.arousalGain>><<dalterneed Arousal _tanfx.arousalGain true>><</if>>
+                <<if _tanfx.attentionGain>><<dalterneed Attention _tanfx.attentionGain true>><</if>>
+                <<advtime 15 Relaxation>>
+                <<run setup.Tanning.apply_session($pc, {session_minutes: 15})>>
+            <</link>> <<dtime 15>>
+            <br>
+            <<link "Tan a while longer (30 min)" _tanret>>
+                <<set _tanfx to setup.Tanning.apply_pass_time($pc, 30)>>
+                <<set $tanpassmsg to _tanfx.passmsg>>
+                <<if _tanfx.witness>>
+                    <<set $tanwitness to _tanfx.witness>>
+                <</if>>
+                <<if _tanfx.extras and _tanfx.extras.length>>
+                    <<set $tanwitnessextras to _tanfx.extras>>
+                <</if>>
+                <<if _tanfx.arousalGain>><<dalterneed Arousal _tanfx.arousalGain true>><</if>>
+                <<if _tanfx.attentionGain>><<dalterneed Attention _tanfx.attentionGain true>><</if>>
+                <<advtime 30 Relaxation>>
+                <<run setup.Tanning.apply_session($pc, {session_minutes: 30})>>
+            <</link>> <<dtime 30>>
+            <br>
+        <</capture>>
+    </div>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibmenuactions">>
+    <<if setup.Tanning.can_exhibition_tan($pc) and $tanpose>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _tanacts to setup.Tanning.get_tan_menu_actions($pc, $tanpose)>>
+    <<highlight "button-sexact-clothes">>
+        <<for _j to 0; _j lt _tanacts.length; _j++>>
+            <<set _tanact to _tanacts[_j]>>
+            <<capture _tanact,_tanret>>
+                <<if _tanact.exhib_req is 0 or $pc.skillleveled("Exhibitionism", _tanact.exhib_req)>>
+                    <<capture _tanact>>
+                        <div class="tan-exhib-action">
+                            <<link _tanact.button _tanret>>
+                                <<set $tandisplacemsg to setup.Tanning.displacement_narration($pc, _tanact)>>
+                                <<run setup.Tanning.apply_tan_action($pc, _tanact)>>
+                                <<run setup.Tanning.run_exhib_guest_self_adjustments()>>
+                                <<set _tanfx to setup.Tanning.apply_witness_effects($pc, _tanact)>>
+                                <<if _tanfx.witness>>
+                                    <<set $tanwitness to _tanfx.witness>>
+                                <</if>>
+                                <<if _tanfx.extras and _tanfx.extras.length>>
+                                    <<set $tanwitnessextras to _tanfx.extras>>
+                                <</if>>
+                                <<if _tanfx.arousalGain>><<dalterneed Arousal _tanfx.arousalGain true>><</if>>
+                                <<if _tanfx.attentionGain>><<dalterneed Attention _tanfx.attentionGain true>><</if>>
+                                <<if _tanact.exhib_req > 0 and (_tanact.visible_tags.length > 0 or (_tanact.kind is "legs" and _tanact.spread))>>
+                                    <<raiseskill Exhibitionism 1>>
+                                <</if>>
+                                <<advtime _tq Relaxation Attention>>
+                                <<run setup.Tanning.apply_session($pc, {session_minutes: _tq})>>
+                            <</link>>
+                            <<set _tanmeta to setup.Tanning.format_tan_action_meta(_tanact)>>
+                            <<if _tanmeta>> · <<print _tanmeta>><</if>> <<dtime _tq>>
+                        </div>
+                    <</capture>>
+                <<else>>
+                    <div class="tan-exhib-action">
+                        <span class="disabled-action"><<print _tanact.button>> · Need <<skill Exhibitionism _tanact.exhib_req>></span>
+                    </div>
+                <</if>>
+            <</capture>>
+        <</for>>
+    <</highlight>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibmenu">>
+    <<if setup.Tanning.can_exhibition_tan($pc) and $tanpose>>
+    <<set _tanacts to setup.Tanning.get_tan_menu_actions($pc, $tanpose)>>
+    <<if _tanacts.length is 0>>
+        <div class="tan-exhib-adjust">
+            <span class="notice">Nothing you can adjust further for this pose — at least, not without getting up.</span>
+        </div>
+    <<else>>
+    <div class="tan-exhib-adjust">
+        <div class="tan-exhib-adjust-title">Adjust your outfit while you tan</div>
+        <div class="tan-exhib-legend">▲ Show more · ▼ Cover up — levels are step/max (e.g. 3/6). Notes after each action say what onlookers can see.</div>
+        <div id="tanexhibact" class="tan-exhib-actions">
+            <<if $tanexhibexpanded>>
+                <<tandexhibmenuactions>>
+            <<else>>
+                <<button "Adjust clothing...">>
+                    <<set $tanexhibexpanded to true>>
+                    <<replace "#tanexhibact">><<tandexhibmenuactions>><</replace>>
+                <</button>>
+            <</if>>
+        </div>
+    </div>
+    <</if>>
+    <<tandexhibpartnermenu>>
+    <<tandexhibguestmenu>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibpartnermenuactions">>
+    <<set _partner to _partner or $tanpartnerexpanded>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _pacts to setup.Tanning.get_partner_menu_actions(_partner, "tanning")>>
+    <<highlight "button-sexact-clothes">>
+        <<for _j to 0; _j lt _pacts.length; _j++>>
+            <<set _pact to _pacts[_j]>>
+            <<capture _pact,_partner,_tanret,_tq>>
+                <<if setup.Tanning.can_order_partner_action($pc, _partner, _pact)>>
+                    <<capture _pact,_partner>>
+                        <<set _plabel to setup.Tanning.partner_action_button_label(_partner, _pact)>>
+                        <div class="tan-exhib-action">
+                            <<link _plabel _tanret>>
+                                <<set _pfx to setup.Tanning.apply_partner_tan_action($pc, _partner, _pact, "tanning")>>
+                                <<if _pfx.msg>><<set $tandisplacemsg to _pfx.msg>><</if>>
+                                <<advtime _tq Relaxation Attention>>
+                            <</link>>
+                            <<set _pmeta to setup.Tanning.format_tan_action_meta(_pact)>>
+                            <<if _pmeta>> · <<print _pmeta>><</if>> <<dtime _tq>>
+                        </div>
+                    <</capture>>
+                <<else>>
+                    <div class="tan-exhib-action">
+                        <span class="disabled-action"><<print setup.Tanning.partner_action_button_label(_partner, _pact)>><<if _pact.exhib_req gt 0>> · Need Exhib <<print _pact.exhib_req>> or higher Dominance<</if>></span>
+                    </div>
+                <</if>>
+            <</capture>>
+        <</for>>
+    <</highlight>>
+<</widget>>
+
+<<widget "tandexhibguestmenu">>
+    <<set _exhibguests to setup.Tanning.get_exhib_self_tan_guests($pc)>>
+    <<if $tanpose and _exhibguests.length gt 0>>
+    <<for _guest range _exhibguests>>
+        <div class="tan-exhib-adjust tan-exhib-partner">
+            <div class="tan-exhib-adjust-title"><<anonorfullname _guest>> on your towel</div>
+            <div class="tan-exhib-legend"><<anonorfirstname _guest>> is choosing their own exposure — within their comfort (Exhib <<print setup.people.skill_level(_guest, "Exhibitionism")>>).</div>
+        </div>
+    <</for>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibpartnermenu">>
+    <<set _controlled to setup.Tanning.get_controlled_tan_partners()>>
+    <<if $tanpose and _controlled.length gt 0>>
+    <<for _partner range _controlled>>
+        <<set _pacts to setup.Tanning.get_partner_menu_actions(_partner, "tanning")>>
+        <<if _pacts.length gt 0>>
+        <div class="tan-exhib-adjust tan-exhib-partner">
+            <div class="tan-exhib-adjust-title">Adjust <<anonorfullname _partner>>'s outfit</div>
+            <div class="tan-exhib-legend">Your controlled partner will obey — if they're bold enough. ▲ Show more · ▼ Cover up.</div>
+            <div class="tan-exhib-actions">
+                <<if $tanpartnerexpanded and $tanpartnerexpanded is _partner>>
+                    <<tandexhibpartnermenuactions>>
+                    <br>
+                    <<button "Done ordering <<anonorfirstname _partner>>">>
+                        <<unset $tanpartnerexpanded>>
+                        <<goto setup.Tanning.get_tan_passage()>>
+                    <</button>>
+                <<else>>
+                    <<capture _partner>>
+                    <<button "Tell <<anonorfirstname _partner>> to adjust clothing...">>
+                        <<set $tanpartnerexpanded to _partner>>
+                        <<goto setup.Tanning.get_tan_passage()>>
+                    <</button>>
+                    <</capture>>
+                <</if>>
+            </div>
+        </div>
+        <</if>>
+    <</for>>
+    <</if>>
+<</widget>>
+
+<<widget "outaboutexposureoffer">>
+    <<if setup.Tanning.can_offer_out_exposure($pc)>>
+    <br>
+    <<if setup.Tanning.can_offer_pc_out_adjust($pc) and setup.Tanning.can_offer_partner_out_adjust($pc)>>
+        <<link "Adjust clothing (yours or <<anonorfirstname $hangout.partner>>'s)" OutAboutExposure '👀'>>
+            <<set $outaboutreturn to passage()>>
+            <<advtime 1>>
+        <</link>>
+    <<elseif setup.Tanning.can_offer_pc_out_adjust($pc)>>
+        <<link "Adjust your outfit" OutAboutExposure '👀'>>
+            <<set $outaboutreturn to passage()>>
+            <<advtime 1>>
+        <</link>>
+    <<else>>
+        <<link "Adjust <<anonorfirstname $hangout.partner>>'s outfit" OutAboutExposure '👀'>>
+            <<set $outaboutreturn to passage()>>
+            <<advtime 1>>
+        <</link>>
+    <</if>> <<dtime 1>>
+    <br>
+    <</if>>
+<</widget>>
+
+<<widget "hangoutpartneradjustoffer">>
+    <<outaboutexposureoffer>>
+<</widget>>
+
+<<widget "outaboutpcactions">>
+    <<set _ret to setup.Tanning.out_about_adjust_return()>>
+    <<set _pacts to setup.Tanning.get_pc_out_menu_actions($pc)>>
+    <<highlight "button-sexact-clothes">>
+        <<for _j to 0; _j lt _pacts.length; _j++>>
+            <<set _pact to _pacts[_j]>>
+            <<capture _pact,_ret>>
+                <<if _pact.exhib_req is 0 or $pc.skillleveled("Exhibitionism", _pact.exhib_req)>>
+                    <<capture _pact>>
+                        <div class="tan-exhib-action">
+                            <<link _pact.button _ret>>
+                                <<set _pfx to setup.Tanning.apply_pc_out_action($pc, _pact)>>
+                                <<if _pfx.msg>><<set $outaboutmsg to _pfx.msg>><</if>>
+                                <<if _pfx.partnerMsg>><<set $outaboutpartnermsg to _pfx.partnerMsg>><</if>>
+                                <<if _pact.exhib_req gt 0 and (_pact.visible_tags.length gt 0 or (_pact.kind is "legs" and _pact.spread))>>
+                                    <<raiseskill Exhibitionism 1>>
+                                <</if>>
+                                <<advtime 5 Attention>>
+                            <</link>>
+                            <<set _pmeta to setup.Tanning.format_tan_action_meta(_pact)>>
+                            <<if _pmeta>> · <<print _pmeta>><</if>> <<dtime 5>>
+                        </div>
+                    <</capture>>
+                <<else>>
+                    <div class="tan-exhib-action">
+                        <span class="disabled-action"><<print _pact.button>> · Need <<skill Exhibitionism _pact.exhib_req>></span>
+                    </div>
+                <</if>>
+            <</capture>>
+        <</for>>
+    <</highlight>>
+<</widget>>
+
+<<widget "outaboutpartneractions">>
+    <<set _partner to $hangout.partner>>
+    <<set _ret to setup.Tanning.out_about_adjust_return()>>
+    <<set _pacts to setup.Tanning.get_partner_menu_actions(_partner, "out")>>
+    <<highlight "button-sexact-clothes">>
+        <<for _j to 0; _j lt _pacts.length; _j++>>
+            <<set _pact to _pacts[_j]>>
+            <<capture _pact,_partner,_ret>>
+                <<if setup.Tanning.can_order_partner_action($pc, _partner, _pact)>>
+                    <<capture _pact,_partner>>
+                        <<set _plabel to setup.Tanning.partner_action_button_label(_partner, _pact)>>
+                        <div class="tan-exhib-action">
+                            <<link _plabel _ret>>
+                                <<set _pfx to setup.Tanning.apply_partner_tan_action($pc, _partner, _pact, "out")>>
+                                <<if _pfx.msg>><<set $outaboutmsg to _pfx.msg>><</if>>
+                                <<advtime 5 Attention>>
+                            <</link>>
+                            <<set _pmeta to setup.Tanning.format_tan_action_meta(_pact)>>
+                            <<if _pmeta>> · <<print _pmeta>><</if>> <<dtime 5>>
+                        </div>
+                    <</capture>>
+                <<else>>
+                    <div class="tan-exhib-action">
+                        <span class="disabled-action"><<print setup.Tanning.partner_action_button_label(_partner, _pact)>><<if _pact.exhib_req gt 0>> · Won't go that far<</if>></span>
+                    </div>
+                <</if>>
+            <</capture>>
+        <</for>>
+    <</highlight>>
+<</widget>>
+
+<<widget "hangoutpartneradjustactions">>
+    <<outaboutpartneractions>>
+<</widget>>
+
+<<widget "tandexhibwitnessmenu">>
+    <<if setup.Tanning.can_exhibition_tan($pc) and $tanpose>>
+    <<set _witnesses to setup.Tanning.get_active_witness_choices($pc)>>
+    <<if _witnesses.length gt 0>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <div class="tan-exhib-witnesses">
+        <div class="tan-exhib-adjust-title">Onlookers</div>
+        <div class="tan-exhib-legend">▲ Shift to show them more · ▼ Hide from them — hiding usually clears a glance, but bold watchers may take it as an invitation to move closer.</div>
+        <<for _w range _witnesses>>
+            <<capture _w,_tanret,_tq>>
+                <div class="tan-exhib-witness-block">
+                    <div class="tan-exhib-flavor"><<= setup.Tanning.format_tan_witness_wiki(_w)>></div>
+                    <div class="tan-exhib-action">
+                        <<set _showlink to setup.Tanning.menu_link_label("show", _w.witness)>>
+                        <<link _showlink _tanret>>
+                            <<set $tandisplacemsg to setup.Tanning.apply_tease_witness($pc, _w)>>
+                            <<lust _w.witness 15 25>>
+                            <<raiseskill Exhibitionism 1>>
+                            <<advtime _tq Attention>>
+                        <</link>> <<dtime _tq>>
+                    </div>
+                    <div class="tan-exhib-action">
+                        <<set _hidelink to setup.Tanning.menu_link_label("hide", _w.witness)>>
+                        <<link _hidelink _tanret>>
+                            <<set $tandisplacemsg to setup.Tanning.apply_hide_from_witness($pc, _w)>>
+                            <<advtime _tq Attention>>
+                        <</link>> <<dtime _tq>>
+                    </div>
+                </div>
+            <</capture>>
+        <</for>>
+    </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibflavor">>
+    <<if setup.Tanning.can_exhibition_tan($pc)>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<if $tanpose>>
+        <br><br>
+        <div class="tan-exhib-flavor"><<print setup.Tanning.tan_crowd_narration()>></div>
+        <<if setup.Tanning.format_tan_towel_guests()>>
+            <br><br>
+            <div class="tan-exhib-flavor"><<print setup.Tanning.format_tan_towel_guests()>></div>
+        <</if>>
+        <<if $tanguestselfmsg>>
+            <<for _g range Object.keys($tanguestselfmsg)>>
+                <br><br>
+                <div class="tan-exhib-flavor"><<= $tanguestselfmsg[_g]>></div>
+            <</for>>
+            <<unset $tanguestselfmsg>>
+        <</if>>
+    <</if>>
+    <<if $taninvitemsg>>
+        <br><br>
+        <div class="tan-exhib-flavor"><<= $taninvitemsg>></div>
+        <<unset $taninvitemsg>>
+    <</if>>
+    <<if $tanpassmsg>>
+        <br><br>
+        <<print $tanpassmsg>>
+        <<unset $tanpassmsg>>
+    <</if>>
+    <<if $tandisplacemsg>>
+        <br><br>
+        <<= $tandisplacemsg>>
+        <<unset $tandisplacemsg>>
+    <</if>>
+    <<if $tanwitnessextras and $tanwitnessextras.length>>
+        <<for _ew range $tanwitnessextras>>
+            <br><br>
+            <<= setup.Tanning.format_tan_witness_wiki(_ew)>>
+        <</for>>
+        <<unset $tanwitnessextras>>
+    <</if>>
+    <<if $tanwitness>>
+        <br><br>
+        <div class="tan-exhib-flavor"><<= setup.Tanning.format_tan_witness_wiki($tanwitness)>></div>
+        <<unset $tanwitness>>
+    <</if>>
+    <<tandexhibclose>>
+    <<set _dispattn to setup.Tanning.attention_from_displacements($pc)>>
+    <<set _ambth to setup.Tanning.mall_ambient_attention_threshold()>>
+    <<if _dispattn gte _ambth>>
+        <br><br>
+        <<if _dispattn gte _ambth + 4>>
+            The way you've arranged yourself is impossible to ignore. People aren't even pretending not to look.
+        <<elseif _dispattn gte _ambth + 2>>
+            You catch more than a few lingering stares at how boldly you've shifted your clothes.
+        <<else>>
+            Someone definitely noticed how you've adjusted your outfit, even if they're trying to be subtle about it.
+        <</if>>
+    <</if>>
+    <<tandexhibaudience>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibaudience">>
+    <<if setup.Tanning.can_exhibition_tan($pc) and $tanpose and !setup.Tanning.has_valid_close_escalation()>>
+    <<set _targets to setup.Tanning.get_audience_targets($pc)>>
+    <<if _targets.length gt 0>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _teasereq to setup.Tanning.tease_audience_exhib_req($pc)>>
+    <<set _beckonreq to setup.Tanning.beckon_audience_exhib_req($pc)>>
+    <div class="tan-exhib-audience">
+        <div class="tan-exhib-adjust-title">Invite someone closer</div>
+        <div class="tan-exhib-legend">Beckon someone you know (or who's been watching) to your towel. Pleasing/sub inclinations lower the Exhibitionism needed.</div>
+        <<for _tgt range _targets>>
+            <<capture _tgt,_tanret,_teasereq,_beckonreq>>
+                <div class="tan-exhib-action">
+                <<if _tgt.canWave>>
+                    <<set _wavelink to setup.Tanning.menu_link_label("wave", _tgt.name)>>
+                    <<link _wavelink _tanret>>
+                        You lift a lazy hand from your towel and wave. <<anonorfullnamerel _tgt.name>> <<conj _tgt.name wave>> back with a <<if setup.people.likes_pc(_tgt.name)>>grin<<else>>small, uncertain smile<</if>>.
+                        <<socialize 15>> <<dalterneed Attention 10 true>> <<friendship _tgt.name 10>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<dtime _tq>>
+                <</if>>
+                <<if _tgt.canTease>>
+                    <<set _teaselink to setup.Tanning.menu_link_label("tease", _tgt.name)>>
+                    <<link _teaselink _tanret>>
+                        <<set $tandisplacemsg to setup.Tanning.apply_bold_tease_audience($pc, _tgt.name)>>
+                        <<lust _tgt.name 12 22>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tq Attention>>
+                    <</link>> · Exhib <<print _teasereq>> <<dtime _tq>>
+                <<elseif _tgt.familiar>>
+                    <span class="disabled-action"><<print setup.Tanning.menu_link_label("tease", _tgt.name)>> · Need Exhib <<print _teasereq>></span>
+                <</if>>
+                <<if _tgt.canBeckon>>
+                    <<set _beckonlink to setup.Tanning.menu_link_label("beckon", _tgt.name)>>
+                    <<link _beckonlink _tanret>>
+                        <<set $tandisplacemsg to setup.Tanning.apply_beckon_audience($pc, _tgt.name)>>
+                        <<lust _tgt.name 22 38>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tq Attention>>
+                    <</link>> · Exhib <<print _beckonreq>> <<dtime _tq>>
+                <<elseif _tgt.familiar or _tgt.receptive>>
+                    <span class="disabled-action"><<print setup.Tanning.menu_link_label("beckon", _tgt.name)>> · Need Exhib <<print _beckonreq>></span>
+                <</if>>
+                </div>
+            <</capture>>
+        <</for>>
+    </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibclose">>
+    <<if setup.Tanning.has_valid_close_escalation()>>
+    <<if $tanwitnessescalation.finished>>
+        <<tandexhibcloseaftermath>>
+    <<else>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _tp to setup.Tanning.TAN_PLAY_MIN>>
+    <<set _p to $tanwitnessescalation.npc>>
+    <<set _talkreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_TALK_EXHIB, $pc)>>
+    <<set _teasereq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_BODY_TEASE_EXHIB, $pc)>>
+    <<set _touchreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_SELF_TOUCH_EXHIB, $pc)>>
+    <<set _playreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_SELF_PLAY_EXHIB, $pc)>>
+    <<set _showreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_SHOW_MORE_EXHIB, $pc)>>
+    <<set _exposereq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_EXPOSE_EXHIB, $pc)>>
+    <<set _fingerreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_FINGER_EXHIB, $pc)>>
+    <<set _orgasmreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_ORGASM_EXHIB, $pc)>>
+    <<set _canfinger to setup.Tanning.can_close_finger($pc)>>
+    <<set _canorgasm to setup.Tanning.can_close_orgasm($pc)>>
+    <<set _hasexpose to setup.Tanning.close_expose_action($pc)>>
+    <br><br>
+    <div class="tan-exhib-close">
+        <<if $tanwitnessescalation.tier is "grope">>
+            <<anonorfullname _p>> is far too close — <<ps _p>> <<conj _p watch>> you like <<ps _p>> <<conj _p own>> the view.
+        <<else>>
+            <<anonorfullname _p>> has settled near your towel, not even pretending <<ps _p>> isn't watching.
+        <</if>>
+        <<set _npcask to setup.Tanning.maybe_npc_asks_show_more()>>
+        <<if _npcask>>
+            <br><br>
+            <<= _npcask>>
+        <</if>>
+        <<if $tanwitnessescalation.npcAsked>>
+            <br><br>
+            <<capture _tanret,_p,_showreq,_tq>>
+                <<if $pc.skillleveled("Exhibitionism", _showreq)>>
+                    <<link "Give <<po _p>> the better view <<ps _p>> wants" _tanret>>
+                        <<set _cr to setup.Tanning.apply_close_show_more($pc, _p)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<lust _p 18 30>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<skill Exhibitionism _showreq>> <<dtime _tq>>
+                    <br>
+                    <<link "Smile and cover up anyway" _tanret>>
+                        <<set _cr to setup.Tanning.apply_close_tease_denial($pc, _p)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<lust _p 5 12>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<dtime _tq>>
+                    <br>
+                <<else>>
+                    <span class="disabled-action">Show <<po _p>> more (Need <<skill Exhibitionism _showreq>>)</span>
+                    <br>
+                <</if>>
+            <</capture>>
+        <</if>>
+        <br><br>
+        Talk to <<anonorfullnamerel _p>>:
+        <br>
+        <<capture _tanret,_p,_talkreq,_tq>>
+            <<if $pc.skillleveled("Exhibitionism", _talkreq)>>
+                <<link "\"Like what you see?\"" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_talk($pc, _p, "like")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 8 15>>
+                    <<advtime _tq Attention>>
+                <</link>> <<skill Exhibitionism _talkreq>> <<dtime _tq>>
+                <br>
+                <<link "\"What do you think?\"" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_talk($pc, _p, "think")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 8 15>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+                <<link "\"Want me to show more?\"" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_talk($pc, _p, "more")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 12 20>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <<else>>
+                <span class="disabled-action">Talk to <<anonorfullnamerel _p>> (Need <<skill Exhibitionism _talkreq>>)</span>
+                <br>
+            <</if>>
+        <</capture>>
+        Tease with your body:
+        <br>
+        <<capture _tanret,_p,_teasereq,_tq>>
+            <<if $pc.skillleveled("Exhibitionism", _teasereq)>>
+                <<link "Run your hands over your skin" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_body_tease($pc, _p, "trace")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 12 22>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tq Attention>>
+                <</link>> <<skill Exhibitionism _teasereq>> <<dtime _tq>>
+                <br>
+                <<link "Squeeze your chest where <<ps _p>> can see" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_body_tease($pc, _p, "chest")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 14 24>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+                <<link "Arch and present yourself" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_body_tease($pc, _p, "hips")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 12 20>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <<else>>
+                <span class="disabled-action">Tease with your body (Need <<skill Exhibitionism _teasereq>>)</span>
+                <br>
+            <</if>>
+        <</capture>>
+        Touch yourself:
+        <br>
+        <<capture _tanret,_p,_touchreq,_playreq,_exposereq,_fingerreq,_orgasmreq,_tq,_tp>>
+            <<if $pc.skillleveled("Exhibitionism", _touchreq)>>
+                <<link "Slide your hand along your thigh" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_self_touch($pc, _p, "thigh")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 15 25>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tq Attention>>
+                <</link>> <<skill Exhibitionism _touchreq>> <<dtime _tq>>
+                <br>
+                <<link "Rub yourself through your clothes" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_self_touch($pc, _p, "crotch")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 18 30>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <<else>>
+                <span class="disabled-action">Touch yourself (Need <<skill Exhibitionism _touchreq>>)</span>
+                <br>
+            <</if>>
+            <<if $pc.skillleveled("Exhibitionism", _playreq)>>
+                <<link "Play with yourself where <<ps _p>> can see" _tanret>>
+                    <<set _cr to setup.Tanning.apply_close_self_touch($pc, _p, "play")>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 25 40>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tp Attention>>
+                    <<bepleasing>>
+                <</link>> <<skill Exhibitionism _playreq>> <<dtime _tp>>
+                <br>
+            <<else>>
+                <span class="disabled-action">Play with yourself openly (Need <<skill Exhibitionism _playreq>>)</span>
+                <br>
+            <</if>>
+            <<if _hasexpose>>
+                <<if $pc.skillleveled("Exhibitionism", _exposereq)>>
+                    <<link "Pull your bottoms down for <<po _p>>" _tanret>>
+                        <<set _cr to setup.Tanning.apply_close_pull_down($pc, _p)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<lust _p 30 48>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tq Attention>>
+                    <</link>> <<skill Exhibitionism _exposereq>> <<dtime _tq>>
+                    <br>
+                <<else>>
+                    <span class="disabled-action">Pull your bottoms down for <<anonorfullnamerel _p>> (Need <<skill Exhibitionism _exposereq>>)</span>
+                    <br>
+                <</if>>
+            <</if>>
+            <<if _canfinger>>
+                <<if $pc.skillleveled("Exhibitionism", _fingerreq)>>
+                    <<link "Finger yourself where <<ps _p>> can see everything" _tanret>>
+                        <<set _cr to setup.Tanning.apply_close_finger($pc, _p)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<lust _p 35 55>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tp Attention>>
+                    <</link>> <<skill Exhibitionism _fingerreq>> <<dtime _tp>>
+                    <br>
+                <<else>>
+                    <span class="disabled-action">Finger yourself openly (Need <<skill Exhibitionism _fingerreq>>)</span>
+                    <br>
+                <</if>>
+            <</if>>
+            <<if _canorgasm>>
+                <<if $pc.skillleveled("Exhibitionism", _orgasmreq)>>
+                    <<link "Cum right in front of <<po _p>>" _tanret>>
+                        <<set _cr to setup.Tanning.apply_close_orgasm($pc, _p)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<orgasm $pc>>
+                        <<run setup.record_sex_memory("PC", "masturbation")>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<lust _p 45 65>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tp Attention>>
+                    <</link>> <<skill Exhibitionism _orgasmreq>> <<dtime _tp>>
+                    <br>
+                <<else>>
+                    <span class="disabled-action">Cum in front of <<anonorfullnamerel _p>> (Need <<skill Exhibitionism _orgasmreq>>)</span>
+                    <br>
+                <</if>>
+            <<elseif $pc.skillleveled("Exhibitionism", _orgasmreq)>>
+                <span class="disabled-action">Cum in front of <<anonorfullnamerel _p>> (build Arousal higher first)</span>
+                <br>
+            <</if>>
+        <</capture>>
+        <<tandexhibcrossovermenu>>
+        <<capture _tanret,_p,_tq>>
+            <<if $tanwitnessescalation.tier is "grope">>
+                <<link "Sit up and make <<po _p>> stop" _tanret>>
+                    <<unset $tanwitnessescalation>>
+                    <<dalterneed Humiliation 25 true>> <<dalterneed Composure 20 true>>
+                    <<advtime _tq>>
+                <</link>> <<dtime _tq>>
+                <br>
+                <<link "Freeze and let it happen" _tanret>>
+                    <<unset $tanwitnessescalation>>
+                    <<lust _p 30 45>>
+                    <<dalterneed Arousal 50 true>> <<dalterneed Humiliation 40 true>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tp Attention>>
+                <</link>> <<dtime _tp>>
+                <br>
+            <</if>>
+            <<link "Tell <<po _p>> to get lost" _tanret>>
+                <<unset $tanwitnessescalation>>
+                <<dalterneed Composure 15 true>>
+                <<advtime _tq>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<link "Ignore <<po _p>> and keep tanning" _tanret>>
+                <<lust _p 15 25>>
+                <<dalterneed Arousal 25 true>> <<dalterneed Attention 15 true>>
+            <</link>>
+        <</capture>>
+    </div>
+    <</if>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibcloseaftermath">>
+    <<if setup.Tanning.has_valid_close_escalation() and $tanwitnessescalation.finished>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _tp to setup.Tanning.TAN_PLAY_MIN>>
+    <<set _p to $tanwitnessescalation.npc>>
+    <<set _stance to setup.Tanning.close_npc_stance(_p).stance>>
+    <<set _hasmess to setup.Tanning.pc_has_aftermath_mess($pc)>>
+    <<set _canhelp to setup.Tanning.can_aftermath_help_npc_finish(_p)>>
+    <<set _cancumon to setup.Tanning.can_aftermath_npc_cum_on(_p)>>
+    <br><br>
+    <div class="tan-exhib-aftermath">
+        <span class="small">The show's over — <<anonorfullname _p>> is still right there, taking you in.</span>
+        <br><br>
+        <span class="bold">Talk</span>
+        <br>
+        <<capture _tanret,_p,_tq>>
+            <<link "\"Did you like watching me?\"" _tanret>>
+                <<set _cr to setup.Tanning.apply_aftermath_ask_liked($pc, _p)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<lust _p 8 15>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<link "\"Thank you for watching.\" — fix up and leave" _tanret>>
+                <<set _cr to setup.Tanning.apply_aftermath_thank_leave($pc, _p)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<lust _p 5 10>>
+                <<advtime _tq Composure>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<link "\"Okay, I have to go.\" — fix up and leave <<po _p>> hanging" _tanret>>
+                <<set _cr to setup.Tanning.apply_aftermath_abrupt_leave($pc, _p)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                <<advtime _tq>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<if _stance is "lover">>
+                <<link "\"Want to do that again sometime?\"" _tanret>>
+                    <<set _cr to setup.Tanning.apply_aftermath_ask_again($pc, _p)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<lust _p 12 22>> <<romance _p 15>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <</if>>
+            <<if _stance is "bully" or _stance is "enemy" or _stance is "rival">>
+                <<link "\"Going to tell anyone about this?\"" _tanret>>
+                    <<set _cr to setup.Tanning.apply_aftermath_ask_tell_anyone($pc, _p)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<lust _p 10 18>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <</if>>
+        <</capture>>
+        <br>
+        <span class="bold">Actions</span>
+        <br>
+        <<capture _tanret,_p,_hasmess,_canhelp,_cancumon,_tq,_tp>>
+            <<link "Fix your clothes and leave without a word" _tanret>>
+                <<set _cr to setup.Tanning.apply_aftermath_silent_leave($pc, _p)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                <<advtime _tq Composure>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<if _hasmess>>
+                <<link "Hold your hand out so <<ps _p>> can wipe you clean" _tanret>>
+                    <<set _cr to setup.Tanning.apply_aftermath_offer_hand_clean($pc, _p)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<lust _p 15 28>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+                <<link "Beckon <<po _p>> to lick you clean" _tanret>>
+                    <<set _cr to setup.Tanning.apply_aftermath_lick_clean($pc, _p)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                    <<lust _p 25 42>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tp Attention>>
+                <</link>> <<dtime _tp>>
+                <br>
+            <</if>>
+            <<if _canhelp>>
+                <<link "Help <<po _p>> finish too" _tanret>>
+                    <<set _cr to setup.Tanning.apply_aftermath_help_npc_finish($pc, _p)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _p 35 55>>
+                    <<advtime _tp Attention>>
+                <</link>> <<dtime _tp>>
+                <br>
+            <</if>>
+            <<if _cancumon>>
+                <<tandexhibcumonmenu>>
+            <</if>>
+            <<tandexhibcrossoveraftermath>>
+        <</capture>>
+        <br>
+        <span class="bold">Send <<po _p>> away</span>
+        <br>
+        <<capture _tanret,_p,_tq>>
+            <<link "That was fun — now shoo, you want more visitors" _tanret>>
+                <<set _cr to setup.Tanning.apply_aftermath_shoo_nice($pc, _p)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _p 5 12>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+        <</capture>>
+    </div>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibcrossoveractions">>
+    <<set _sub to _args[0] || $tancrossoverexpanded>>
+    <<set _w to _args[1] || $tanwitnessescalation.npc>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _tp to setup.Tanning.TAN_PLAY_MIN>>
+    <<set _teasereq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_CROSSOVER_TEASE_EXHIB, $pc)>>
+    <<set _touchreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_CROSSOVER_TOUCH_EXHIB, $pc)>>
+    <<set _playreq to setup.Tanning.close_exhib_req(setup.Tanning.CLOSE_CROSSOVER_PLAY_EXHIB, $pc)>>
+    <<set _pacts to setup.Tanning.get_partner_menu_actions(_sub, "tanning")>>
+    <<if _pacts.length gt 0>>
+        <span class="small">Adjust <<anonorfirstname _sub>> for <<anonorfirstname _w>>:</span>
+        <br>
+        <<highlight "button-sexact-clothes">>
+            <<for _j to 0; _j lt _pacts.length; _j++>>
+                <<set _pact to _pacts[_j]>>
+                <<capture _pact,_sub,_w,_tanret,_tq>>
+                    <<if setup.Tanning.can_order_partner_action($pc, _sub, _pact)>>
+                        <<capture _pact,_sub,_w>>
+                            <<set _plabel to setup.Tanning.partner_action_button_label(_sub, _pact)>>
+                            <div class="tan-exhib-action">
+                                <<link _plabel _tanret>>
+                                    <<set _pfx to setup.Tanning.apply_crossover_order_partner_exposure($pc, _w, _sub, _pact)>>
+                                    <<if _pfx.msg>><<set $tandisplacemsg to _pfx.msg>><</if>>
+                                    <<advtime _tq Attention>>
+                                <</link>> <<dtime _tq>>
+                            </div>
+                        <</capture>>
+                    <<else>>
+                        <div class="tan-exhib-action">
+                            <span class="disabled-action"><<print setup.Tanning.partner_action_button_label(_sub, _pact)>></span>
+                        </div>
+                    <</if>>
+                <</capture>>
+            <</for>>
+        <</highlight>>
+        <br>
+    <</if>>
+    <span class="small">Have <<anonorfirstname _sub>> tease <<anonorfirstname _w>>:</span>
+    <br>
+    <<capture _tanret,_sub,_w,_teasereq,_tq>>
+        <<if setup.Tanning.can_order_partner_crossover($pc, _sub, _teasereq)>>
+            <<link "Tell <<anonorfirstname _sub>> to run <<pp _sub>> hands over <<pp _sub>> skin" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_tease($pc, _w, _sub, "trace")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 12 22>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tq Attention>>
+            <</link>> <<skill Exhibitionism _teasereq>> <<dtime _tq>>
+            <br>
+            <<link "Tell <<anonorfirstname _sub>> to squeeze <<pp _sub>> chest for <<po _w>>" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_tease($pc, _w, _sub, "chest")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 14 24>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<link "Tell <<anonorfirstname _sub>> to arch and present <<po _sub>>self" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_tease($pc, _w, _sub, "hips")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 12 20>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+        <<else>>
+            <span class="disabled-action">Tease orders for <<anonorfirstname _sub>> (won't go that far)</span>
+            <br>
+        <</if>>
+    <</capture>>
+    <span class="small">Have <<anonorfirstname _sub>> touch <<po _sub>>self for <<anonorfirstname _w>>:</span>
+    <br>
+    <<capture _tanret,_sub,_w,_touchreq,_playreq,_tq,_tp>>
+        <<if setup.Tanning.can_order_partner_crossover($pc, _sub, _touchreq)>>
+            <<link "Tell <<anonorfirstname _sub>> to slide a hand along <<pp _sub>> thigh" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_touch($pc, _w, _sub, "thigh")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 15 25>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tq Attention>>
+            <</link>> <<skill Exhibitionism _touchreq>> <<dtime _tq>>
+            <br>
+            <<link "Tell <<anonorfirstname _sub>> to rub <<po _sub>>self through <<pp _sub>> clothes" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_touch($pc, _w, _sub, "crotch")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 18 30>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+        <<else>>
+            <span class="disabled-action">Touch orders for <<anonorfirstname _sub>> (won't go that far)</span>
+            <br>
+        <</if>>
+        <<if setup.Tanning.can_order_partner_crossover($pc, _sub, _playreq)>>
+            <<link "Tell <<anonorfirstname _sub>> to play with <<po _sub>>self where <<ps _w>> can see" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_order_partner_touch($pc, _w, _sub, "play")>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                <<lust _w 25 40>>
+                <<raiseskill Exhibitionism 1>>
+                <<advtime _tp Attention>>
+            <</link>> <<skill Exhibitionism _playreq>> <<dtime _tp>>
+            <br>
+        <<else>>
+            <span class="disabled-action">Open self-touch for <<anonorfirstname _sub>> (won't go that far)</span>
+            <br>
+        <</if>>
+    <</capture>>
+    <<if setup.Tanning.can_crossover_watcher_jerk(_w)>>
+        <span class="small">Between <<anonorfirstname _sub>> and <<anonorfirstname _w>>:</span>
+        <br>
+        <<capture _tanret,_sub,_w,_tq,_tp>>
+            <<link "Tell <<anonorfirstname _sub>> to stroke <<po _w>>" _tanret>>
+                <<set _cr to setup.Tanning.apply_crossover_sub_stroke_watcher($pc, _w, _sub)>>
+                <<set $tandisplacemsg to _cr.msg>>
+                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                <<lust _w 22 35>>
+                <<advtime _tq Attention>>
+            <</link>> <<dtime _tq>>
+            <br>
+            <<if setup.Tanning.can_crossover_pc_jerk_onto_sub(_w, _sub)>>
+                <<if !$tancrossoverpcjerksub or $tancrossoverpcjerksub isnot _sub>>
+                    <<link "Jerk <<anonorfirstname _w>> onto <<anonorfirstname _sub>> yourself..." _tanret>>
+                        <<set $tancrossoverpcjerksub to _sub>>
+                    <</link>>
+                    <br>
+                <<else>>
+                    <span class="small">Where do you want to make <<anonorfirstname _w>> finish on <<anonorfirstname _sub>>?</span>
+                    <br>
+                    <<set _pcjerkopts to setup.Tanning.get_crossover_cum_on_sub_options(_w, _sub)>>
+                    <<for _opt range _pcjerkopts>>
+                        <<capture _opt,_sub,_w>>
+                            <<link _opt.label _tanret>>
+                                <<set _cr to setup.Tanning.apply_crossover_pc_jerk_onto_sub($pc, _w, _sub, _opt.id)>>
+                                <<set $tandisplacemsg to _cr.msg>>
+                                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                                <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                                <<lust _w 30 45>>
+                                <<raiseskill Exhibitionism 1>>
+                                <<advtime _tp Attention>>
+                                <<unset $tancrossoverpcjerksub>>
+                            <</link>> <<dtime _tp>>
+                            <br>
+                        <</capture>>
+                    <</for>>
+                    <<link "Never mind" _tanret>>
+                        <<unset $tancrossoverpcjerksub>>
+                    <</link>>
+                    <br>
+                    <<set _refusehint to setup.Tanning.sub_internal_creampie_refuse_hint($pc, _sub, _w)>>
+                    <<if _refusehint>>
+                        <span class="disabled-action small">Cum inside <<anonorfirstname _sub>> — <<print _refusehint>></span>
+                        <br>
+                    <</if>>
+                <</if>>
+            <</if>>
+            <<if setup.Tanning.can_crossover_watcher_cum_on_sub(_w, _sub)>>
+                <<if !$tancrossovercumonsub or $tancrossovercumonsub isnot _sub>>
+                    <<link "Let <<anonorfirstname _w>> cum on <<anonorfirstname _sub>>..." _tanret>>
+                        <<set $tancrossovercumonsub to _sub>>
+                    <</link>>
+                    <br>
+                <<else>>
+                    <span class="small">Where should <<anonorfirstname _w>> finish on <<anonorfirstname _sub>>?</span>
+                    <br>
+                    <<set _cumsubopts to setup.Tanning.get_crossover_cum_on_sub_options(_w, _sub)>>
+                    <<for _opt range _cumsubopts>>
+                        <<capture _opt,_sub,_w>>
+                            <<link _opt.label _tanret>>
+                                <<set _cr to setup.Tanning.apply_crossover_watcher_cum_on_sub($pc, _w, _sub, _opt.id)>>
+                                <<set $tandisplacemsg to _cr.msg>>
+                                <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                                <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                                <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                                <<lust _w 28 42>>
+                                <<raiseskill Exhibitionism 1>>
+                                <<advtime _tp Attention>>
+                                <<unset $tancrossovercumonsub>>
+                            <</link>> <<dtime _tp>>
+                            <br>
+                        <</capture>>
+                    <</for>>
+                    <<link "Never mind" _tanret>>
+                        <<unset $tancrossovercumonsub>>
+                    <</link>>
+                    <br>
+                    <<set _refusehint to setup.Tanning.sub_internal_creampie_refuse_hint($pc, _sub, _w)>>
+                    <<if _refusehint>>
+                        <span class="disabled-action small">Cum inside <<anonorfirstname _sub>> — <<print _refusehint>></span>
+                        <br>
+                    <</if>>
+                <</if>>
+            <</if>>
+            <<if !$tancrossoverjerkpc or $tancrossoverjerkpc isnot _sub>>
+                <<link "Tell <<anonorfirstname _sub>> to jerk <<anonorfirstname _w>> onto you..." _tanret>>
+                    <<set $tancrossoverjerkpc to _sub>>
+                <</link>>
+                <br>
+            <<else>>
+                <span class="small">Where do you want <<anonorfirstname _w>> to finish on you? (includes creampie if you have a vagina)</span>
+                <br>
+                <<set _jerkopts to setup.Tanning.get_crossover_jerk_onto_pc_options(_w, _sub)>>
+                <<for _opt range _jerkopts>>
+                    <<capture _opt,_sub,_w>>
+                        <<link _opt.label _tanret>>
+                            <<set _cr to setup.Tanning.apply_crossover_sub_jerk_onto_pc($pc, _w, _sub, _opt.id)>>
+                            <<set $tandisplacemsg to _cr.msg>>
+                            <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                            <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                            <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                            <<lust _w 30 48>>
+                            <<raiseskill Exhibitionism 1>>
+                            <<advtime _tp Attention>>
+                            <<unset $tancrossoverjerkpc>>
+                        <</link>> <<dtime _tp>>
+                        <br>
+                    <</capture>>
+                <</for>>
+                <<link "Never mind" _tanret>>
+                    <<unset $tancrossoverjerkpc>>
+                <</link>>
+                <br>
+            <</if>>
+        <</capture>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibcrossovermenu">>
+    <<if setup.Tanning.can_tan_crossover($pc, $tanwitnessescalation.npc)>>
+    <<set _w to $tanwitnessescalation.npc>>
+    <<set _subs to setup.Tanning.get_tan_crossover_subs($pc, _w)>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <br><br>
+    <div class="tan-exhib-crossover">
+        <div class="tan-exhib-adjust-title">Use your controlled partner</div>
+        <div class="tan-exhib-legend">With <<anonorfullname _w>> watching, order a sub on your towel to show off, touch themselves, or get between you and your audience. Full subs obey creampies; breeding-kink subs want them; others may refuse unless you dominate them into it.</div>
+        <<for _sub range _subs>>
+            <div class="tan-exhib-partner">
+                <<if $tancrossoverexpanded and $tancrossoverexpanded is _sub>>
+                    <<tandexhibcrossoveractions _sub _w>>
+                    <br>
+                    <<button "Done with <<anonorfirstname _sub>>">>
+                        <<unset $tancrossoverexpanded>>
+                        <<unset $tancrossovercumonsub>>
+                        <<unset $tancrossoverjerkpc>>
+                        <<unset $tancrossoverpcjerksub>>
+                        <<goto _tanret>>
+                    <</button>>
+                <<else>>
+                    <<capture _sub>>
+                    <<button "Put <<anonorfirstname _sub>> to work with <<anonorfirstname _w>>...">>
+                        <<set $tancrossoverexpanded to _sub>>
+                        <<goto _tanret>>
+                    <</button>>
+                    <</capture>>
+                <</if>>
+            </div>
+        <</for>>
+    </div>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibcrossoveraftermath">>
+    <<if setup.Tanning.can_tan_crossover($pc, _p)>>
+    <<set _w to _p>>
+    <<set _subs to setup.Tanning.get_tan_crossover_subs($pc, _w)>>
+    <<set _tanret to setup.Tanning.get_tan_passage()>>
+    <<set _tq to setup.Tanning.TAN_QUICK_MIN>>
+    <<set _tp to setup.Tanning.TAN_PLAY_MIN>>
+    <br>
+    <span class="bold">Involve your partner</span>
+    <br>
+    <<for _sub range _subs>>
+        <<capture _sub,_w,_tanret,_tq,_tp>>
+            <<if setup.Tanning.can_crossover_watcher_jerk(_w)>>
+                <<link "Tell <<anonorfirstname _sub>> to stroke <<po _w>>" _tanret>>
+                    <<set _cr to setup.Tanning.apply_crossover_sub_stroke_watcher($pc, _w, _sub)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<lust _w 22 35>>
+                    <<advtime _tq Attention>>
+                <</link>> <<dtime _tq>>
+                <br>
+            <</if>>
+            <<if setup.Tanning.can_crossover_pc_jerk_onto_sub(_w, _sub)>>
+                <<set _pcjerkopts to setup.Tanning.get_crossover_cum_on_sub_options(_w, _sub)>>
+                <<if _pcjerkopts.length gt 0>>
+                    <<set _pjopt to _pcjerkopts[0]>>
+                    <<link "Jerk <<anonorfirstname _w>> onto <<anonorfirstname _sub>> yourself (<<print _pjopt.label>>)" _tanret>>
+                        <<set _cr to setup.Tanning.apply_crossover_pc_jerk_onto_sub($pc, _w, _sub, _pjopt.id)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<lust _w 30 45>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tp Attention>>
+                    <</link>> <<dtime _tp>>
+                    <br>
+                <</if>>
+            <</if>>
+            <<if setup.Tanning.can_crossover_watcher_cum_on_sub(_w, _sub)>>
+                <<set _cumsubopts to setup.Tanning.get_crossover_cum_on_sub_options(_w, _sub)>>
+                <<if _cumsubopts.length gt 0>>
+                    <<set _opt to _cumsubopts[0]>>
+                    <<link "Let <<anonorfirstname _w>> cum on <<anonorfirstname _sub>> (<<print _opt.label>>)" _tanret>>
+                        <<set _cr to setup.Tanning.apply_crossover_watcher_cum_on_sub($pc, _w, _sub, _opt.id)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<lust _w 28 42>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tp Attention>>
+                    <</link>> <<dtime _tp>>
+                    <br>
+                <</if>>
+            <</if>>
+            <<set _jerkopts to setup.Tanning.get_crossover_jerk_onto_pc_options(_w, _sub)>>
+            <<if _jerkopts.length gt 0>>
+                <<set _jopt to _jerkopts[0]>>
+                <<link "Tell <<anonorfirstname _sub>> to jerk <<po _w>> — <<print _jopt.label>>" _tanret>>
+                    <<set _cr to setup.Tanning.apply_crossover_sub_jerk_onto_pc($pc, _w, _sub, _jopt.id)>>
+                    <<set $tandisplacemsg to _cr.msg>>
+                    <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                    <<if _cr.attention>><<dalterneed Attention _cr.attention true>><</if>>
+                    <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                    <<lust _w 30 48>>
+                    <<raiseskill Exhibitionism 1>>
+                    <<advtime _tp Attention>>
+                <</link>> <<dtime _tp>>
+                <br>
+            <</if>>
+        <</capture>>
+    <</for>>
+    <</if>>
+<</widget>>
+
+<<widget "tandexhibcumonmenu">>
+    <<if setup.Tanning.can_aftermath_npc_cum_on(_p)>>
+    <<set _cumopts to setup.Tanning.get_aftermath_cum_on_options($pc, _p)>>
+    <<if _cumopts.length gt 0>>
+    <<capture _tanret,_p,_tp,_cumopts>>
+        <<if !$tancumonexpanded>>
+            <<link "Let <<po _p>> move in close and cum on you..." _tanret>>
+                <<set $tancumonexpanded to true>>
+            <</link>>
+            <br>
+        <<else>>
+            <span class="small">Where do you want <<po _p>> to finish?</span>
+            <br>
+            <<for _opt range _cumopts>>
+                <<capture _opt>>
+                    <<link _opt.label _tanret>>
+                        <<set _cr to setup.Tanning.apply_aftermath_let_npc_cum_on($pc, _p, _opt.id)>>
+                        <<set $tandisplacemsg to _cr.msg>>
+                        <<if _cr.humiliation>><<dalterneed Humiliation _cr.humiliation true>><</if>>
+                        <<if _cr.arousal>><<dalterneed Arousal _cr.arousal true>><</if>>
+                        <<lust _p 30 48>>
+                        <<raiseskill Exhibitionism 1>>
+                        <<advtime _tp Attention>>
+                        <<set $tancumonexpanded to false>>
+                    <</link>> <<dtime _tp>>
+                    <br>
+                <</capture>>
+            <</for>>
+            <<link "Never mind" _tanret>>
+                <<set $tancumonexpanded to false>>
+            <</link>>
+            <br>
+        <</if>>
+    <</capture>>
+    <</if>>
+    <</if>>
+<</widget>>

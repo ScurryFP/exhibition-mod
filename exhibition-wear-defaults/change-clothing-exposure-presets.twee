@@ -1,0 +1,53 @@
+<<if setup.ExhibitionAdjustment.menu_visible($pc) and setup.ExhibitionAdjustment.save_exposure_preset>>
+    <tr><td class="clothing-table-item" colspan=2><b>Saved exposure presets</b> <span class="small">(strap tweaks and displacement — separate from saved outfits)</span></td></tr>
+    <tr><td colspan=2>
+        <div class="outfit-menu-container nokeys">
+            <div class="outfit-menu-col-1 nokeys">
+                <<capture _newexposurepresetname>>
+                    <<link "Save current exposure" "ChangeClothingConfig">>
+                        <<set _fx to setup.ExhibitionAdjustment.save_exposure_preset($pc, _newexposurepresetname)>>
+                        <<set $wearresult to _fx.msg>>
+                        <<script>>
+                            Dialog.setup("CURRENT OUTFIT");
+                            Dialog.wiki(Story.get("ChangeClothingConfig").processText());
+                            Dialog.open(null,function(){if(V.dialogCloseFn)V.dialogCloseFn();});
+                        <</script>>
+                    <</link>>
+                <</capture>>
+            </div>
+            <div class="outfit-menu-col-2 nokeys">
+                <<textbox "_newexposurepresetname" "New preset">>
+            </div>
+        </div>
+        <br>
+        <<if $exposure_presets and $exposure_presets.length>>
+            <<for _epreset range $exposure_presets>>
+                <<capture _epreset>>
+                    <<link "Apply «" + _epreset.name + "»" "ChangeClothingConfig">>
+                        <<set _fx to setup.ExhibitionAdjustment.apply_exposure_preset($pc, _epreset.name)>>
+                        <<set $wearresult to _fx.msg>>
+                        <<script>>
+                            Dialog.setup("CURRENT OUTFIT");
+                            Dialog.wiki(Story.get("ChangeClothingConfig").processText());
+                            Dialog.open(null,function(){if(V.dialogCloseFn)V.dialogCloseFn();});
+                        <</script>>
+                    <</link>>
+                    <<capture _epreset>>
+                        <<link "(delete)" "ChangeClothingConfig">>
+                            <<run setup.ExhibitionAdjustment.delete_exposure_preset(_epreset.name)>>
+                            <<set $wearresult to "Deleted exposure preset «" + _epreset.name + "».">>
+                            <<script>>
+                                Dialog.setup("CURRENT OUTFIT");
+                                Dialog.wiki(Story.get("ChangeClothingConfig").processText());
+                                Dialog.open(null,function(){if(V.dialogCloseFn)V.dialogCloseFn();});
+                            <</script>>
+                        <</link>>
+                    <</capture>>
+                    <br>
+                <</capture>>
+            <</for>>
+        <<else>>
+            <span class="small">No exposure presets saved yet. Tweak exposure above, then save a preset to re-apply later.</span>
+        <</if>>
+    </td></tr>
+<</if>>

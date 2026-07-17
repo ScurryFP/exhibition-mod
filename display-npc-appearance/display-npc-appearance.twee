@@ -1,0 +1,60 @@
+:: DisplayNPCAppearanceWidgets [widget nobr]
+
+<<widget "displaynpcappearance">>
+<<set _npc to _args[0]>>
+<<if !_npc>>
+    <span class="notice">No appearance data.</span>
+<<elseif _anon and !_relwith>>
+    You're not sure enough about who this is to study how they look.
+<<else>>
+    <<run setup.NpcAppearance.prepare(_npc)>>
+    <<set _npcappearancesubject to _npc.person || _npc.name>>
+    <<set $npcappearancesubject to _npcappearancesubject>>
+    <div class="npc-appearance-tab">
+        <div class="npc-appearance-mirror-col">
+            <div id="npc-appearance-bg-host" class="npc-appearance-bg-host"></div>
+            <div id="npc-appearance-stage" class="exhib-mirror-stage npc-appearance-stage" data-exhib-mirror="npc">
+                <canvas id="npc-appearance-canvas" width="256" height="512" aria-label="NPC full-body appearance mirror"></canvas>
+            </div>
+            <div class="npc-appearance-mirror-note">
+                <span class="small">Full-body paperdoll (body, face, clothes). Use BG if line art is hard to see. Silhouette only if render fails.</span>
+            </div>
+        </div>
+        <div class="npc-appearance-info-col">
+            <div class="npc-appearance-meta">
+                <<set _exhibsum to setup.NpcAppearance.exhibition_summary(_npc)>>
+                <<if _exhibsum>>
+                    <div><<print _exhibsum>></div>
+                <</if>>
+                <<set _swimsum to setup.NpcAppearance.swimwear_summary(_npc)>>
+                <<if _swimsum>>
+                    <div><<print _swimsum>></div>
+                <</if>>
+            </div>
+            <<set _exhibchips to "">>
+            <<if setup.ExhibitionAdjustment and setup.ExhibitionAdjustment.format_clothing_status_exposure>>
+                <<set _exhibchips to setup.ExhibitionAdjustment.format_clothing_status_exposure(_npc)>>
+            <</if>>
+            <<if _exhibchips>>
+                <div class="npc-appearance-exposure">
+                    <strong>Exposure</strong>
+                    <<print _exhibchips>>
+                </div>
+            <<else>>
+                <div class="npc-appearance-exposure">
+                    <span class="small">No notable exposure adjustments right now.</span>
+                </div>
+            <</if>>
+            <div class="npc-appearance-tan">
+                <<if setup.NpcTanning and setup.NpcTanning.format_summary>>
+                    <<print setup.NpcTanning.format_summary(_npc)>>
+                <<else>>
+                    <span class="small">Tan tracking unavailable.</span>
+                <</if>>
+            </div>
+            <<npcfacefeatures _npcappearancesubject>>
+        </div>
+    </div>
+    <<script>>setup.NpcAppearance.scheduleMirrorPaint();<</script>>
+<</if>>
+<</widget>>

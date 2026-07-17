@@ -1,0 +1,38 @@
+{
+  "id": "example-base-overlay",
+  "type": "base-overlay",
+  "name": "Example Hi-Res Base Overlay (template)",
+  "description": "Copy this folder, add body_512.png / body_2048.png per pose, rebake. Disabled until PNGs exist.",
+  "enabled": false,
+  "overlays": [
+    {
+      "layer": "body",
+      "poses": {
+        "front": {
+          "sources": {
+            "512": "mods/_example-base-overlay/assets/poses/front/body_512.png",
+            "2048": "mods/_example-base-overlay/assets/poses/front/body_2048.png"
+          }
+        },
+        "back": {
+          "sources": {
+            "512": "mods/_example-base-overlay/assets/poses/back/body_512.png",
+            "2048": "mods/_example-base-overlay/assets/poses/back/body_2048.png"
+          }
+        },
+        "on_back": {
+          "sources": {
+            "512": "mods/_example-base-overlay/assets/poses/on_back/body_512.png",
+            "2048": "mods/_example-base-overlay/assets/poses/on_back/body_2048.png"
+          }
+        },
+        "on_stomach": {
+          "sources": {
+            "512": "mods/_example-base-overlay/assets/poses/on_stomach/body_512.png",
+            "2048": "mods/_example-base-overlay/assets/poses/on_stomach/body_2048.png"
+          }
+        }
+      }
+    }
+  ]
+}

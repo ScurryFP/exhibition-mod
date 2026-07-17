@@ -1,0 +1,25 @@
+:: HangoutPartnerAdjust [hangout nobr noevents]
+<<set _partner to $hangout.partner>>
+<<set _ret to setup.Tanning.hangout_partner_adjust_return()>>
+<<if !setup.Tanning.can_offer_hangout_partner_adjust()>>
+    <<link "Back" _ret>><</link>>
+<<else>>
+You pull <<anonorfullname _partner>> aside for a moment.
+<br><br>
+<<if $hangoutpartnermsg>>
+    <<= $hangoutpartnermsg>>
+    <<unset $hangoutpartnermsg>>
+    <br><br>
+<</if>>
+<div class="tan-exhib-adjust tan-exhib-partner">
+    <div class="tan-exhib-adjust-title">Adjust <<anonorfullname _partner>>'s outfit</div>
+    <div class="tan-exhib-legend">Order your controlled partner to shift, hike, or fix what they're wearing. ▲ Show more · ▼ Cover up.</div>
+    <div class="tan-exhib-actions">
+        <<hangoutpartneradjustactions>>
+    </div>
+</div>
+<br>
+<<link "Done adjusting" _ret>>
+    <<advtime 2>>
+<</link>> <<dtime 2>>
+<</if>>

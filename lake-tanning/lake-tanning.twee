@@ -1,0 +1,153 @@
+:: LakeTanMenu [nobr]
+You claim a sunny patch of sand by the lake. How do you want to lay out?
+<br><br>
+<<set _lake to "UniversityLakeBeach">>
+<<set _link to {text: "Tan in your clothes", link: "LakeTanClothed", emoji: '🧴'}>>
+<<link _link>><<set $malltanning to "clothed">><<set $tanninglocation to _lake>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "clothed")>><<unset $malltaneventfired>><<advtime 30 Relaxation>><<run setup.Tanning.apply_session($pc)>><</link>> <<dtime 30>> <<dalterneed Relaxation 40>>
+<br>
+<<set _qlink to {text: "Quick sun session in your clothes", link: "LakeTanClothed", emoji: '🧴'}>>
+<<link _qlink>><<set $malltanning to "clothed">><<set $tanninglocation to _lake>><<set $tanningduration to 15>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "clothed")>><<unset $malltaneventfired>><<advtime 15 Relaxation>><<run setup.Tanning.apply_session($pc, {session_minutes: 15})>><</link>> <<dtime 15>> <<dalterneed Relaxation 25>>
+<br>
+<<if $pc.wearing_some_swimwear()>>
+    <<set _exhibreq to setup.SwimwearExhibition.swimwear_requirement($pc, _lake, _lake, "Campus")>>
+    <<set _attn to setup.SwimwearExhibition.swimwear_attention_score($pc, _lake, _lake, "Campus")>>
+    <<if $pc.skillleveled("Exhibitionism", _exhibreq)>>
+        <<set _link to {text: "Tan in your swimwear", link: "LakeTanSwimwear", emoji: '👙'}>>
+        <<link _link>><<set $malltanning to "swimwear">><<set $tanninglocation to _lake>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "swimwear")>><<unset $malltaneventfired>><<advtime 30 Relaxation>><<run setup.Tanning.apply_session($pc)>><</link>> <<dtime 30>> <<dalterneed Relaxation 50>>
+        <br>
+        <<set _qlink to {text: "Quick tan in your swimwear", link: "LakeTanSwimwear", emoji: '👙'}>>
+        <<link _qlink>><<set $malltanning to "swimwear">><<set $tanninglocation to _lake>><<set $tanningduration to 15>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "swimwear")>><<unset $malltaneventfired>><<advtime 15 Relaxation>><<run setup.Tanning.apply_session($pc, {session_minutes: 15})>><</link>> <<dtime 15>> <<dalterneed Relaxation 35>>
+        <<if _attn gte 5>> <<skill Exhibitionism _exhibreq>> <<raiseskill Exhibitionism 1>><</if>>
+        <br>
+        <<if $pc.wearing_swimwear()>>
+            <<set _link to {text: "Lay out in your bikini", link: "LakeTanBikini", emoji: '☀️'}>>
+            <<link _link>><<set $malltanning to "bikini">><<set $tanninglocation to _lake>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "bikini")>><<unset $malltaneventfired>><<advtime 45 Relaxation Attention>><<run setup.Tanning.apply_session($pc)>><</link>> <<dtime 45>> <<dalterneed Relaxation 60>> <<dalterneed Attention 25>> <<skill Exhibitionism _exhibreq>> <<raiseskill Exhibitionism 1>>
+            <br>
+            <<set _qlink to {text: "Quick lay-out in your bikini", link: "LakeTanBikini", emoji: '☀️'}>>
+            <<link _qlink>><<set $malltanning to "bikini">><<set $tanninglocation to _lake>><<set $tanningduration to 15>><<run setup.Tanning.init_exhib_session()>><<run setup.Tanning.save_outfit($pc, "bikini")>><<unset $malltaneventfired>><<advtime 15 Relaxation Attention>><<run setup.Tanning.apply_session($pc, {session_minutes: 15})>><</link>> <<dtime 15>> <<dalterneed Relaxation 40>> <<dalterneed Attention 15>> <<skill Exhibitionism _exhibreq>> <<raiseskill Exhibitionism 1>>
+            <br>
+        <</if>>
+    <<else>>
+        Laying out in swimwear here would take more nerve than you have right now. (Need <<skill Exhibitionism _exhibreq>>)
+        <br>
+    <</if>>
+<</if>>
+<<if setup.Tanning.should_offer_saved_outfit($pc)>>
+    <<set _savedreq to setup.Tanning.swimwear_requirement_for_saved($pc, _lake, _lake, "Campus")>>
+    <<set _savedattn to setup.Tanning.saved_attention_score($pc, _lake, _lake, "Campus")>>
+    <<if $pc.skillleveled("Exhibitionism", _savedreq)>>
+        <<set _link to {text: setup.Tanning.menu_label_for_saved(), link: setup.Tanning.get_saved_passage(), emoji: '☀️'}>>
+        <<if $lastmalltanning is "bikini">>
+            <<link _link>><<set $tanninglocation to _lake>><<run setup.Tanning.wear_saved_outfit($pc)>><<set $malltanning to $lastmalltanning>><<run setup.Tanning.init_exhib_session()>><<unset $malltaneventfired>><<advtime 45 Relaxation Attention>><<run setup.Tanning.apply_session($pc)>><</link>> <<dtime 45>> <<dalterneed Relaxation 60>> <<dalterneed Attention 25>> <<skill Exhibitionism _savedreq>> <<raiseskill Exhibitionism 1>>
+        <<else>>
+            <<link _link>><<set $tanninglocation to _lake>><<run setup.Tanning.wear_saved_outfit($pc)>><<set $malltanning to $lastmalltanning>><<run setup.Tanning.init_exhib_session()>><<unset $malltaneventfired>><<advtime 30 Relaxation>><<run setup.Tanning.apply_session($pc)>><</link>> <<dtime 30>> <<dalterneed Relaxation 50>>
+            <<if _savedattn gte 5>> <<skill Exhibitionism _savedreq>> <<raiseskill Exhibitionism 1>><</if>>
+        <</if>>
+        <br>
+    <<else>>
+        <<print setup.Tanning.menu_label_for_saved()>> would take more nerve than you have right now. (Need <<skill Exhibitionism _savedreq>>)
+        <br>
+    <</if>>
+<</if>>
+<br>
+<<if setup.Tanning.can_exhibition_tan($pc)>>
+    <br><br>
+    <span class="notice">While laying out you can shift pose and adjust how your clothes sit — back and stomach show different options (nipples face-up, ass face-down, camel toe with legs apart on your back, and so on). Tan lines follow whatever you keep on.</span> (Need <<skill Exhibitionism setup.Tanning.EXHIB_TANNING_MIN>>)
+<</if>>
+<br>
+<<link "Never mind" UniversityLakeBeach>><<unset $malltanning>><<unset $tanninglocation>><</link>>
+
+:: LakeTanClothed [nobr]
+<<if !$malltaneventfired>>
+    <<set _tanevt to setup.Events.passage(["lake tanning"])>>
+    <<if _tanevt>>
+        <<set $malltaneventfired to true>>
+        <<go _tanevt>>
+    <</if>>
+<</if>>
+You stretch out on a towel by the water, letting the sun warm your skin while the lake breeze drifts past.
+<<if setup.Tanning.get_description($pc)>>
+    <br><br>
+    You notice <<print setup.Tanning.get_description($pc)>>.
+<</if>>
+<br><br>
+<<if setup.Tanning.can_exhibition_tan($pc)>>
+    <<tandexhibposemenu>>
+    <<tandexhibmenu>>
+    <<tandexhibwitnessmenu>>
+    <<tandexhibflavor>>
+<</if>>
+<br><br><<alterneed Relaxation 40>>
+<<link "Done tanning" UniversityLakeBeach>><<run setup.Tanning.restore_after_tan($pc)>><<unset $malltanning>><<unset $malltaneventfired>><<unset $tanninglocation>><</link>>
+
+:: LakeTanSwimwear [nobr]
+<<if !$malltaneventfired>>
+    <<set _tanevt to setup.Events.passage(["lake tanning"])>>
+    <<if _tanevt>>
+        <<set $malltaneventfired to true>>
+        <<go _tanevt>>
+    <</if>>
+<</if>>
+<<set _lake to "UniversityLakeBeach">>
+<<set _attn to setup.SwimwearExhibition.swimwear_attention_score($pc, _lake, _lake, "Campus")>>
+You settle onto the sand in your swimwear. At a campus lake on a warm day, that feels almost normal — though you still catch a few glances from other beachgoers.
+<br><br>
+<<if _attn gte 8>>
+    More than a few people seem to be looking your way. Your suit is hard to ignore even by the water.
+<<elseif _attn gte 5>>
+    You notice a couple of lingering looks, but nobody seems bothered.
+<<else>>
+    Most people leave you alone to enjoy the sun.
+<</if>>
+<br><br>
+<<if setup.Tanning.get_description($pc)>>
+    <br><br>
+    You notice <<print setup.Tanning.get_description($pc)>>.
+<</if>>
+<br><br>
+<<if setup.Tanning.can_exhibition_tan($pc)>>
+    <<tandexhibposemenu>>
+    <<tandexhibmenu>>
+    <<tandexhibwitnessmenu>>
+    <<tandexhibflavor>>
+<</if>>
+<br><br><<alterneed Relaxation 50>>
+<<if _attn gte 5>><<raiseskill Exhibitionism 1>><</if>>
+<<link "Done tanning" UniversityLakeBeach>><<run setup.Tanning.restore_after_tan($pc)>><<unset $malltanning>><<unset $malltaneventfired>><<unset $tanninglocation>><</link>>
+
+:: LakeTanBikini [nobr]
+<<if !$malltaneventfired>>
+    <<set _tanevt to setup.Events.passage(["lake tanning"])>>
+    <<if _tanevt>>
+        <<set $malltaneventfired to true>>
+        <<go _tanevt>>
+    <</if>>
+<</if>>
+<<set _lake to "UniversityLakeBeach">>
+<<set _attn to setup.SwimwearExhibition.swimwear_attention_score($pc, _lake, _lake, "Campus")>>
+You lay back on the sand in nothing but your bikini, soaking up the sun like this really is a beach day.
+<br><br>
+<<if _attn gte 8>>
+    Your suit leaves little to the imagination, and the attention proves it. A few people definitely pause to look.
+    <<dalterneed Arousal 50 true>> <<dalterneed Attention 25 true>>
+<<elseif _attn gte 5>>
+    You get a few appreciative glances, but laying out in a bikini by the lake feels almost expected on a sunny afternoon.
+    <<dalterneed Attention 15 true>>
+<<else>>
+    The sun feels good, and nobody seems to mind your swimwear one bit.
+<</if>>
+<br><br>
+<<if setup.Tanning.get_description($pc)>>
+    <br><br>
+    You notice <<print setup.Tanning.get_description($pc)>>.
+<</if>>
+<br><br>
+<<if setup.Tanning.can_exhibition_tan($pc)>>
+    <<tandexhibposemenu>>
+    <<tandexhibmenu>>
+    <<tandexhibwitnessmenu>>
+    <<tandexhibflavor>>
+<</if>>
+<br><br><<alterneed Relaxation 60>>
+<<raiseskill Exhibitionism 1>>
+<<link "Done tanning" UniversityLakeBeach>><<run setup.Tanning.restore_after_tan($pc)>><<unset $malltanning>><<unset $malltaneventfired>><<unset $tanninglocation>><</link>>

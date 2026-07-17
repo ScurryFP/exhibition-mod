@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Uninstall Exhibition Mod
+Comment=Restore game HTML and optionally remove mod folders (Yes/No popups — no terminal)
+# %k is the path to this .desktop file
+Exec=bash -c 'DIR="$(dirname "$(readlink -f "%k")")"; cd "$DIR" && exec ./uninstall.sh'
+Icon=user-trash
+Terminal=false
+Categories=Utility;
+StartupNotify=true

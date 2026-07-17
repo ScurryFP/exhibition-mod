@@ -1,0 +1,53 @@
+:: ExhibitionPaperdollUtil [widget nobr]
+
+<<widget "refreshPaperdollPC">>
+    <<PaperdollPanel>>
+<</widget>>
+
+<<widget "PaperdollPC">>
+<</widget>>
+
+<<widget "PaperdollPanel">>
+    <<if ndef $optpaperdollopen>><<set $optpaperdollopen to false>><</if>>
+    <<if ndef $optpaperdollview>><<set $optpaperdollview to "front">><</if>>
+    <div class="paperdoll-panel exhib-paperdoll-panel">
+        <div class="paperdoll-panel-bar">
+            <button type="button" class="paperdoll-panel-toggle" onclick="setup.ExhibitionPaperdoll.togglePanel()" title="Show or hide your character">
+                <span class="paperdoll-panel-chevron">▶</span> Appearance
+            </button>
+            <button type="button" class="paperdoll-panel-face" onclick="setup.ExhibitionPaperdoll.openFaceDialog()" title="Face close-up, features, and makeup">Face</button>
+            <button type="button" class="exhib-paperdoll-panel-view paperdoll-panel-view" onclick="setup.ExhibitionPaperdoll.toggleView()" title="Show ass (back)" style="display:none;">Ass</button>
+            <button type="button" class="paperdoll-panel-mirror" onclick="setup.ExhibitionPaperdoll.openMirrorDialog()" title="Open full-body mirror" style="display:none;">🪞</button>
+            <button type="button" class="paperdoll-panel-refresh" onclick="refreshPaperdollPC()" title="Refresh sprite" style="display:none;">↻</button>
+        </div>
+        <div id="exhib-paperdoll-panel-body" class="paperdoll-panel-body is-collapsed" hidden style="display:none;height:0;overflow:hidden;"></div>
+    </div>
+    <<script>>
+        window.refreshPaperdollPC = function() {
+            setup.ExhibitionPaperdoll.invalidate();
+            setup.ExhibitionPaperdoll.renderSidebar();
+        };
+        $(document).one(":passageend", () => {
+            if (setup.ExhibitionPaperdoll.syncViewButtons) setup.ExhibitionPaperdoll.syncViewButtons();
+            if (setup.ExhibitionPaperdoll.syncPanelFromState) setup.ExhibitionPaperdoll.syncPanelFromState();
+        });
+    <</script>>
+<</widget>>
+
+<<widget "shopModel">>
+    <canvas id="shopModel-canvas" style="position: relative;left: 20vw;width: 200px;"></canvas>
+    <<script>>
+        $(document).one(":passageend", () => {
+            (async function() {
+                const canvas = document.getElementById("shopModel-canvas");
+                await setup.ExhibitionPaperdoll.shopPreview(canvas);
+            })();
+        });
+        T.refreshShopModel = function() {
+            (async function() {
+                const canvas = document.getElementById("shopModel-canvas");
+                await setup.ExhibitionPaperdoll.shopPreview(canvas);
+            })();
+        };
+    <</script>>
+<</widget>>

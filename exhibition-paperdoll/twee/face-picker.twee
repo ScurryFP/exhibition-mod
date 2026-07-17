@@ -1,0 +1,43 @@
+:: ExhibitionFacePickerWidgets [widget nobr]
+
+<<widget "pcfacepicker">>
+<<if !$pc>>
+    <span class="notice">No character loaded.</span>
+<<else>>
+    <<set _fproot to _args[0] || "exhib-face-picker-root">>
+    <<set _fptitle to _args[1] || "Face features">>
+    <<set _fpcompact to _args[2] ? true : false>>
+    <div id="<<print _fproot>>" class="exhib-face-picker-mount"></div>
+    <<script>>
+        $(document).one(":passageend", function () {
+            const el = document.getElementById("<<print _fproot>>");
+            const EP = setup.ExhibitionPaperdoll;
+            if (!el || !V.pc || !EP || !EP.FacePicker) return;
+            EP.FacePicker.renderInto(el, V.pc, {
+                title: "<<print _fptitle>>",
+                compact: <<print _fpcompact ? "true" : "false">>,
+                // Editable only in chargen (or with face-edit cheat); otherwise locked summary.
+                onChange: function () { EP.FacePicker.rerenderMirrors(V.pc); }
+            });
+        });
+    <</script>>
+<</if>>
+<</widget>>
+
+<<widget "npcfacefeatures">>
+<<set _npcsubj to _args[0]>>
+<<if _npcsubj>>
+    <div id="exhib-npc-face-features-<<print _npcsubj>>" class="npc-appearance-face-features exhib-face-features-mount"></div>
+    <<script>>
+        $(document).one(":passageend", function () {
+            const EP = setup.ExhibitionPaperdoll;
+            const el = document.getElementById("exhib-npc-face-features-<<print _npcsubj>>");
+            if (!el || !EP || !EP.FacePicker) return;
+            let person;
+            try { person = new Person({ person: "<<print _npcsubj>>" }); }
+            catch (e) { return; }
+            EP.FacePicker.renderNpcSummary(el, person);
+        });
+    <</script>>
+<</if>>
+<</widget>>

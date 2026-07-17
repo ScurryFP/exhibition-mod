@@ -1,0 +1,315 @@
+:: LakeBeachHangoutWidgets [widget nobr]
+
+<<widget "beachhangoutinit">>
+<<script>>
+if (setup.LakeBeach && setup.LakeBeach.ensure_parkmates)
+{
+    State.setVar("$parkmates", setup.LakeBeach.ensure_parkmates());
+    State.setVar("$beachhangoutlead", setup.LakeBeach.resolve_hangout_lead());
+}
+else
+{
+    State.setVar("$parkmates", []);
+    State.setVar("$beachhangoutlead", null);
+}
+<</script>>
+<<parkhangoutinit>>
+<</widget>>
+
+<<widget "beachleadnamec">>
+<<if $beachhangoutlead and setup.LakeBeach.is_valid_person($beachhangoutlead)>><<anonorfullnamec setup.people.get_name($beachhangoutlead)>><<else>>Someone<</if>>
+<</widget>>
+
+<<widget "beachleadname">>
+<<if $beachhangoutlead and setup.LakeBeach.is_valid_person($beachhangoutlead)>><<anonorfullname setup.people.get_name($beachhangoutlead)>><<else>>someone<</if>>
+<</widget>>
+
+:: BeachSocialMenu [noevents emoji💬 nobr suppressemoji]
+<<set $firsttime.beachsocial to true>>
+<<run setup.LakeBeach.refresh_activities($peopleatlocation)>>
+<<if setup.LakeBeach.is_skinnydip_time()>>
+You look around at the dark shoreline. Quiet laughter and splashing drift across the water.
+<<else>>
+You look around at the students on the beach.
+<</if>>
+<br><br>
+<<set _anyknown to false>>
+<<set _archetypes to []>>
+<<set _groupcount to 0>>
+<<set _maxgroupcount to Math.min($peopleatlocation.length / 3, 8)>>
+<<set _picked to []>>
+<<for _person range setup.people.sort_for_socialization($peopleatlocation)>>
+    <<set _archetype to $people[_person].archetype>>
+    <<if (setup.people.get_attitude(_person, "friendship") gte 100 or setup.people.get_attitude(_person, "romance") gte 100) or (!_archetypes.includes(_archetype) and setup.people.get_attitude(_person, "friendship") gte 0)>>
+        <<run _picked.push(_person)>>
+        <<set _groupcount++>>
+        <<run _archetypes.push(_archetype)>>
+        <<set _anyknown to true>>
+        <<set _act to setup.LakeBeach.get_activity(_person)>>
+        <<set _event to setup.Events.pick(["beach hangout", _archetype])>>
+        <<if !_event>>
+            <<set _event to setup.Events.pick(["beach hangout", _act])>>
+        <</if>>
+        <<if !_event>><<continue>><</if>>
+
+        <<set _metadata to _event.metadata>>
+        <<set _desc to _metadata.description || setup.LakeBeach.hangout_description(_person)>>
+        <<set _desc to _desc.replace("%N", "<<anonorfullnamec _person>>")>>
+        <<=_desc>>
+        <<sumrelationship _person>>
+        <<if !setup.Relationships.relationship_with(_person)>>
+            <<npcattraction _person>>
+        <</if>>
+        <br>
+        <<set _linkname to _metadata.linkname || "Join them">>
+        <<set _passage to _event.passage>>
+        <<capture _person,_event,_passage,_act>>
+            <<link _linkname _passage>>
+                <<if _act is "skinnydipping">><<run setup.LakeBeach.begin_skinnydip($pc)>><</if>>
+                <<set $parkmates to setup.LakeBeach.pick_mates_for_activity(_act, _person)>>
+                <<advtime 60 Attention Relaxation>>
+                <<playerinitsocializing>>
+            <</link>> <<dtime 60>>
+        <</capture>>
+        <br><br>
+        <<if _groupcount gte _maxgroupcount>><<break>><</if>>
+    <</if>>
+<</for>>
+<<if !_anyknown>>
+    You don't see anybody you know or who looks inviting to hang out with.
+    <br><br>
+<</if>>
+<<link "Never mind" $lastlocpassage>><</link>>
+
+:: EventBeachVolleyball [event nobr]
+<<beachhangoutinit>>
+You wander over to the volleyball net strung up on the sand. <<beachleadnamec>> waves you into the rotation.
+<br><br>
+<<if $pc.skillcheck("Physical", 2)>>
+    You bump, set, and spike your way through a few rallies. It's a good workout and everyone seems glad you joined.
+    <<dalterneed Relaxation 25 true>> <<raiseskill Physical 1>>
+<<else>>
+    You try your best, but your timing is off and you whiff a couple of easy serves. Still, nobody seems to mind much.
+    <<dalterneed Relaxation 10 true>>
+<</if>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachBadminton [event nobr]
+<<beachhangoutinit>>
+You pick up a spare racket and join <<beachleadname>> on the grass for a casual badminton rally.
+<br><br>
+<<if $pc.skillcheck("Physical", 1)>>
+    The shuttlecock sails back and forth until your arms start to burn. It's surprisingly fun.
+    <<dalterneed Relaxation 20 true>> <<raiseskill Physical 1>>
+<<else>>
+    You miss more than you hit, but laughing at your own clumsy swings keeps the mood light.
+    <<dalterneed Relaxation 10 true>>
+<</if>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachFrisbee [event nobr]
+<<beachhangoutinit>>
+You jog over to the frisbee game and <<beachleadnamec>> tosses you the disc.
+<br><br>
+<<if $pc.skillcheck("Physical", 1)>>
+    You catch and throw cleanly, sliding into the rotation like you've been playing all afternoon.
+    <<dalterneed Relaxation 25 true>> <<raiseskill Physical 1>>
+<<else>>
+    Your first toss wobbles and lands short, but someone retrieves it with a grin and keeps the game going.
+    <<dalterneed Relaxation 10 true>>
+<</if>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachFootball [event nobr]
+<<beachhangoutinit>>
+You join the loose football toss along the shore. <<beachleadnamec>> fires a spiral your way.
+<br><br>
+<<if $pc.skillcheck("Physical", 1)>>
+    You snag it out of the air and fire it back — clean throw, easy catch. The group keeps you in the rotation.
+    <<dalterneed Relaxation 20 true>> <<raiseskill Physical 1>>
+<<else>>
+    The ball slips through your hands once, but you shake it off and stay in the game.
+    <<dalterneed Relaxation 10 true>>
+<</if>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachSwimHangout [event nobr swimwear]
+<<beachhangoutinit>>
+You head into the shallows with <<beachleadname>> and the others. The lake water is cool but refreshing.
+<br><br>
+You splash around, float on your back, and chat between dips. It's a lazy, easy afternoon by the water.
+<<dalterneed Relaxation 35 true>> <<dalterneed Hygiene -15>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachTanHangout [event nobr]
+<<beachhangoutinit>>
+You claim a patch of sand near <<beachleadname>> and stretch out on a towel. Sunscreen, idle chatter, and the sound of the lake — it's a mellow way to kill an hour.
+<<dalterneed Relaxation 40 true>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachTalk [event nobr]
+<<beachhangoutinit>>
+You settle in with <<beachleadname>> and some others near the water. Conversation drifts between classes, weekend plans, and whether the lake is actually clean enough to swim in.
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<parkhangoutcontinue>>
+
+:: EventBeachWalkFrisbee [event nobr]
+A frisbee wobbles past you and lands in the sand. <<anonorfullnamec $eventnpc>> jogs over from a game farther down the shore.
+<br><br>
+<<link "Toss it back" EventBeachWalkFrisbeeToss>><</link>> <<skill Physical 1>>
+<br>
+<<link "Keep going" EventBeachWalkFrisbeeIgnore>><</link>>
+
+:: EventBeachWalkFrisbeeIgnore [event nobr]
+You keep walking. Not your problem!
+<br><br>
+<<continuelink>>
+
+:: EventBeachWalkFrisbeeToss [event nobr]
+You pick up the frisbee and toss it back.
+<<if !$pc.skillcheck("Physical", 1)>>
+    It flutters sideways and lands in the grass. <<anonorfirstnamec $eventnpc>> snorts, grabs it, and jogs back to the game.
+    <<friendship $eventnpc 5>>
+<<else>>
+    <<anonorfirstnamec $eventnpc>> catches it cleanly. "Thanks," <<ps>> <<conj say>>, and <<conj 'head'>> back to the tossers.
+    <<if !setup.people.is_known($eventnpc) and setup.people.likes_pc($eventnpc) and setup.people.attracted_to_pc($eventnpc)>>
+        <<ps>> <<conj pause>>. "I'm <<highlight>><<dfirstname $eventnpc>><</highlight>>." <<becomeknown $eventnpc>> <<friendship $eventnpc 100>> <<lust $eventnpc 50>> <<romance $eventnpc 25>>
+    <<else>>
+        <<friendship $eventnpc 15>>
+    <</if>>
+<</if>>
+<br><br>
+<<continuelink>>
+
+:: EventLakeTanningStare [event nobr]
+<<set _lake to "UniversityLakeBeach">>
+<<set _attn to setup.SwimwearExhibition.swimwear_attention_score($pc, _lake, _lake, "Campus")>>
+<<set _bodyattn to setup.BodyExposure.attention_score($pc, _lake, _lake, "Campus")>>
+<<set _attn to Math.max(_attn, _bodyattn)>>
+<<set _p to $eventnpc || setup.Events.pick_person({attitudes: ["lust"], attractiontopc: true, specialok: true})>>
+Someone walking along the shore slows down to look at you sunning yourself.
+<br><br>
+<<anonorfullname _p>> <<if _attn gte 8>>stops outright, shamelessly taking in your <<if $malltanning is "bikini" or $malltanning is "swimwear">>swimwear<<else>>outfit<</if>><<elseif _attn gte 5>>lingers with an appreciative stare<<else>>gives you a curious once-over<</if>> before moving on.
+<<if $pc.has_any_inclination("exhibitionist")>>
+    <<if $pc.has_inclination("Proud Exhibitionist")>>You stretch lazily in the sun.<<dalterneed Composure 40 true>><<raiseskill Exhibitionism 1>><<else>>You keep your sunglasses on and try to ignore it.<<dalterneed Composure 20 true>><</if>>
+<<else>>
+    <<dalterneed Humiliation 20 true>>
+<</if>>
+<<sexattention <<= Math.min(60, _attn * 7)>><<dalterneed Attention <<= Math.min(50, _attn * 6)>><<lust _p 10 15>>
+<br><br>
+<<set _tanret to setup.Tanning.get_tan_passage()>>
+<<link "Continue tanning" _tanret>><</link>>
+
+:: EventLakeTanningCamelToe [event nobr]
+<<set _p to $eventnpc || setup.Events.pick_person({attitudes: ["lust"], attractiontopc: true, specialok: true})>>
+You shift on your towel and feel eyes on you. <<anonorfullname _p>> is staring at how your <<shortpants $pc>> cling while you tan.
+<br><br>
+<<if $pc.will_camel_toe()>>
+    The fabric leaves nothing to guesswork.
+<<else>>
+    The stretchy material shows off every detail anyway.
+<</if>>
+<<if $pc.has_any_inclination("exhibitionist")>>
+    <<if $pc.has_inclination("Proud Exhibitionist")>>You roll onto your back without adjusting a thing.<<dalterneed Composure 30 true>><<raiseskill Exhibitionism 1>><<else>>You sit up and tug at your waistband.<<dalterneed Humiliation 25 true>><</if>>
+<<else>>
+    <<dalterneed Humiliation 30 true>>
+<</if>>
+<<sexattention 35>><<dalterneed Attention 35>><<lust _p 10 20>>
+<br><br>
+<<set _tanret to setup.Tanning.get_tan_passage()>>
+<<link "Continue tanning" _tanret>><</link>>
+
+:: EventBeachSkinnyDipHangout [event nobr nakednpc]
+<<beachhangoutinit>>
+You slip out of your clothes and wade into the cool lake with <<beachleadname>> and the others. In the dark it's hard to tell where the water ends and the night sky begins.
+<br><br>
+<<if $pc.has_any_inclination("basic_exhibitionist")>>
+    The thrill of being bare outside sends a shiver through you that's only partly the cold water. <<dalterneed Composure 25 true>> <<dalterneed Relaxation 35 true>>
+<<else>>
+    You keep mostly submerged, heart pounding every time someone laughs nearby. <<dalterneed Humiliation 40 true>> <<dalterneed Relaxation 20 true>>
+<</if>>
+<<raiseskill Exhibitionism 1>> <<dalterneed Hygiene -20>>
+<br><br>
+<<parkhangoutpost>>
+<br><br>
+<<run setup.LakeBeach.end_skinnydip($pc)>>
+<<link "Continue" UniversityLakeBeach>><<unset $parkmates>><<unset $parklikes>><<unset $parkdislikes>><</link>>
+
+:: LakeSkinnyDipMenu [nobr]
+The lake is dark and still. A late-night skinny dip would be risky — and kind of classic campus mischief.
+<br><br>
+<<if $peopleatlocation.length gt 0>>
+    <<if $peopleatlocation.length is 1>>
+        There's one other person out here. You'll definitely be seen if you strip down.
+    <<else>>
+        There are <<print $peopleatlocation.length>> students around the shore. You'll almost certainly be noticed.
+    <</if>>
+    <br><br>
+<<else>>
+    The beach seems empty. You could probably get away with it unnoticed — if you're brave enough to strip down outside anyway.
+    <br><br>
+<</if>>
+<<skillgate Exhibitionism 3 "Skinny dip in the lake" LakeSkinnyDipDo 15>>
+<br>
+<<link "Never mind" UniversityLakeBeach>><</link>>
+
+:: LakeSkinnyDipDo [nobr]
+<<run setup.LakeBeach.begin_skinnydip($pc)>>
+You leave your clothes in a heap on the sand and wade into the lake. The water is cold against your bare skin.
+<br><br>
+<<set _dip to setup.Events.passage(["lake skinnydip"])>>
+<<if _dip>>
+    <<go _dip>>
+<<else>>
+    You float on your back for a while, listening to the campus sounds muffled by darkness. <<dalterneed Relaxation 45 true>> <<dalterneed Hygiene -25>> <<raiseskill Exhibitionism 1>>
+    <<if $peopleatlocation.length gt 0>>
+        <<passivelyseen>>
+    <</if>>
+    <br><br>
+    <<link "Get out and get dressed" LakeSkinnyDipDone>><</link>>
+<</if>>
+
+:: EventLakeSkinnyDipSwim [event nobr]
+You paddle around naked in the shallows, trying not to think about how exposed you are.
+<<if $peopleatlocation.length gt 0>>
+    <br><br>
+    <<set _witness to setup.Events.pick_person({type: "student", specialok: true})>>
+    <<if _witness>>
+        <<anonorfullnamec _witness>> catches a glimpse of you in the water and does a double-take.
+        <<if setup.people.likes_pc(_witness)>>
+            <<ps>> <<conj grin>> and <<conj look>> away — but not before you notice <<po>> looking a little longer than necessary. <<lust _witness 15 25>> <<friendship _witness 10>>
+        <<else>>
+            "Jesus," <<ps>> <<conj mutter>>, and <<conj hurry>> along the shore. <<dalterneed Humiliation 35 true>>
+        <</if>>
+    <</if>>
+<</if>>
+<<dalterneed Relaxation 40 true>> <<dalterneed Hygiene -25>> <<raiseskill Exhibitionism 1>>
+<<if $peopleatlocation.length gt 0>><<passivelyseen>><</if>>
+<br><br>
+<<link "Get out and get dressed" LakeSkinnyDipDone>><</link>>
+
+:: LakeSkinnyDipDone [nobr]
+<<run setup.LakeBeach.end_skinnydip($pc)>>
+You hurry back to your pile of clothes, skin pebbled with goosebumps, and get dressed again.
+<br><br>
+<<link "Return to the beach" UniversityLakeBeach>><</link>>

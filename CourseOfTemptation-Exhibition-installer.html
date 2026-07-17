@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exhibition Mod — Installer</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color: #1a1a1a; background: #f4f1ec; }
+    body { max-width: 44rem; margin: 2rem auto; padding: 0 1rem 3rem; line-height: 1.5; }
+    h1 { font-size: 1.35rem; }
+    .card { background: #fff; border: 1px solid #d8d2c8; border-radius: 8px; padding: 1rem 1.1rem; margin: 1rem 0; }
+    .card h2 { font-size: 1rem; margin: 0 0 0.6rem; }
+    code, pre { font-family: ui-monospace, monospace; font-size: 0.9em; }
+    pre { background: #f0ebe3; padding: 0.75rem; border-radius: 6px; overflow-x: auto; }
+    ol { margin: 0.4rem 0 0; padding-left: 1.3rem; }
+    li { margin: 0.35rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Exhibition Mod — Player install</h1>
+
+  <div class="card">
+    <h2>Quick start</h2>
+    <ol>
+      <li>Unzip this mod into the same folder as your game HTML.</li>
+      <li>Make sure your game file is named <code>CourseOfTemptationtest.html</code> (or leave the default <code>CourseOfTemptation.html</code> — the installer will find it).</li>
+      <li>Run the installer:
+        <ul>
+          <li><strong>Linux:</strong> <code>./install.sh</code></li>
+          <li><strong>Windows:</strong> double-click <code>install.exe</code> (or <code>install.bat</code> if Python is installed)</li>
+        </ul>
+      </li>
+      <li>Open your game HTML and hard-refresh (Ctrl+Shift+R).</li>
+      <li>Open the Paperdoll asset editor via <code>Exhibition Paperdoll Editor.sh</code> (Linux) or <code>Exhibition Paperdoll Editor.bat</code> (Windows).</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Uninstall (one click + Yes/No popups)</h2>
+    <ol>
+      <li><strong>Windows:</strong> double-click <code>uninstall.bat</code></li>
+      <li><strong>Linux:</strong> double-click <code>Uninstall Exhibition Mod.desktop</code> or <code>uninstall.sh</code></li>
+    </ol>
+    <p><strong>No command line needed.</strong> Two popups appear:</p>
+    <ol>
+      <li><strong>Uninstall Exhibition Mod?</strong> — Yes continues, No cancels</li>
+      <li><strong>Remove mod folders too?</strong> — Yes = full clean; No = only restore the game HTML (keep files for later)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>What the installer does</h2>
+    <ul>
+      <li>Backs up your game HTML</li>
+      <li>Rebakes every Exhibition mod feature into your game file</li>
+      <li>Rebuilds the standalone Paperdoll editor so it works offline</li>
+      <li>Creates desktop-style launcher scripts for the editor</li>
+      <li>Writes <code>backup/install-record.json</code> so uninstall can restore cleanly</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Mod authors</h2>
+    <p>While developing, use <code>./rebake-dev.sh</code> on your dev HTML copy.</p>
+    <p>Before publishing the ZIP, run <code>build-install-exe.bat</code> on Windows once to create <code>install.exe</code> for players without Python.</p>
+  </div>
+</body>
+</html>

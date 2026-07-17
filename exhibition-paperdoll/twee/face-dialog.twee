@@ -1,0 +1,22 @@
+:: PaperdollFace [noevents nobr]
+<div id="exhib-face-dialog" class="exhib-face-dialog"></div>
+<<script>>
+    $(document).one(":passageend", function () {
+        const EP = setup.ExhibitionPaperdoll;
+        if (!EP || !EP.FaceMirror || !V.pc) return;
+        const root = document.getElementById("exhib-face-dialog");
+        if (!root) return;
+        EP.FaceMirror.renderDialog(root, V.pc, {});
+    });
+    // Dialog path: open_dialog wiki's this passage into #ui-dialog-body
+    $(document).one(":dialogopened", function () {
+        const EP = setup.ExhibitionPaperdoll;
+        if (!EP || !EP.FaceMirror || !V.pc) return;
+        const root = document.getElementById("exhib-face-dialog");
+        if (root) EP.FaceMirror.renderDialog(root, V.pc, {});
+    });
+<</script>>
+
+:: PaperdollFacePassage [noevents nobr]
+<<link '<-' previous>><</link>>
+<<include PaperdollFace>>

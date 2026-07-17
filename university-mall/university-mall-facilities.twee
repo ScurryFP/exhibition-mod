@@ -1,0 +1,63 @@
+:: UniMallRestroom [location locUniMallRestroom locblockCampus roomtypebathroom dcCampusOutside bathroom emoji🚽 nobr quickieroomtypebathroomstall]
+A small brick restroom pavilion sits near the Thoreau Building end of the mall — gender-neutral stalls, a row of sinks, and the faint smell of cut grass drifting in whenever someone opens the door.
+<br><br>
+<<if $justpeed>>
+    You go into a stall and take care of business.
+    <br><br>
+    <<include StallRoomWall>>
+    <br>
+    After finishing, you step back out to wash your hands.
+    <<unset $justpeed>>
+<<else>>
+    The restroom is clean enough for a campus park facility.
+<</if>>
+<br><br>
+<<set _loc to passage()>>
+<<if $pcneeds['Bladder'] lt 1000>>
+    <<set _link to {text: "Take care of business", emojifrom: "UniMallRestroom"}>>
+    <<link _link>>
+        <<unset $attemptednavigation>>
+        <<set $justpeed to true>>
+        <<advtime 3>>
+        <<run setup.Needs.pee(1000)>>
+        <<if State.random() lte setup.Events.base_event_chance()>>
+            <<set _event to setup.Events.passage(["restroom"])>>
+            <<if _event>>
+                <<egoto _event>>
+            <<else>>
+                <<egoto _loc>>
+            <</if>>
+        <<else>>
+            <<egoto _loc>>
+        <</if>>
+    <</link>> <<dtime 3>> <<dalterneed Bladder 1000>><br>
+<</if>>
+<<set _link to {text: "Wash up", link: "UniMallRestroom", emoji: "💧"}>>
+<<link _link>>
+    <<advtime 5>>
+    <<alterneed Hygiene 25>>
+    <<set $header to "You quickly wash up. <<dalterneed Hygiene 25>>">>
+<</link>> <<dtime 5>> <<dalterneed Hygiene 25>>
+<<adjusttoyslink>>
+<<dryclotheslink>>
+<<pregnancytestlink>>
+<br><br>
+<<if $tanswimchangetarget>>
+    <<if $tanswimchangemsg>>
+        <<= $tanswimchangemsg>>
+        <br><br>
+        <<unset $tanswimchangemsg>>
+    <</if>>
+    <<set _tanret to $tanswimchangetarget>>
+    <<link "Choose a swimsuit" TanSwimWardrobe>><<advtime 1>><</link>> <<dtime 1>>
+    <br>
+    <<link "Back to tanning menu" _tanret>>
+        <<run setup.Tanning.cancel_swimsuit_picker($pc)>>
+        <<unset $tanswimchangetarget>>
+        <<advtime 1>>
+    <</link>> <<dtime 1>>
+<<else>>
+    <<opportunities>>
+    <<set _link to {text: "Return to the mall", link: "UniMall", emoji: '🌳'}>>
+    <<link _link>><<advtime 1>><</link>> <<dtime 1>>
+<</if>>

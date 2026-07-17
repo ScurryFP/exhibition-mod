@@ -1,0 +1,58 @@
+{
+  "id": "clothing-mod",
+  "type": "clothing",
+  "maskMode": "default",
+  "name": "Clothing mod",
+  "description": "",
+  "enabled": true,
+  "items": [
+    {
+      "id": "bikini-bottom",
+      "name": "Bikini Bottom",
+      "zIndex": 41,
+      "poses": {
+        "front": {
+          "sources": {
+            "1024": "assets/items/bikini-bottom/front_1024.png"
+          },
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false,
+            "opacity": 1
+          },
+          "colorMask": {
+            "1024": "assets/items/bikini-bottom/front_color_1024.png"
+          }
+        },
+        "back": {
+          "sources": {
+            "1024": "assets/items/bikini-bottom/back_1024.png"
+          },
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 0,
+            "flipH": false,
+            "flipV": false,
+            "opacity": 1
+          },
+          "colorMask": {
+            "1024": "assets/items/bikini-bottom/back_color_1024.png"
+          }
+        }
+      },
+      "layer": "bikini-bottom",
+      "cotBindings": [
+        "Bikini Bottom"
+      ],
+      "recolor": true
+    }
+  ]
+}

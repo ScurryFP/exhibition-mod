@@ -1,0 +1,31 @@
+# Game HTML (player/modder copies — never commit base game)
+CourseOfTemptation*.html
+!CourseOfTemptation-Exhibition-installer.html
+
+# Backups & local drafts
+backup/
+old edits/
+Images foe edit/
+Zips/
+sesion/
+__pycache__/
+*.pyc
+.base-pack-staging/
+
+# Build output
+dist/
+*.egg-info/
+build/
+install.exe
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Optional large third-party reference (not part of this mod)
+PaperDoll/
+res/paperdoll/
+res/img/

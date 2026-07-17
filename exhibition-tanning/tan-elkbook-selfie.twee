@@ -1,0 +1,105 @@
+:: TanElkbookSelfie [noevents phoneselfie nobr]
+<<run setup.Tanning.init_tan_elkbook_selfie_passage()>>
+<<if $tanphoneselfieactive and $phoneselfiesent>>
+<<set _selfie to $phoneselfiesent>>
+<<set _lewd to _selfie[4].lewd>>
+<<set _underwear to _selfie[2] or []>>
+<<set _naked to _selfie[3] or []>>
+<<set _narrate to _selfie[5]>>
+<<set _inccomposure to _selfie[4].inccomposure>>
+<<set _selfietype to "">>
+<<set _selfieclass to setup.people.is_femme($pc) ? "femme" : "masc">>
+<<set _phoneRet to setup.Tanning.get_tan_phone_passage()>>
+
+<<= _narrate>>
+
+You hit Post and it joins the other pics and posts making up today's Elkbook timeline.
+
+<<if _naked.includes("penis") or _naked.includes("vagina")>>
+    <<set _selfietype to "naked">>
+    <<if $pc.has_part("penis")>><<set _selfieclass to "masc">><</if>>
+    <<set _lewd to true>>
+<<elseif _naked.includes("breasts")>>
+    <<set _selfieclass to "femme">>
+    <<set _lewd to true>>
+    <<set _selfietype to "topless">>
+<<elseif _underwear.length gt 0>>
+    <<set _selfietype to "underwear">>
+    <<set _lewd to true>>
+<<elseif _selfie[4].topless>>
+    <<set _selfietype to "topless">>
+<</if>>
+
+<<set _img to "selfie_" + _selfieclass>>
+<<if _selfietype isnot "">><<set _img += "_" + _selfietype>><</if>>
+<<set _img += ".png">>
+<<set _msg to '<img src="res/img/' + _img + '">'>>
+<<set _posttext to setup.Tanning.get_tan_elkbook_post_text(_selfie)>>
+
+<<set $elkbook.sawtodayspost to []>>
+<<set _count to (_naked.length gt 0 || _underwear.length gt 0) ? 8 : 25>>
+<<set _replychance to (_naked.length gt 0 || _underwear.length gt 0) ? 0.667 : 0.25>>
+<<set _count to Math.round((_count / 2) + (State.random() * (_count / 2)))>>
+<<set _students to setup.people.people_of_type("student")>>
+<<set _people to setup.Events.pick_several({attitudes: ["aggregate", "random"], specialok: true}, _count, _students)>>
+<<set $elkbook.sawtodayspost to _people>>
+
+<<set _viewers to $elkbook.sawtodayspost.length gt 0 ? $elkbook.sawtodayspost : ["dummy"]>>
+
+<br><br>
+<<set $elkbook.lastpost to $gameday>>
+<<if _naked.length gt 0 or _underwear.length gt 0>>
+    <<set $elkbook.lastlewdselfie to $gameday>>
+    <<set $elkbook.todayspost to {flags: ["selfie", "tanning", "lewd"], text: _posttext}>>
+    It's probably going to be deleted almost immediately, but probably some people will see it. After a few minutes, you take a look.
+    <<if _naked.length gt 0>>
+        <<= setup.Events.exhibitionism(_naked, "naked", "photo", true, _viewers, {nocomposure: !_inccomposure}).dalterneed>>
+    <<elseif _underwear.length gt 0>>
+        <<= setup.Events.exhibitionism(_underwear, "underwear", "photo", true, _viewers, {nocomposure: !_inccomposure}).dalterneed>>
+    <</if>>
+<<else>>
+    After a few minutes, you check the replies.
+    <<set $elkbook.lastpgselfie to $gameday>>
+    <<set $elkbook.todayspost to {flags: ["selfie", "tanning"], text: _posttext}>>
+<</if>>
+
+<br><br>
+<div class="tan-exhib-phone-page">
+    <div class="elkbook-container">
+        <span class="elkbook-name"><<dfullname $pc>></span><br>
+        <span class="elkbook-text"><<= _posttext>><br><br><<= _msg>></span>
+    </div>
+    <div class="indent">
+        <<tantanelkbookreplyloop>>
+    </div>
+</div>
+
+<<if _people.length gt 0>>
+    <<if _naked.length gt 0 or _underwear.length gt 0>>
+        People actually saw it. That makes you hot. <<dalterneed Arousal 100 true>>
+    <<else>>
+        It's nice to be acknowledged, mostly. <<dalterneed Attention 50 true>>
+    <</if>>
+<</if>>
+
+<<set _discover to _selfie[4].discoverchance>>
+<<if _discover and $peopleatlocation.length gt 0>>
+    <<if $peopleatlocation gte 5>><<set _discover += 0.4>><<elseif $peopleatlocation gte 3>><<set _discover += 0.2>><</if>>
+    <<set _p2 to setup.Events.pick_person({attitudes: ["random"], specialok: true})>>
+    <<if _p2 isnot null and State.random() lte _discover>>
+        <br><br>
+        You look around as you're fixing your clothing, and... oops. You're pretty sure <<anonorfullname _p2>> noticed what you were doing.
+        <<if _naked.length gt 0>>
+            <<= setup.Events.exhibitionism(_naked, "naked", "in person", false, [_p2], {nocomposure: !_inccomposure}).dalterneed>>
+        <<elseif _underwear.length gt 0>>
+            <<= setup.Events.exhibitionism(_underwear, "underwear", "in person", false, [_p2], {nocomposure: !_inccomposure}).dalterneed>>
+        <</if>>
+    <</if>>
+<</if>>
+
+<<run setup.Tanning.clear_tan_selfie_staging()>>
+<br><br>
+<<link "Back to your phone" _phoneRet>><</link>>
+<<else>>
+<<egoto TanPhoneMenu>>
+<</if>>

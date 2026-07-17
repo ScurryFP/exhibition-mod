@@ -1,0 +1,95 @@
+:: UniversityLakeBeach [location locUniversityLakeBeach locblockCampus roomtypenature dcCampusOutside outdoors campuswalk hasmap swimwearallowed emoji🏖️ nobr]
+You are at the university lake beach. A path from Emerson Road brings you out to the shore — grass, sand, and the campus lake stretching off to the side. Near the path, a small utility building offers restrooms and changing stalls.
+<br><br>
+<<set _link to {text: "Restrooms", link: "UniversityLakeBeachRestroom", emoji: '🚽'}>>
+<<link _link>><<advtime 1>><</link>> <<dtime 1>>
+<br>
+<<set _link to {text: "Changing rooms", link: "UniversityLakeBeachChangingRoom", emoji: '🪞'}>>
+<<link _link>><<advtime 1>><</link>> <<dtime 1>>
+<br><br>
+<<if setup.LakeBeach.is_accessible() and !$exhibitionsneak>>
+    <<if $peopleatlocation.length gt 0>>
+        <<run setup.LakeBeach.refresh_activities($peopleatlocation)>>
+        <<print setup.LakeBeach.ambient_scene($peopleatlocation)>>
+    <<elseif setup.LakeBeach.is_skinnydip_time()>>
+        <<print setup.LakeBeach.ambient_scene($peopleatlocation)>>
+    <</if>>
+    <br><br>
+<</if>>
+<<if !$exhibitionsneak and setup.LakeBeach.is_daytime() and State.random() lt 0.12>>
+    <<set _walkevt to setup.Events.passage(["beach walk"])>>
+    <<if _walkevt>>
+        <<go _walkevt>>
+    <</if>>
+<</if>>
+<<if setup.SwimwearExhibition.is_tanning_weather() and $hour gte 8 and $hour lte 19 and !$exhibitionsneak>>
+    The <<if $weather>><<engtemperature>>, <<engweather $weather.description>><<else>>warm, sunny<</if>> weather makes the sand look inviting. Plenty of students lay out here on days like this.
+    <br>
+    <<set _link to {text: "Lay out and tan", link: "LakeTanMenu", emoji: '☀️'}>>
+    <<link _link>><<set $tanninglocation to "UniversityLakeBeach">><</link>>
+    <br><br>
+<</if>>
+<<if setup.LakeBeach.is_daytime() and $hour gte 8 and $hour lte 19 and $peopleatlocation.length gte 4 and !$exhibitionsneak>>
+    <<set _joinacts to setup.LakeBeach.joinable_activities($peopleatlocation)>>
+    <<if _joinacts.length gt 0>>
+        <<for _act range _joinacts>>
+            <<capture _act>>
+                <<link setup.LakeBeach.join_label(_act) setup.LakeBeach.join_passage(_act)>>
+                    <<set $parkmates to setup.LakeBeach.pick_mates_for_activity(_act, setup.randomchoice(setup.LakeBeach.people_by_activity(_act)))>>
+                    <<advtime 60 Attention Relaxation>>
+                    <<playerinitsocializing>>
+                <</link>> <<dtime 60>> <<dalterneed Relaxation 60>> <<dalterneed Attention 60>>
+                <br>
+            <</capture>>
+        <</for>>
+        <br>
+    <</if>>
+    There are students around enjoying the beach. Maybe you could join a group.
+    <br>
+    <<link "Socialize" BeachSocialMenu>><</link>> <<dtime 60>> <<dalterneed Relaxation 60>> <<dalterneed Attention 60>>
+    <br><br>
+<</if>>
+<<if setup.LakeBeach.is_skinnydip_time() and !$exhibitionsneak and !setup.LakeBeach.is_skinnydipping()>>
+    <<if $peopleatlocation.length gt 0>>
+        <<set _joinacts to setup.LakeBeach.joinable_activities($peopleatlocation)>>
+        <<if _joinacts.includes("skinnydipping")>>
+            <<capture _joinacts>>
+                <<link "Join the skinny dippers" EventBeachSkinnyDipHangout>>
+                    <<run setup.LakeBeach.begin_skinnydip($pc)>>
+                    <<set $parkmates to setup.LakeBeach.pick_mates_for_activity("skinnydipping", setup.randomchoice(setup.LakeBeach.people_by_activity("skinnydipping")))>>
+                    <<advtime 45 Attention Relaxation>>
+                    <<playerinitsocializing>>
+                <</link>> <<dtime 45>> <<dalterneed Relaxation 50>> <<dalterneed Attention 40>>
+                <br>
+            <</capture>>
+            <br>
+        <</if>>
+        <<if $peopleatlocation.length gte 2>>
+            A few students are daring enough to skinny dip out here after dark. You could mingle — or strip down yourself.
+            <br>
+            <<link "Socialize" BeachSocialMenu>><</link>> <<dtime 45>> <<dalterneed Relaxation 50>> <<dalterneed Attention 40>>
+            <br><br>
+        <</if>>
+    <</if>>
+    <<if $pc.skillleveled("Exhibitionism", 3)>>
+        <<set _sdlink to {text: "Go skinny dipping", link: "LakeSkinnyDipMenu", emoji: '🌙'}>>
+        <<link _sdlink>><</link>>
+        <br><br>
+    <<else>>
+        <<hintskillgate Exhibitionism 3>>
+        <br><br>
+    <</if>>
+<</if>>
+<<if setup.LakeBeach.is_skinnydipping()>>
+    You're still naked from your dip in the lake.
+    <br>
+    <<link "Get dressed" LakeSkinnyDipDone>><</link>>
+    <br><br>
+<</if>>
+<<opportunities>>
+<<set _link to {text: "Return to Emerson Road", link: "EmersonRd", emoji: '🚪'}>>
+<<link _link>><<advtime 2>><</link>> <<dtime 2>>
+<br><br>
+<<exits>>
+<br>
+<<map>>

@@ -1,0 +1,9 @@
+:: TanPhoneSelfie [event phoneselfie noevents nobr]
+<<if $phoneselfieconvoactive>>
+    <<egoto TanPhoneMenu>>
+<<elseif $phoneselfieactive and $phoneselfiesent>>
+    <<run setup.Tanning.begin_tan_phone_selfie_convo($phoneselfiesent, $phoneselfietarget or $tanphoneselfietarget)>>
+    <<egoto TanPhoneMenu>>
+<<else>>
+    <<egoto TanPhoneMenu>>
+<</if>>

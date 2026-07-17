@@ -1,0 +1,367 @@
+/* === Exhibition Face Picker CSS === */
+.exhib-face-picker {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(12, 12, 24, 0.55);
+}
+
+.exhib-face-picker--compact {
+  font-size: 0.82rem;
+  padding: 0.45rem 0.5rem;
+}
+
+.exhib-face-picker-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.exhib-face-picker-hint {
+  margin: 0 0 0.5rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.35;
+}
+
+.exhib-face-picker-grid {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.exhib-face-picker-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 34%) 1fr;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.exhib-face-picker-label {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.exhib-face-picker-select {
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.paperdoll-mirror-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 340px);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .paperdoll-mirror-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.paperdoll-mirror-face-col .exhib-face-picker {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.exhib-face-features-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.exhib-face-features-list .muted {
+  color: rgba(255, 255, 255, 0.55);
+  list-style: none;
+  margin-left: -1.1rem;
+}
+
+.npc-appearance-face-features {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exhib-face-picker-marks {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.exhib-face-picker-mark-list .exhib-face-picker-mark-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  list-style: none;
+  margin-left: -1.1rem;
+}
+
+.exhib-face-picker-mark-list .exhib-face-picker-mark-item span {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.exhib-face-mark-remove {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0.1rem 0.35rem;
+}
+
+.exhib-face-mark-remove:hover {
+  background: rgba(120, 40, 40, 0.45);
+}
+
+.exhib-face-picker-add-mark {
+  margin-top: 0.15rem;
+}
+
+.exhib-face-picker--locked {
+  opacity: 0.98;
+}
+
+.exhib-face-picker-readonly {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.35;
+}
+
+.exhib-face-picker-lock-bar {
+  margin-top: 0.45rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.exhib-face-picker-cheat-btn {
+  justify-self: start;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+}
+
+.exhib-face-picker-cheat-btn:hover {
+  border-color: rgba(140, 200, 255, 0.45);
+  color: #8cf;
+}
+
+.exhib-face-picker-chargen-mount {
+  margin: 1rem 0 0.5rem;
+  max-width: 28rem;
+}
+
+/* Face dialog — close-up mirror + controls */
+.exhib-face-dialog {
+  margin: 0;
+  padding: 0.25rem 0;
+  max-width: 52rem;
+}
+
+.exhib-face-dialog--inline {
+  margin: 0 0 1rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(12, 12, 24, 0.45);
+}
+
+.exhib-face-dialog-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) minmax(220px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .exhib-face-dialog-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exhib-face-dialog-mirror {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+  position: sticky;
+  top: 0.25rem;
+}
+
+.exhib-face-dialog-mirror-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  justify-self: start;
+  width: 100%;
+}
+
+.exhib-face-closeup-canvas {
+  display: block;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  /* Zoomed head — larger than old shoulders crop */
+  width: min(100%, 380px);
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Mirror stages — background lives on the stage so black line art stays visible */
+.exhib-mirror-stage {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  /* min sizes are fallbacks only — JS sets width/height from canvas display size */
+  min-width: 8rem;
+  min-height: 12rem;
+  box-sizing: border-box;
+}
+
+/* Full PC mirror dialog: do not clamp the stage smaller than the doll */
+#paperdollMirror {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#paperdollMirror .exhib-mirror-stage {
+  max-width: min(90vw, 520px);
+}
+
+#paperdollMirror .exhib-mirror-stage canvas,
+#paperdollPC-canvas-dialog {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.exhib-face-closeup-stage {
+  width: min(100%, 380px);
+}
+
+.exhib-face-closeup-stage .exhib-face-closeup-canvas {
+  width: 100%;
+}
+
+.paperdoll-panel-viewport.exhib-mirror-stage,
+.exhib-paperdoll-viewport.exhib-mirror-stage {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin: 0.15em 0.25em 0.35em;
+  padding: 0.25em 0;
+}
+
+.exhib-bg-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.25rem 0 0.4rem;
+  width: 100%;
+}
+
+.exhib-bg-bar-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-right: 0.15rem;
+}
+
+.exhib-bg-btn {
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.18rem 0.45rem;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.exhib-bg-btn:hover {
+  border-color: rgba(140, 200, 255, 0.5);
+  color: #8cf;
+}
+
+.exhib-bg-btn.is-active {
+  border-color: rgba(140, 200, 255, 0.75);
+  background: rgba(40, 70, 110, 0.55);
+  color: #fff;
+}
+
+.exhib-bg-btn--image {
+  max-width: 6.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exhib-sidebar-bg-host {
+  padding: 0 0.35em;
+}
+
+.exhib-face-dialog-controls {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.exhib-face-makeup {
+  margin-top: 0.15rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exhib-face-makeup-grid {
+  display: grid;
+  gap: 0.35rem;
+}
+
+/* Face button on Appearance bar — always available */
+.paperdoll-panel-face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4em;
+  height: 1.6em;
+  padding: 0 0.45em;
+  border-radius: 0.35em;
+  border: 1px solid #444;
+  background: #222;
+  color: #eee;
+  font: inherit;
+  font-size: 90%;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.paperdoll-panel-face:hover {
+  opacity: 1;
+  border-color: #666;
+  color: #8cf;
+}
+
+#ui-dialog-body.exhib-face-dialog-ui,
+#ui-dialog-body:has(#exhib-face-dialog) {
+  max-width: min(56rem, 96vw);
+}

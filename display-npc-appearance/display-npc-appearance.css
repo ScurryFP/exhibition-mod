@@ -1,0 +1,109 @@
+/* DisplayNPC Appearance tab */
+.npc-appearance-tab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em 1.25em;
+    align-items: flex-start;
+    margin-top: 0.5em;
+}
+
+.npc-appearance-mirror-col {
+    flex: 0 0 auto;
+    min-width: 200px;
+    max-width: 240px;
+}
+
+.npc-appearance-bg-host {
+    min-height: 1.5em;
+    margin-bottom: 0.35em;
+}
+
+/* Full-body NPC mirror — visible even before JS paints */
+.npc-appearance-stage,
+.npc-appearance-mirror-col .exhib-mirror-stage,
+#npc-appearance-stage {
+    width: 200px !important;
+    min-width: 200px !important;
+    min-height: 360px !important;
+    max-width: 200px;
+    border-radius: 0.35em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: block !important;
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: #5a6578; /* slate default until BG module applies */
+}
+
+#npc-appearance-canvas {
+    display: block !important;
+    width: 200px !important;
+    height: 400px !important;
+    max-width: 200px !important;
+    max-height: 400px !important;
+    border: none;
+    border-radius: 0;
+    background: transparent !important;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 auto;
+    visibility: visible !important;
+}
+
+.npc-appearance-mirror-col .exhib-bg-bar {
+    margin-bottom: 0.35em;
+    max-width: 220px;
+}
+
+.npc-appearance-mirror-note {
+    max-width: 200px;
+    margin-top: 0.4em;
+}
+
+.npc-appearance-mirror-col .npc-appearance-paperdoll {
+    transform-origin: top center;
+}
+
+.npc-appearance-mirror-note {
+    margin-top: 0.35em;
+    max-width: 200px;
+    line-height: 1.25;
+    opacity: 0.85;
+}
+
+.npc-appearance-info-col {
+    flex: 1 1 220px;
+    min-width: 200px;
+}
+
+.npc-appearance-exposure .clothing-exposure-chips {
+    margin-top: 0.25em;
+}
+
+.npc-appearance-meta {
+    margin: 0.5em 0;
+    line-height: 1.35;
+}
+
+.npc-appearance-tan {
+    margin-top: 0.75em;
+    line-height: 1.4;
+}
+
+.npc-appearance-tan-lines {
+    margin: 0.35em 0 0 1.1em;
+    padding: 0;
+}
+
+.npc-appearance-tan-lines li {
+    margin: 0.15em 0;
+}
+
+.npc-display-header + .tabgroup .npc-appearance-tab .clothing-exposure-chip {
+    font-size: 90%;
+}

@@ -1,0 +1,147 @@
+# Sidebar exposure chip labels — edit and save, then ask to apply changes.
+# Format: one label per level (1–5). Lines starting with # are ignored.
+# Level key: score 4–4.9 = 1, 5–5.9 = 2, 6–7.9 = 3, 8–8.9 = 4, 9+ = 5
+# Chips only appear at score 4 or higher.
+#
+# Placeholders (resolved at runtime from the PC):
+#   {color}  — areola color as stored (e.g. "rosy pink")
+#   {Color}  — same, capitalized (e.g. "Rosy Pink")
+# Example areola line: level3={Color} Areola's
+#
+# Chip box colors (CSS class chip-tier-*):
+#   subtle  — green   (minimal show / no malfunction flag yet)
+#   low     — yellow  (low chance)
+#   medium  — orange  (medium chance)
+#   high    — red     (high chance)
+#   certain — pink    (certain chance)
+#   exposed — purple  (bare or visibly out now)
+
+# --- GLOBAL (optional) ---
+# If you fill these in, they override the default prefix/suffix pattern for ALL types
+# below unless a type defines its own level1–level5 lines.
+# Leave blank to use per-type labels only.
+# global_level1=
+# global_level2=
+# global_level3=
+# global_level4=
+# global_level5=
+
+# =============================================================================
+# CAMEL TOE
+# code_key: camel_toe
+# base_phrase: camel toe
+# =============================================================================
+[camel_toe]
+level1=Camel Toe?
+level2=Slight Camel Toe
+level3=Camel Toe
+level4=Thick Camel Toe
+level5=Fat Camel Toe
+
+# =============================================================================
+# NIP SHOW (nipples through fabric / nipslip tweaks)
+# code_key: Nipple
+# base_phrase: Nipples Show
+# =============================================================================
+[nipple]
+level1=Nipples?
+level2=Nipples
+level3=Pokies
+level4=Nice Nipples
+level5=Fat Nipples
+
+# =============================================================================
+# AREOLA SHOW
+# code_key: areola
+# base_phrase: areola show
+# =============================================================================
+[areola]
+level1={Color}?
+level2={Color}
+level3={Color} Areola's
+level4=Nice {Color} Areola's
+level5=Full {Color} Areola's
+
+# =============================================================================
+# SIDEBOOB
+# code_key: sideboob
+# base_phrase: sideboob
+# =============================================================================
+[sideboob]
+level1=Sideboob?
+level2=Slight Sideboob
+level3=Sideboob
+level4=Full Sideboob
+level5=All The Sideboob
+
+# =============================================================================
+# UNDERBOOB
+# code_key: underboob
+# base_phrase: underboob
+# =============================================================================
+[underboob]
+level1=Underboob?
+level2=Slight Underboob
+level3=Underboob
+level4=Full Underboob
+level5=Underboob with Areola
+
+# =============================================================================
+# CLEAVAGE (loose neckline / down-blouse)
+# code_key: cleavage
+# base_phrase: cleavage
+# =============================================================================
+[cleavage]
+level1=Cleavage?
+level2=Slight cleavage
+level3=Cleavage
+level4=Nice TIts
+level5=Nice Tits,Nipples
+
+# =============================================================================
+# UNDERBUTT (hiked hem / low waistband)
+# code_key: underbutt
+# base_phrase: underbutt
+# =============================================================================
+[underbutt]
+level1=Underbutt?
+level2=Slight underbutt
+level3=Underbutt
+level4=Thick Underbutt
+level5=Fat Underbutt
+
+# =============================================================================
+# CRACK PEEK (butt crack)
+# code_key: butt_crack
+# base_phrase: crack peek
+# =============================================================================
+[butt_crack]
+level1=Crack?
+level2=Slight Crack
+level3=Crack
+level4=Thick Crack
+level5=Fat Crack Show
+
+# =============================================================================
+# BULGE (penis outline)
+# code_key: bulge
+# base_phrase: bulge
+# =============================================================================
+[bulge]
+level1=Bulge?
+level2=Slight bulge
+level3=Bulge
+level4=Thick bulge
+level5=Fat bulge
+
+# =============================================================================
+# BARE ASS (how little bottoms cover)
+# code_key: ass_cheeks
+# base_phrase: bare ass
+# =============================================================================
+[ass_cheeks]
+level1=Ass?
+level2=Ass
+level3=Bare Ass
+level4=Thick Ass
+level5=Fat Ass

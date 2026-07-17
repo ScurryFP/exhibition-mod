@@ -1,0 +1,125 @@
+:: EventHangoutMallTanArrive [event hangout nobr]
+<<set $eventnpc to $hangout.partner>>
+You text <<firstname $eventnpc>> to say you're at the mall with a spot picked out. <<psc>> <<conj find>> you a few minutes later with sunscreen and a spare towel.
+<br><br>
+You claim a sunny patch of grass together and spread out your towels. The campus mall is busy but mellow — students strolling between classes, someone strumming a guitar off in the distance.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 2>><</if>>
+<<dalterneed Relaxation 20 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 10>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutMallTanSunscreen [event hangout nobr]
+<<set $eventnpc to $hangout.partner>>
+<<psc>> <<conj offer>> to help with sunscreen. You take turns working lotion over each other's shoulders and back, laughing when <<ps>> <<conj miss>> a spot.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 3>><<lust $eventnpc 10 15>><</if>>
+<<dalterneed Relaxation 25 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 15>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutMallTanChat [event hangout nobr]
+You lounge on your towel beside <<firstname $eventnpc>>, chatting about classes, weekend plans, and who's brave enough to tan on the quad in something skimpy.
+<br><br>
+<<set $hangout.fun += 3>>
+<<if $hangout.type is "date">><<set $hangout.romance += 2>><</if>>
+<<friendship $eventnpc 10 15>>
+<<dalterneed Relaxation 30 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 20>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutMallTanPeopleWatch [event hangout nobr]
+A few students walk past and glance your way — some lingering longer than necessary. <<firstname $eventnpc>> notices too and snorts. "Guess we're part of the scenery now."
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 1>><</if>>
+<<dalterneed Attention 15 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 10>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutMallTanEnd [event hangout nobr]
+The sun is starting to feel like a lot. You and <<firstname $eventnpc>> sit up, shake grass from your towels, and pack up.
+<br><br>
+"That was nice," <<ps>> <<conj say>>. "Same time next week?"
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">>
+    You nod.
+    <br><br>
+    <<include EventHangoutDateKissMenu>>
+<<else>>
+    "I'll see you around," you say, and <<ps>> <<conj smile>>.
+    <br><br>
+    <<set _loc to $hangout.startlocation>><<summarizehangout>><<endhangout>><<unset $eventnpc>>
+    <br><br>
+    <<link "Continue" _loc>><</link>>
+<</if>>
+
+:: EventHangoutLakeTanArrive [event hangout nobr]
+<<set $eventnpc to $hangout.partner>>
+You text <<firstname $eventnpc>> that you've claimed a spot on the sand. <<psc>> <<conj find>> you a few minutes later, kicking off slip-ons and dropping a towel beside yours.
+<br><br>
+The lake glitters nearby while you both settle in to soak up the sun. Sand sticks to everything, but it's worth it.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 2>><</if>>
+<<dalterneed Relaxation 25 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 10>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutLakeTanSunscreen [event hangout nobr]
+<<set $eventnpc to $hangout.partner>>
+<<psc>> <<conj offer>> to get your back. You trade off applying sunscreen, the lake breeze making the lotion cool on your skin.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 3>><<lust $eventnpc 10 15>><</if>>
+<<dalterneed Relaxation 30 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 15>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutLakeTanChat [event hangout nobr]
+You stretch out beside <<firstname $eventnpc>> on your towels, talking lazily about the water temperature, summer plans, and whether anyone's actually going to swim today.
+<br><br>
+<<set $hangout.fun += 3>>
+<<if $hangout.type is "date">><<set $hangout.romance += 2>><</if>>
+<<friendship $eventnpc 10 15>>
+<<dalterneed Relaxation 35 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 20>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutLakeTanSwimLook [event hangout nobr]
+Someone splashes into the lake farther down the shore. <<firstname $eventnpc>> props up on an elbow to watch. "Tempting," <<ps>> <<conj murmur>>. You agree, though neither of you moves from the warm sand just yet.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">><<set $hangout.romance += 1>><</if>>
+<<dalterneed Relaxation 15 true>>
+<br><br>
+<<mayberecognizedonhangout>>
+<<link "Next">><<advtime 10>><<gotonexthangoutevent>><</link>>
+
+:: EventHangoutLakeTanEnd [event hangout nobr]
+The afternoon sun is getting lower. You and <<firstname $eventnpc>> brush sand off yourselves and roll up your towels.
+<br><br>
+"Good day for it," <<ps>> <<conj say>> with a lazy smile.
+<br><br>
+<<set $hangout.fun += 2>>
+<<if $hangout.type is "date">>
+    You nod.
+    <br><br>
+    <<include EventHangoutDateKissMenu>>
+<<else>>
+    "Yeah. See you around?" you ask, and <<ps>> <<conj nod>>.
+    <br><br>
+    <<set _loc to $hangout.startlocation>><<summarizehangout>><<endhangout>><<unset $eventnpc>>
+    <br><br>
+    <<link "Continue" _loc>><</link>>
+<</if>>

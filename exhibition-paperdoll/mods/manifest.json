@@ -1,0 +1,9 @@
+{
+  "packs": [
+    "_example-base-overlay",
+    "_example-clothing",
+    "appearance-mod",
+    "clothing-mod"
+  ],
+  "updatedAt": "2026-07-16T21:43:34.684647+00:00"
+}

@@ -1,0 +1,70 @@
+{
+  "id": "example-clothing",
+  "name": "Example Clothing (template)",
+  "description": "Copy this folder. Use one full-coverage base PNG per pose, then displacement masks (hem_lifted, cameltoe depth, etc.) to show exposure tweaks — see pack maskMode. Set enabled or rebake.",
+  "maskMode": "default",
+  "enabled": false,
+  "items": [
+    {
+      "id": "example-top",
+      "name": "Example top",
+      "zIndex": 50,
+      "cotBindings": ["T-shirt"],
+      "exposureDisplacements": {
+        "tie_top": "hem_lifted",
+        "loosen_neck": "neckline_lowered"
+      },
+      "poses": {
+        "front": {
+          "sources": {
+            "256": "assets/items/example-top/front_256.png"
+          },
+          "transform": {},
+          "displacements": {
+            "hem_lifted": {
+              "mask": { "256": "assets/items/example-top/front_hem_lifted_mask_256.png" },
+              "depth": { "256": "assets/items/example-top/front_hem_lifted_depth_256.png" }
+            },
+            "neckline_lowered": {
+              "depth": { "256": "assets/items/example-top/front_neckline_depth_256.png" }
+            }
+          }
+        },
+        "back": {
+          "sources": {
+            "256": "assets/items/example-top/back_256.png"
+          },
+          "transform": {}
+        }
+      }
+    },
+    {
+      "id": "example-pants",
+      "name": "Example pants",
+      "zIndex": 45,
+      "cotBindings": ["Hiking pants"],
+      "exposureDisplacements": {
+        "tighten_bottom": "cameltoe"
+      },
+      "poses": {
+        "front": {
+          "sources": {
+            "256": "assets/items/example-pants/front_256.png"
+          },
+          "transform": {},
+          "displacements": {
+            "cameltoe": {
+              "depth": { "256": "assets/items/example-pants/front_cameltoe_depth_256.png" }
+            }
+          }
+        },
+        "back": {
+          "sources": {
+            "256": "assets/items/example-pants/back_256.png"
+          },
+          "transform": {}
+        }
+      }
+    }
+  ]
+}
