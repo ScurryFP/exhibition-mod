@@ -65,8 +65,8 @@ Most desktop Linux installs already have one of these.
 
 1. Unzip this mod into the folder that contains your game `.html`.
 2. Double-click **`install.bat`**  
-   (or build/run `install.exe` via `build-install-exe.bat` if you ship that).
-3. Requires **Python 3** on PATH unless you use a built `install.exe`.
+   (I need to build `install.exe` via `build-install-exe.bat` but dont have windows so you can if you wish it is included.).
+3. Requires **Python 3** on PATH.
 4. Open the game HTML → **Ctrl+Shift+R**.
 
 ### Uninstall (Windows)
@@ -230,7 +230,7 @@ Others can **fork**, change engine/editor packs, and open PRs under MIT.
 
 - **Exhibition Mod source** in this package: **MIT** — you may release/fork it if **you** wrote it or contributors agreed to MIT.
 - **JSZip** (editor vendor): third-party MIT/GPL — keep attribution ([THIRD_PARTY.md](THIRD_PARTY.md)).
-- **Course of Temptation** game: **not yours to redistribute** — players must own it.
+
 
 See [THIRD_PARTY.md](THIRD_PARTY.md) before publishing.
 
